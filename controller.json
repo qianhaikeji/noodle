@@ -1,0 +1,122 @@
+[
+  {
+    "controllerName": "admin",
+    "apiBase": "/platform",
+    "servicePath": "common.admin", 
+    "modelName": "admin",
+    "modelDocName": "管理员",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformAdmin",
+    "apiGroupLabel": "平台方-管理员"
+  },
+  {
+    "controllerName": "betHash",
+    "apiBase": "/platform",
+    "servicePath": "activity.betHash", 
+    "modelName": "betHash",
+    "modelDocName": "猜HASH",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformBetHash",
+    "apiGroupLabel": "平台方-猜HASH"
+  },
+  {
+    "controllerName": "bill",
+    "apiBase": "/platform",
+    "servicePath": "finance.bill", 
+    "modelName": "bill",
+    "modelDocName": "交易单",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformBill",
+    "apiGroupLabel": "平台方-交易单"
+  },
+  {
+    "controllerName": "commission",
+    "apiBase": "/platform",
+    "servicePath": "finance.commission", 
+    "modelName": "commission",
+    "modelDocName": "佣金单",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformCommission",
+    "apiGroupLabel": "平台方-佣金单"
+  },
+  {
+    "controllerName": "settlement",
+    "apiBase": "/platform",
+    "servicePath": "finance.settlement", 
+    "modelName": "settlement",
+    "modelDocName": "结算单",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformSettlement",
+    "apiGroupLabel": "平台方-结算单"
+  },
+  {
+    "controllerName": "billEgg",
+    "apiBase": "/platform",
+    "servicePath": "activity.billEgg", 
+    "modelName": "billEgg",
+    "modelDocName": "交易彩蛋",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformBillEgg",
+    "apiGroupLabel": "平台方-交易彩蛋"
+  },
+  {
+    "controllerName": "channel",
+    "apiBase": "/platform",
+    "servicePath": "common.channel", 
+    "modelName": "channel",
+    "modelDocName": "渠道",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformChannel",
+    "apiGroupLabel": "平台方-渠道"
+  },
+  {
+    "controllerName": "channelExchange",
+    "apiBase": "/platform",
+    "servicePath": "common.channel", 
+    "modelName": "channelExchange",
+    "modelDocName": "渠道-交易对",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformChannel",
+    "apiGroupLabel": "平台方-渠道"
+  },
+  {
+    "controllerName": "contract",
+    "apiBase": "/platform",
+    "servicePath": "common.contract", 
+    "modelName": "contract",
+    "modelDocName": "合约项目",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformContract",
+    "apiGroupLabel": "平台方-合约项目"
+  },
+  {
+    "controllerName": "exchange",
+    "apiBase": "/platform",
+    "servicePath": "common.exchange", 
+    "modelName": "exchange",
+    "modelDocName": "合约交易对",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformExchange",
+    "apiGroupLabel": "平台方-合约交易对"
+  },
+  {
+    "controllerName": "marketMaker",
+    "apiBase": "/platform",
+    "servicePath": "common.marketMaker", 
+    "modelName": "marketMaker",
+    "modelDocName": "做市商",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformMarketMaker",
+    "apiGroupLabel": "平台方-做市商"
+  },
+  {
+    "controllerName": "marketMakerExchange",
+    "apiBase": "/platform",
+    "servicePath": "common.marketMaker", 
+    "modelName": "marketMakerExchange",
+    "modelDocName": "做市商",
+    "apiVersion": "1.0.0",
+    "apiGroupValue": "platformMarketMaker",
+    "apiGroupLabel": "平台方-做市商"
+  }
+]

@@ -1,0 +1,22 @@
+import request from '@/utils/request'
+
+{%- macro strPathParams(api) -%}
+  {%- if api.pathParams and api.pathParams.length > 0 -%}
+    {{api.pathParams | join(', ') + ', '}}
+  {%- endif -%}
+{%- endmacro -%}
+
+
+{% for api in apiList %}
+export async function {{api.func}} ({{strPathParams(api)}}{%- if api.method !== 'delete' %}params{%- endif %}) {
+  return request(`{{api.path}}`, {
+    method: '{{api.method}}',
+    {%- if api.method === 'post' or api.method === 'put' %}
+    data: params,
+    {%- elif api.method === 'get' %}
+    params: params,
+    {%- endif %}
+  })
+}
+{% endfor %}
+

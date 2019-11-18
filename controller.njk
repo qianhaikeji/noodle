@@ -1,0 +1,93 @@
+'use strict'
+const fs = require('fs')
+const path = require('path')
+const BaseController = require('./base')
+
+{%- set ControllerName = controllerName | upperFirstLetter %}
+{%- set ModelName = modelName | upperFirstLetter %}
+
+// 自动生成路由代码，拷贝到router.js中配置
+// router.get('/api{{apiBase}}/{{modelName}}s', controller.{{controllerName}}.get{{ModelName}}List)
+// router.get('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.get{{ModelName}}Detail)
+// router.post('/api{{apiBase}}/{{modelName}}s', controller.{{controllerName}}.create{{ModelName}})
+// router.put('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.modify{{ModelName}})
+// router.delete('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.delete{{ModelName}})
+
+/**
+ * @apiDefine {{apiGroupValue}}
+ * {{apiGroupLabel}}
+ */
+class {{ControllerName}}Controller extends BaseController {
+  constructor(ctx) {
+    super(ctx)
+  }
+
+  /**
+   * @api {get} {{apiBase}}/{{modelName}}s 获取{{modelDocName}}列表
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 获取{{modelDocName}}列表
+   * @apiSuccess {Integer} count 结果总数
+   * @apiSuccess {[{{modelName}}RspEntity[]](#api-Schema-Model{{ModelName}})} rows 列表数据
+   */
+  async get{{ModelName}}List () {
+    let res = await this.service.{{servicePath}}.get{{ModelName}}List(this.queryParams)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {get} {{apiBase}}/{{modelName}}s/:id 获取{{modelDocName}}详情
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 获取{{modelDocName}}详情
+   * @apiParam {Integer} id (path参数){{modelDocName}}id
+   * @apiUse {{modelName}}RspEntity
+   */
+  async get{{ModelName}}Detail () {
+    const { id } = this.pathParams
+    const res = await this.service.{{servicePath}}.get{{ModelName}}(id)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {post} {{apiBase}}/{{modelName}}s 创建{{modelDocName}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 创建{{modelDocName}}
+   * @apiUse {{modelName}}ReqEntity
+   * @apiUse {{modelName}}RspEntity
+   */
+  async create{{ModelName}} () {
+    const res = await this.service.{{servicePath}}.add{{ModelName}}(this.requestBody)
+    this.restful.created(res)
+  }
+
+  /**
+   * @api {put} {{apiBase}}/{{modelName}}s/:id 修改{{modelDocName}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 修改{{modelDocName}}
+   * @apiParam {Integer} id (path参数){{modelDocName}}id
+   * @apiUse {{modelName}}ReqEntity
+   */
+  async modify{{ModelName}} () {
+    const { id } = this.pathParams
+    const res = await this.service.{{servicePath}}.modify{{ModelName}}(id, this.requestBody)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {delete} {{apiBase}}/{{modelName}}s/:id 删除{{modelDocName}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 删除{{modelDocName}}
+   * @apiParam {Integer} id (path参数){{modelDocName}}id
+   */
+  async delete{{ModelName}} () {
+    const { id } = this.pathParams
+    await this.service.{{servicePath}}.delete{{ModelName}}(id)
+    this.restful.deleted()
+  }
+}
+
+module.exports = {{ControllerName}}Controller

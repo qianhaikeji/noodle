@@ -1,0 +1,62 @@
+[
+  {
+    "namespace": "activity",
+    "serviceName": "betHash", 
+    "modelName": "betHash",
+    "modelDocName": "猜Hash活动"
+  },
+  {
+    "namespace": "activity",
+    "serviceName": "billEgg", 
+    "modelName": "billEgg",
+    "modelDocName": "交易彩蛋活动"
+  },
+  {
+    "namespace": "common",
+    "serviceName": "admin", 
+    "modelName": "admin",
+    "modelDocName": "管理员"
+  },
+  {
+    "namespace": "common",
+    "serviceName": "channel", 
+    "modelName": "channel",
+    "modelDocName": "渠道"
+  },
+  {
+    "namespace": "common",
+    "serviceName": "contract", 
+    "modelName": "contract",
+    "modelDocName": "合约项目"
+  },
+  {
+    "namespace": "common",
+    "serviceName": "exchange", 
+    "modelName": "exchange",
+    "modelDocName": "交易对"
+  },
+  {
+    "namespace": "common",
+    "serviceName": "marketMaker", 
+    "modelName": "marketMaker",
+    "modelDocName": "做市商"
+  },
+  {
+    "namespace": "finance",
+    "serviceName": "bill", 
+    "modelName": "bill",
+    "modelDocName": "交易单"
+  },
+  {
+    "namespace": "finance",
+    "serviceName": "commission", 
+    "modelName": "commission",
+    "modelDocName": "佣金单"
+  },
+  {
+    "namespace": "finance",
+    "serviceName": "settlement", 
+    "modelName": "settlement",
+    "modelDocName": "结算单"
+  }
+]
