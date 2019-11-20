@@ -68,8 +68,37 @@ function genApiCode (srcFile, dstPath, {cover = false}) {
   // console.log(result)
 }
 
+async function genMainCode (srcFile, dstPath, {cover = false}) {
+  const absolutesrcPath = path.resolve(srcFile)
+  const absoluteDstPath = path.resolve(dstPath)
+  const env = utils.initEnv()
+
+  const list = require(absolutesrcPath)
+
+  const modelDir = path.join(absoluteDstPath, 'model')
+  const pageDir = path.join(absoluteDstPath, 'page')
+  utils.mkdirs(modelDir)
+  utils.mkdirs(pageDir)
+  for (let ele of list) {
+    const modelFilename = path.join(modelDir, ele.modelName) + '.js'
+    const pageFilename = path.join(pageDir, ele.name) + '.jsx'
+
+    const context = {
+      ...ele
+    }
+
+    await utils.render(env, path.join('antd-pro', 'model.njk'), modelFilename, context, cover)
+    if (ele.type === 'table') {
+      await utils.render(env, path.join('antd-pro', 'tablePage.njk'), pageFilename, context, cover)
+    }
+    
+  }
+  // console.log(result)
+}
+
 module.exports = {
-  genApiCode
+  api: genApiCode,
+  main: genMainCode,
 }
 
 

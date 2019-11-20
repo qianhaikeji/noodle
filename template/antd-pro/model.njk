@@ -1,0 +1,12 @@
+{%- set getMethodList = 'get' + modelName | upperFirstLetter -%}
+import { {{getMethodList}} } from '@/services/api/{{apiModule}}'
+import { extendServerList } from '@/utils/extendListModel'
+import _ from 'lodash'
+
+const baseModel = extendServerList({
+  namespace: '{{modelName}}',
+  getListMethod: {{getMethodList}}
+})
+
+const Model = {}
+export default _.merge(baseModel, Model)

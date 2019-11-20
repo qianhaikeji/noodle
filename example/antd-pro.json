@@ -1,0 +1,278 @@
+[
+  {
+    "name": "ContractList",
+    "modelName": "contractList",
+    "modelText": "合约项目",
+    "apiModule": "contract",
+    "type": "table",
+    "creatable": true,
+    "editable": true,
+    "deletable": true,
+    "modelFields": [
+      {"name": "name", "desc": "合约项目名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": false},
+      {"name": "desc", "desc": "简介", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "homepage", "desc": "官网", "listable": false, "filterable": true, "required": false, "creatable": true, "editable": true},
+      {"name": "contractAddr", "desc": "合约地址", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "precision", "desc": "精度", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "feeRatio", "desc": "手续费", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
+      {"name": "minVolume", "desc": "最小交易量", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
+      {"name": "phone", "desc": "联系方式", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true}
+    ]
+  },
+  {
+    "name": "ExchangeList",
+    "modelName": "exchangeList",
+    "modelText": "交易对",
+    "apiModule": "exchange",
+    "type": "table",
+    "creatable": true,
+    "editable": true,
+    "deletable": true,
+    "modelFields": [
+      {"name": "standardContractId", "desc": "基础币种", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": true},
+      {"name": "targetContractId", "desc": "目标币种", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": true},
+      {"name": "standardContractName", "desc": "基础币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "targetContractName", "desc": "目标币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "defaultBuyFeeRatio", "desc": "默认买单手续费", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
+      {"name": "defaultSaleFeeRatio", "desc": "默认卖单手续费", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true}
+    ]
+  },
+  {
+    "name": "MarketMakerList",
+    "modelName": "marketMakerList",
+    "modelText": "做市商",
+    "apiModule": "marketMaker",
+    "type": "table"
+  },
+  {
+    "name": "MarketMaker",
+    "modelName": "marketMaker",
+    "modelText": "做市商",
+    "apiModule": "marketMaker",
+    "type": "detail"
+  },
+  {
+    "name": "ChannelList",
+    "modelName": "channelList",
+    "modelText": "渠道",
+    "apiModule": "channel",
+    "type": "table",
+    "creatable": true,
+    "editable": true,
+    "deletable": true,
+    "modelFields": [
+      {"name": "username", "desc": "渠道名", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": false},
+      {"name": "password", "desc": "密码", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": false},
+      {"name": "desc", "desc": "介绍", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "parentId", "desc": "上级渠道ID", "listable": false, "filterable": true, "required": false, "creatable": true, "editable": true},
+      {"name": "contact", "desc": "联系人名称", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "channelLink", "desc": "渠道链接", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "phone", "desc": "联系人电话", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
+      {"name": "email", "desc": "联系人邮箱", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
+      {"name": "walletAddr", "desc": "账户地址", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
+      {"name": "parentShareRatio", "desc": "分给上级渠道的比例", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "commissionRatio", "desc": "默认佣金率比例", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
+      {"name": "closed", "desc": "状态", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true}
+    ]
+  },
+  {
+    "name": "ChannelExchangeList",
+    "modelName": "channelExchangeList",
+    "modelText": "渠道交易对",
+    "apiModule": "channel",
+    "type": "table",
+    "creatable": false,
+    "editable": true,
+    "deletable": false,
+    "modelFields": [
+      {"name": "standardContractName", "desc": "基础币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "targetContractName", "desc": "目标币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "commissionCOF", "desc": "佣金调整系数", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "closed", "desc": "状态", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "exchangeId", "desc": "交易对", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "channelId", "desc": "渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BillList",
+    "modelName": "billList",
+    "modelText": "交易",
+    "apiModule": "bill",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "sn", "desc": "基础币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "type", "desc": "交易单类型", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "commissionCOF", "desc": "佣金调整系数", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "buyerWalletAddr", "desc": "买方钱包", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "sellerWalletAddr", "desc": "卖方钱包", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "channelId", "desc": "渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "channelName", "desc": "渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "parentChannelId", "desc": "上级渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "parentChannelName", "desc": "上级渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "totalMoney", "desc": "总手续费", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "channelMoney", "desc": "渠道所得", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "parentChannelMoney", "desc": "上级渠道所得", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "status", "desc": "交易状态", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "settlementAt", "desc": "结算时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "createdAt", "desc": "创建时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "CommissionList",
+    "modelName": "commissionList",
+    "modelText": "收益",
+    "apiModule": "commission",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "money", "desc": "收益", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "unit", "desc": "结算币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "channelId", "desc": "渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "channelName", "desc": "渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "billSn", "desc": "交易sn", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "desc", "desc": "收益变动原因", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "createdAt", "desc": "结算时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "SettlementList",
+    "modelName": "settlementList",
+    "modelText": "结算",
+    "apiModule": "settlement",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "period", "desc": "结算周期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "channelId", "desc": "所属渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "channelName", "desc": "所属渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "startDate", "desc": "交易起始日期", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "endDate", "desc": "交易结束日期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "commissionCount", "desc": "收益笔数", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "commissionAmount", "desc": "收益总金额", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "status", "desc": "状态", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "operatorName", "desc": "操作人", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "remark", "desc": "操作备注", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "createdAt", "desc": "划账日期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BillEggList",
+    "modelName": "billEggList",
+    "modelText": "交易彩蛋",
+    "apiModule": "billEgg",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "name", "desc": "活动名称", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "budget", "desc": "预算", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "exchanges", "desc": "可参与的交易对", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "activeDate", "desc": "活动日期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "startTime", "desc": "起始时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "endTime", "desc": "结束时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "moneyRule", "desc": "中奖金额规则", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "frequency", "desc": "中奖频率", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "unit", "desc": "奖金结算币种", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "whiteList", "desc": "中奖白名单", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "active", "desc": "是否开启", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BillEggPrizeList",
+    "modelName": "billEggPrizeList",
+    "modelText": "交易彩蛋中奖纪录",
+    "apiModule": "billEgg",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "billEggId", "desc": "活动id", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "billEggName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "billSn", "desc": "交易流水号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "billTime", "desc": "交易时间", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "winnerWalletAddr", "desc": "中奖者", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "money", "desc": "奖金", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "unit", "desc": "奖金结算币种", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "status", "desc": "状态", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "remark", "desc": "操作备注", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BetHashList",
+    "modelName": "betHashList",
+    "modelText": "猜Hash尾数",
+    "apiModule": "betHash",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "name", "desc": "活动名称", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "budget", "desc": "预算", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "exchanges", "desc": "可参与的交易对", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "period", "desc": "活动期数", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "startDate", "desc": "活动起始日期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "endDate", "desc": "活动结束日期", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "lotteryHash", "desc": "开奖HASH", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "blockHeight", "desc": "区块高度", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "unit", "desc": "奖金结算币种", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "active", "desc": "是否开启", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BetHashRecordList",
+    "modelName": "betHashRecordList",
+    "modelText": "猜Hash尾数下注纪录",
+    "apiModule": "betHash",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "betHashName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "bettorWalletAddr", "desc": "所属渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "blockHeight", "desc": "区块高度", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "hash", "desc": "下注的hash尾号", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "lotteryHash", "desc": "开奖的hash尾号", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "DateTime", "desc": "提交时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "finished", "desc": "已结束", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "result", "desc": "中奖结果", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  },
+  {
+    "name": "BetHashPrizeList",
+    "modelName": "betHashPrizeList",
+    "modelText": "猜Hash尾数中奖纪录",
+    "apiModule": "betHash",
+    "type": "table",
+    "creatable": false,
+    "editable": false,
+    "deletable": false,
+    "modelFields": [
+      {"name": "billEggId", "desc": "活动id", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "betHashName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "billSn", "desc": "交易流水号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "billTime", "desc": "交易时间", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "bettorWalletAddr", "desc": "中奖者", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": true},
+      {"name": "lotteryHash", "desc": "开奖HASH", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "blockHeight", "desc": "区块高度", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "betHash", "desc": "下注的hash尾号", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "lotteryHash", "desc": "开奖的hash尾号", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "result", "desc": "中奖结果", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "money", "desc": "奖金", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "unit", "desc": "奖金结算币种", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "status", "desc": "状态", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "remark", "desc": "操作备注", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
+      {"name": "createdAt", "desc": "结算时间", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false}
+    ]
+  }
+]
