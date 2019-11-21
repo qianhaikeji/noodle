@@ -31,15 +31,17 @@ function initCommand(){
   commander
     .command('antd-pro <template> <src> <dst>')
     .option('-c --cover', '覆盖原来的文件')
+    .option('-s --specModules <specModules>', '指定模块，数组')
     .description('自动生成antd-pro代码. template: [api] src: 原数据 dst：代码输出路径')
     .action(function(cmd, src, dst, options){
+      console.log(`${cmd}, ${src}, ${dst}, ${options}`);
+
       if (!antdPro[cmd]) {
         console.log(`无效的命令：${cmd}`);
         return
       }
 
       antdPro[cmd](src, dst, options)
-      console.log(`${cmd}, ${src}, ${dst}, ${options}`);
     }).on('--help', function() {
       console.log('');
       console.log('Examples:');

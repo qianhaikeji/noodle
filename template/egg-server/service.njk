@@ -37,7 +37,7 @@ class {{ ServiceName }} extends Service {
   }
 
   async get{{UpperCaseModelName}} (id) {
-    return await this.models.{{UpperCaseModelName}}.findById(id)
+    return await this.models.{{UpperCaseModelName}}.findByPk(id)
   }
 
   async add{{UpperCaseModelName}} (data) {
@@ -55,7 +55,7 @@ class {{ ServiceName }} extends Service {
   async modify{{UpperCaseModelName}} (id, data) {
     throw new ReferenceError("method not implement!")
 
-    let exist = await this.models.{{UpperCaseModelName}}.find(id)
+    let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的{{modelDocName}}!')
       return
@@ -76,7 +76,7 @@ class {{ ServiceName }} extends Service {
   async delete{{UpperCaseModelName}} (id) {
     throw new ReferenceError("method not implement!")
 
-    let exist = await this.models.{{UpperCaseModelName}}.find(id)
+    let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
     if (!exist) {
       return
     }

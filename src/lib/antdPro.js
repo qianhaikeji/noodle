@@ -68,27 +68,32 @@ function genApiCode (srcFile, dstPath, {cover = false}) {
   // console.log(result)
 }
 
-async function genMainCode (srcFile, dstPath, {cover = false}) {
+async function genMainCode (srcFile, dstPath, {cover = false, specModules=''}) {
   const absolutesrcPath = path.resolve(srcFile)
   const absoluteDstPath = path.resolve(dstPath)
   const env = utils.initEnv()
 
   const list = require(absolutesrcPath)
 
-  const modelDir = path.join(absoluteDstPath, 'model')
-  const pageDir = path.join(absoluteDstPath, 'page')
+  const modelDir = path.join(absoluteDstPath, 'models')
+  const pageDir = path.join(absoluteDstPath, 'pages')
   utils.mkdirs(modelDir)
   utils.mkdirs(pageDir)
+
+  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
   for (let ele of list) {
-    const modelFilename = path.join(modelDir, ele.modelName) + '.js'
-    const pageFilename = path.join(pageDir, ele.name) + '.jsx'
+    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.name)) {
+      continue
+    }
 
     const context = {
       ...ele
     }
 
-    await utils.render(env, path.join('antd-pro', 'model.njk'), modelFilename, context, cover)
     if (ele.type === 'table') {
+      const modelFilename = path.join(modelDir, ele.modelName) + 'List.js'
+      const pageFilename = path.join(pageDir, ele.name) + '.jsx'
+      await utils.render(env, path.join('antd-pro', 'listModel.njk'), modelFilename, context, cover)
       await utils.render(env, path.join('antd-pro', 'tablePage.njk'), pageFilename, context, cover)
     }
     

@@ -16,15 +16,23 @@ import {
   message,
   Typography,
   Alert,
-  Modal
+  Modal,
+  notification,
 } from 'antd'
 import { PageHeaderWrapper } from '@ant-design/pro-layout'
 import React, { userEffect, useState, Fragment, useEffect } from 'react'
 import { connect } from 'dva'
 import moment from 'moment'
+import excel from '@/services/excel'
+import {downloadAllPage} from '@/utils/utils'
 import TableList from '@/components/TableList'
 import editForm from '@/components/Dialog/EditForm'
 import QueryForm from '@/components/QueryForm'
+import toast from '@/components/Toast'
+{% set getMethodList = 'get' + modelName | upperFirstLetter + 'List' -%}
+import { 
+  {{getMethodList}}, 
+}  from '@/services/api/{{apiModule}}'
 
 const {Text} = Typography
 const FormItem = Form.Item
@@ -147,6 +155,9 @@ const Widget = ({
   list,
   pagination,
   loadList,
+  deleteItem,
+  modifyItem,
+  createItem
 }) => {
   const [queryParams, setQueryParams] = useState({})
   useEffect(() => {
@@ -163,6 +174,16 @@ const Widget = ({
       ...queryParams,
       ...filters,
       ...sorter
+    }
+
+    loadList(params)
+  }
+
+  const refreshTable = () => {
+    const params = {
+      page: 1,
+      pageSize: pagination.pageSize,
+      ...queryParams,
     }
 
     loadList(params)
@@ -185,7 +206,7 @@ const Widget = ({
                 return ele
               }),
               onSubmit: (data) => {
-                console.log(data)
+                modifyItem(record.id, data)
               },
             })
           }}>编辑</a>
@@ -199,7 +220,7 @@ const Widget = ({
               okType: 'danger',
               cancelText: '取消',
               onOk: async() => {
-                console.log('OK');
+                deleteItem(record.id)
               },             
             })
           } }>删除</a>
@@ -213,15 +234,41 @@ const Widget = ({
   return (
     <PageHeaderWrapper>
       <Card bordered={false}>
-        <QueryForm items={queryFormItems} onSubmit={setQueryParams}></QueryForm>
+        <QueryForm items={queryFormItems} onSubmit={setQueryParams} onQuery={refreshTable}></QueryForm>
         <div>
           {% if creatable -%}
-          <Button icon="plus" type="primary" onClick={() => editForm({
+          <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
               title: '新建{{modelText}}', 
               items: createFormItems,
-              onSubmit: (data) => console.log(data),
+              onSubmit: (data) => createItem(data),
             })}>
             新建
+          </Button>
+          {%- endif %}
+          {% if exportable -%}
+          <Button style={ {marginRight: '10px'} } icon="export" type="primary" onClick={async () => {
+            toast.show({message: '正在导出数据...'})
+            try {
+              const allData = await downloadAllPage({{getMethodList}}, queryParams)
+              excel.exportJsonToXlsx('{{modelText}}', _.map(allData, ele => {
+                return {
+                  {% for ele in modelFields -%}
+                  {% if ele.listable -%}
+                  '{{ele.desc}}': ele.{{ele.name}},
+                  {% endif -%}
+                  {%- endfor %}
+                }
+              }))
+            } catch (err) {
+              console.log(err)
+              notification.error({
+                message: `导出excel失败`,
+                description: err.message,
+              })
+            }
+            toast.hide()
+          }}>
+            导出Excel
           </Button>
           {%- endif %}
         </div>
@@ -237,17 +284,36 @@ const Widget = ({
   )
 }
 
-const mapState = ({ {{modelName}}, loading }) => ({
-  list: {{modelName}}.list,
-  pagination: {{modelName}}.pagination,
-  loading: loading.models.{{modelName}},
+{% set storeModelName = modelName + 'List' -%}
+const mapState = ({ {{storeModelName}}, loading }) => ({
+  list: {{storeModelName}}.list,
+  pagination: {{storeModelName}}.pagination,
+  loading: loading.models.{{storeModelName}},
 })
 
 const mapDispatch = (dispatch) => ({
   loadList: (payload) => dispatch({
-    type: '{{modelName}}/fetch',
+    type: '{{storeModelName}}/fetch',
     payload
+  }),
+  {% if deletable -%}
+  deleteItem: (id) => dispatch({
+    type: '{{storeModelName}}/deleteItem',
+    payload: {id}
+  }),
+  {%- endif %}
+  {% if creatable -%}
+  createItem: (data) => dispatch({
+    type: '{{storeModelName}}/createItem',
+    payload: {data}
+  }),
+  {%- endif %}
+  {% if editable -%}
+  modifyItem: (id, data) => dispatch({
+    type: '{{storeModelName}}/modifyItem',
+    payload: {id, data}
   })
+  {%- endif %}
 })
 
 export default connect(mapState, mapDispatch)(Widget)

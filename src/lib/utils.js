@@ -6,7 +6,6 @@ const nunjucks = require('nunjucks')
 const templateDir = path.resolve(__dirname, '../../template')
 
 function mkdirs(dirpath) {
-  console.log(dirpath)
   if (fs.existsSync(dirpath)) {
     return
   }
