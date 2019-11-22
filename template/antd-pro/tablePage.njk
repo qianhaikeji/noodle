@@ -160,6 +160,10 @@ const Widget = ({
   createItem
 }) => {
   const [queryParams, setQueryParams] = useState({})
+  {% if batchable -%}
+  const [selectedRows, setSelectedRows] = useState([])
+  {%- endif %}
+
   useEffect(() => {
     loadList({
       page: pagination.current,
@@ -235,7 +239,7 @@ const Widget = ({
     <PageHeaderWrapper>
       <Card bordered={false}>
         <QueryForm items={queryFormItems} onSubmit={setQueryParams} onQuery={refreshTable}></QueryForm>
-        <div>
+        <div style={ {marginBottom: 10} }>
           {% if creatable -%}
           <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
               title: '新建{{modelText}}', 
@@ -271,9 +275,23 @@ const Widget = ({
             导出Excel
           </Button>
           {%- endif %}
+          {% if batchable -%}
+          { 
+            selectedRows.length > 0 && (
+              <>
+                <Button>批量开启</Button>
+                <Button>批量关闭</Button>
+              </>
+            ) 
+          }
+          {%- endif %}
         </div>
         <TableList
-          selectedRows={[]}
+          {% if batchable -%}
+          enableSelect
+          onSelectRow={setSelectedRows}
+          selectedRows={selectedRows}
+          {%- endif %}
           loading={loading}
           data={ {list, pagination} }
           columns={[...columns, ...opColums]}

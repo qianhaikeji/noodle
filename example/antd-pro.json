@@ -10,6 +10,7 @@
     "deletable": true,
     "exportable": true,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "name", "desc": "合约项目名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": false},
       {"name": "desc", "desc": "简介", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
@@ -32,6 +33,7 @@
     "deletable": true,
     "exportable": true,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "standardContractId", "desc": "基础币种", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": true},
       {"name": "targetContractId", "desc": "目标币种", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": true},
@@ -52,6 +54,7 @@
     "deletable": true,
     "exportable": true,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "name", "desc": "名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
       {"name": "desc", "desc": "介绍", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
@@ -77,6 +80,7 @@
     "deletable": true,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "username", "desc": "渠道名", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": false},
       {"name": "password", "desc": "密码", "listable": false, "filterable": false, "required": true, "creatable": true, "editable": false},
@@ -103,6 +107,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": true,
     "modelFields": [
       {"name": "id", "desc": "id", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "channelName", "desc": "渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -125,6 +130,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "sn", "desc": "基础币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "type", "desc": "交易单类型", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -154,6 +160,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "money", "desc": "收益", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "unit", "desc": "结算币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -175,6 +182,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "period", "desc": "结算周期", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "channelId", "desc": "所属渠道", "listable": false, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -200,6 +208,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "name", "desc": "活动名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
       {"name": "budget", "desc": "每日预算", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
@@ -226,6 +235,7 @@
     "deletable": false,
     "exportable": true,
     "importable": false,
+    "batchable": true,
     "modelFields": [
       {"name": "billEggId", "desc": "活动id", "listable": false, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "billEggName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -250,6 +260,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "name", "desc": "活动名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
       {"name": "budget", "desc": "预算", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
@@ -274,6 +285,7 @@
     "deletable": false,
     "exportable": false,
     "importable": false,
+    "batchable": false,
     "modelFields": [
       {"name": "betHashId", "desc": "活动", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "betHashName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -298,17 +310,17 @@
     "deletable": false,
     "exportable": true,
     "importable": false,
+    "batchable": true,
     "modelFields": [
       {"name": "billEggId", "desc": "活动id", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "betHashName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "period", "desc": "活动期数", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "billSn", "desc": "交易流水号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "billTime", "desc": "交易时间", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
-      {"name": "bettorWalletAddr", "desc": "中奖者", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "winnerWalletAddr", "desc": "中奖者", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "lotteryHash", "desc": "开奖HASH", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "blockHeight", "desc": "区块高度", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "betHash", "desc": "下注的hash尾号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
-      {"name": "lotteryHash", "desc": "开奖的hash尾号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "result", "desc": "中奖结果", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "money", "desc": "奖金", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "unit", "desc": "奖金结算币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
