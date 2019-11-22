@@ -14,12 +14,12 @@
     "modelFields": [
       {"name": "name", "desc": "合约项目名称", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": false},
       {"name": "desc", "desc": "简介", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
-      {"name": "homepage", "desc": "官网", "listable": false, "filterable": true, "required": false, "creatable": true, "editable": true},
-      {"name": "contractAddr", "desc": "合约地址", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "homepage", "desc": "官网", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
+      {"name": "contractAddr", "desc": "合约地址", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true},
       {"name": "precision", "desc": "精度", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true},
       {"name": "feeRatio", "desc": "手续费", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
       {"name": "minVolume", "desc": "最小交易量", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": false},
-      {"name": "phone", "desc": "联系方式", "listable": true, "filterable": false, "required": true, "creatable": true, "editable": true}
+      {"name": "phone", "desc": "联系方式", "listable": true, "filterable": false, "required": false, "creatable": true, "editable": true}
     ]
   },
   {
@@ -132,9 +132,7 @@
     "importable": false,
     "batchable": false,
     "modelFields": [
-      {"name": "sn", "desc": "基础币种", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
-      {"name": "type", "desc": "交易单类型", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
-      {"name": "commissionCOF", "desc": "佣金调整系数", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
+      {"name": "sn", "desc": "交易单编号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "buyerWalletAddr", "desc": "买方钱包", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": true},
       {"name": "sellerWalletAddr", "desc": "卖方钱包", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "channelId", "desc": "渠道", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
@@ -290,7 +288,7 @@
       {"name": "betHashId", "desc": "活动", "listable": false, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "betHashName", "desc": "活动名称", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "period", "desc": "活动期数", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": true},
-      {"name": "bettorWalletAddr", "desc": "所属渠道", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "bettorWalletAddr", "desc": "下注者", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "blockHeight", "desc": "区块高度", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
       {"name": "hash", "desc": "下注的hash尾号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": true},
       {"name": "lotteryHash", "desc": "开奖的hash尾号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
@@ -317,7 +315,7 @@
       {"name": "period", "desc": "活动期数", "listable": true, "filterable": true, "required": false, "creatable": false, "editable": false},
       {"name": "billSn", "desc": "交易流水号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "billTime", "desc": "交易时间", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
-      {"name": "winnerWalletAddr", "desc": "中奖者", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
+      {"name": "bettorWalletAddr", "desc": "中奖者", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "lotteryHash", "desc": "开奖HASH", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "blockHeight", "desc": "区块高度", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
       {"name": "betHash", "desc": "下注的hash尾号", "listable": true, "filterable": false, "required": false, "creatable": false, "editable": false},
