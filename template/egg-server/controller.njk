@@ -3,32 +3,30 @@ const fs = require('fs')
 const path = require('path')
 const BaseController = require('./base')
 
-{%- set ControllerName = controllerName | upperFirstLetter %}
-{%- set ModelName = modelName | upperFirstLetter %}
-
-// 自动生成路由代码，拷贝到router.js中配置
-// router.get('/api{{apiBase}}/{{modelName}}s', controller.{{controllerName}}.get{{ModelName}}List)
-// router.get('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.get{{ModelName}}Detail)
-// router.post('/api{{apiBase}}/{{modelName}}s', controller.{{controllerName}}.create{{ModelName}})
-// router.put('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.modify{{ModelName}})
-// router.delete('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerName}}.delete{{ModelName}})
+{% set ModelName = modelName | upperFirstLetter %}
 
 /**
  * @apiDefine {{apiGroupValue}}
  * {{apiGroupLabel}}
  */
-class {{ControllerName}}Controller extends BaseController {
+class {{controllerClass}} extends BaseController {
   constructor(ctx) {
     super(ctx)
   }
 
   /**
-   * @api {get} {{apiBase}}/{{modelName}}s 获取{{modelDocName}}列表
+   * @api {get} {{apiBase}}/{{modelName}}s 获取{{modelText}}列表
    * @apiVersion {{apiVersion}}
    * @apiGroup {{apiGroupValue}}
-   * @apiDescription 获取{{modelDocName}}列表
-   * @apiSuccess {Integer} count 结果总数
-   * @apiSuccess {[{{modelName}}RspEntity[]](#api-Schema-Model{{ModelName}})} rows 列表数据
+   * @apiDescription 获取{{modelText}}列表
+{% for filed in modelFields %}
+{% if filed.filterable %}
+   * @apiParam { {{filed.type}} } [{{filed.name}}] (query参数) {{filed.comment}}
+{% endif %}
+{% endfor %}
+   * @apiUse pagination
+   * @apiUse pageResult
+   * @apiUse {{modelName}}ResponseEntity
    */
   async get{{ModelName}}List () {
     let res = await this.service.{{servicePath}}.get{{ModelName}}List(this.queryParams)
@@ -36,12 +34,12 @@ class {{ControllerName}}Controller extends BaseController {
   }
 
   /**
-   * @api {get} {{apiBase}}/{{modelName}}s/:id 获取{{modelDocName}}详情
+   * @api {get} {{apiBase}}/{{modelName}}s/:id 获取{{modelText}}详情
    * @apiVersion {{apiVersion}}
    * @apiGroup {{apiGroupValue}}
-   * @apiDescription 获取{{modelDocName}}详情
-   * @apiParam {Integer} id (path参数){{modelDocName}}id
-   * @apiUse {{modelName}}RspEntity
+   * @apiDescription 获取{{modelText}}详情
+   * @apiParam {Integer} id (path参数){{modelText}}id
+   * @apiUse {{modelName}}ResponseEntity
    */
   async get{{ModelName}}Detail () {
     const { id } = this.pathParams
@@ -50,12 +48,12 @@ class {{ControllerName}}Controller extends BaseController {
   }
 
   /**
-   * @api {post} {{apiBase}}/{{modelName}}s 创建{{modelDocName}}
+   * @api {post} {{apiBase}}/{{modelName}}s 创建{{modelText}}
    * @apiVersion {{apiVersion}}
    * @apiGroup {{apiGroupValue}}
-   * @apiDescription 创建{{modelDocName}}
-   * @apiUse {{modelName}}ReqEntity
-   * @apiUse {{modelName}}RspEntity
+   * @apiDescription 创建{{modelText}}
+   * @apiUse {{modelName}}RequestEntity
+   * @apiUse {{modelName}}ResponseEntity
    */
   async create{{ModelName}} () {
     const res = await this.service.{{servicePath}}.add{{ModelName}}(this.requestBody)
@@ -63,12 +61,13 @@ class {{ControllerName}}Controller extends BaseController {
   }
 
   /**
-   * @api {put} {{apiBase}}/{{modelName}}s/:id 修改{{modelDocName}}
+   * @api {put} {{apiBase}}/{{modelName}}s/:id 修改{{modelText}}
    * @apiVersion {{apiVersion}}
    * @apiGroup {{apiGroupValue}}
-   * @apiDescription 修改{{modelDocName}}
-   * @apiParam {Integer} id (path参数){{modelDocName}}id
-   * @apiUse {{modelName}}ReqEntity
+   * @apiDescription 修改{{modelText}}
+   * @apiParam {Integer} id (path参数){{modelText}}id
+   * @apiUse {{modelName}}RequestEntity
+   * @apiUse {{modelName}}ResponseEntity
    */
   async modify{{ModelName}} () {
     const { id } = this.pathParams
@@ -77,11 +76,11 @@ class {{ControllerName}}Controller extends BaseController {
   }
 
   /**
-   * @api {delete} {{apiBase}}/{{modelName}}s/:id 删除{{modelDocName}}
+   * @api {delete} {{apiBase}}/{{modelName}}s/:id 删除{{modelText}}
    * @apiVersion {{apiVersion}}
    * @apiGroup {{apiGroupValue}}
-   * @apiDescription 删除{{modelDocName}}
-   * @apiParam {Integer} id (path参数){{modelDocName}}id
+   * @apiDescription 根据 id 删除一条{{modelText}}
+   * @apiParam {Integer} id (path参数){{modelText}}id
    */
   async delete{{ModelName}} () {
     const { id } = this.pathParams
@@ -90,4 +89,4 @@ class {{ControllerName}}Controller extends BaseController {
   }
 }
 
-module.exports = {{ControllerName}}Controller
+module.exports = {{controllerClass}}

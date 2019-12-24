@@ -1,0 +1,13 @@
+{% set ModelName = modelName | upperFirstLetter %}
+
+  router.get('/api{{apiBase}}/{{modelName}}s', controller.{{controllerClass}}.get{{ModelName}}List)
+  router.get('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerClass}}.get{{ModelName}}Detail)
+  {% if creatable %}
+  router.post('/api{{apiBase}}/{{modelName}}s', controller.{{controllerClass}}.create{{ModelName}})
+  {% endif %}
+  {% if editable %}
+  router.put('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerClass}}.modify{{ModelName}})
+  {% endif %}
+  {% if deletable %}
+  router.delete('/api{{apiBase}}/{{modelName}}s/:id', controller.{{controllerClass}}.delete{{ModelName}})
+  {% endif %}

@@ -1,0 +1,36 @@
+'use strict'
+
+const utils = require('./utils')
+
+/**
+ * @apiDefine {{modelName}}RequestEntity {{modelText}}请求实体
+{% for name, attrs in fileds %}
+ * @apiParam { {{attrs.type}} } [{{name}}] (body参数) {{attrs.comment}}
+{% endfor -%}
+ */
+
+/**
+ * @apiDefine {{modelName}}ResponseEntity {{modelText}}响应实体
+{% for name, attrs in fileds %}
+ * @apiSuccess { {{attrs.type}} } rows.{{name}} {{attrs.comment}}
+{% endfor -%}
+ */
+
+module.exports = app => {
+  const { STRING, INTEGER, DATE, DATEONLY, TEXT, JSON, FLOAT, DOUBLE, BOOLEAN } = app.Sequelize
+
+  const Table = app.model.define('{{modelName}}', {
+  {% for name, attrs in fileds %}
+  {{name}}: {
+  {% for key, value in attrs %}
+    {{key}}: {{value}},
+  {% endfor %}
+  },
+  {% endfor -%}
+  }, {
+    tableName: '{{tableName}}'
+  })
+  
+  utils.extendModel(Table)
+  return Table
+}

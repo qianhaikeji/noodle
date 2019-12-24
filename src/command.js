@@ -4,22 +4,24 @@ const chalk = require('chalk');
 const packageJson = require('../package.json');
 const log = console.log;
 
-const egg = require('./lib/egg')
+const eggServer = require('./lib/eggServer')
 const antdPro = require('./lib/antdPro')
 
 function initCommand(){
   commander.version(packageJson.version)
 
   commander
-    .command('egg <template> <src> <dst>')
-    .description('自动生成egg. template: [service, controller] src: 原数据 dst：代码输出路径')
+    .command('egg-server <template> <src> <dst>')
+    .option('-c --cover', '覆盖原来的文件')
+    .option('-s --specModules <specModules>', '指定模块，数组')
+    .description('自动生成egg server. template: [service, controller, model, router] src: 原数据 dst：代码输出路径')
     .action(function(cmd, src, dst, options){
-      if (!egg[cmd]) {
+      if (!eggServer[cmd]) {
         console.log(`无效的命令：${cmd}`);
         return
       }
 
-      egg[cmd](src, dst, options)
+      eggServer[cmd](src, dst, options)
       console.log(`${cmd}, ${src}, ${dst}, ${options}`);
     }).on('--help', function() {
       console.log('');

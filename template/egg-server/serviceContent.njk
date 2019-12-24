@@ -1,0 +1,121 @@
+{% set UpperCaseModelName = modelName | upperFirstLetter %}
+
+async get{{UpperCaseModelName}}List (params) {
+  throw new ReferenceError("method not implement!")
+
+  let conditions = [
+  ]
+  
+  // add custom query here
+  // e.g. 
+  // if (params.type) {
+  //   conditions.push({type: params.type})
+  // }
+
+  {% for filed in modelFields %}
+  {% if filed.filterable %}
+  {% if filed.type === 'DATE' or filed.type === 'DATEONLY' %}
+  if (params.startDate) {
+    conditions.push({ {{filed.name}} : { [this.app.Sequelize.Op.gte]: params.startDate }})
+  }
+
+  if (params.endDate) {
+    conditions.push({ {{filed.name}} : { [this.app.Sequelize.Op.lt]: params.endDate }})
+  }
+  {% elif filed.type === 'BOOLEAN' %}
+  if (params.{{filed.name}}) {
+    conditions.push({ {{filed.name}}: JSON.parse(params.{{filed.name}}) })
+  }
+  {% else %}
+  if (params.{{filed.name}}) {
+    conditions.push({ {{filed.name}}: params.{{filed.name}} })
+  }
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  let queryParams = this.formatPageParams(params)
+  if (conditions.length > 0) {
+    queryParams.where = {
+      $and: [
+        ...conditions,
+        queryParams.where
+      ]
+    }
+  }
+
+  return await this.models.{{UpperCaseModelName}}.findAndCountAll(queryParams)
+}
+
+async get{{UpperCaseModelName}} (id) {
+  return await this.models.{{UpperCaseModelName}}.findByPk(id)
+}
+
+async add{{UpperCaseModelName}} (data) {
+  throw new ReferenceError("method not implement!")
+
+  try {
+    utils.checkInputParams([
+    {% for filed in modelFields %}
+    {% if filed.creatable and filed.required %}
+      {value: data.{{filed.name}}, error: '请填写xxxx'},
+    {% endif %}
+    {% endfor %}
+    ])
+  } catch (err) {
+    this.throwException(400, err.message)
+  }
+
+  // do params check here!
+
+  let {{modelName}} = await this.models.{{UpperCaseModelName}}.create(data, {transaction: this.t})
+  if (!{{modelName}}) {
+    this.logger.error(`添加{{modelDocName}}失败! ${err}`)
+    this.throwException(400, '添加{{modelDocName}}失败!')
+  }
+  return {{modelName}}
+}
+
+async modify{{UpperCaseModelName}} (id, data) {
+  throw new ReferenceError("method not implement!")
+
+  let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
+  if (!exist) {
+    this.throwException(400, '无效的{{modelDocName}}!')
+    return
+  }
+
+  try {
+    utils.checkInputParams([
+    {% for filed in modelFields %}
+    {% if filed.editable and filed.required %}
+      {value: data.{{filed.name}}, error: '请填写xxxx'},
+    {% endif %}
+    {% endfor %}
+    ])
+  } catch (err) {
+    this.throwException(400, err.message)
+  }
+
+  // add set data code here
+  // e.g. exist.name = data.name
+
+  {% for filed in modelFields %}
+  {% if filed.editable %}
+  exist.{{filed.name}} = data.{{filed.name}}
+  {% endif %}
+  {% endfor %}
+
+  return await exist.save({transaction: this.t})
+}  
+
+async delete{{UpperCaseModelName}} (id) {
+  throw new ReferenceError("method not implement!")
+
+  let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
+  if (!exist) {
+    return
+  }
+
+  await this.models.{{UpperCaseModelName}}.destroyById(exist.id, {transaction: this.t})
+}

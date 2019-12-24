@@ -1,0 +1,16 @@
+'use strict'
+
+const _ = require('lodash')
+const moment = require('moment')
+const utils = require('../../lib/utils')
+const Service = require('qhkj-framework').Service
+
+class {{ serviceClass }} extends Service {
+  constructor(ctx) {
+    super(ctx, '{{ serviceNamespace }}')
+  }
+
+  {{content}}
+}
+
+module.exports = {{ serviceClass }}

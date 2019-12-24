@@ -19,7 +19,11 @@ function mkdirs(dirpath) {
 }
 
 function initEnv () {
-  var env = nunjucks.configure(templateDir)
+  var env = nunjucks.configure(templateDir, {
+    autoescape: false,
+    trimBlocks: true,
+    lstripBlocks: true
+  })
   env.addFilter('upperFirstLetter', (word) => {
     if (!word || word.length === 0) {
       return word
@@ -54,9 +58,25 @@ async function render (env, templateFile, dstFile, context, cover = false) {
   
 }
 
+async function renderToBuff (env, templateFile, context) {
+  return new Promise((resolve, reject) => {
+    env.render(templateFile, context, (err, res) => {
+      if (err) {
+        console.error(err)
+        reject(err)
+        return
+      }
+
+      resolve(res)
+    })
+  })
+  
+}
+
 
 module.exports = {
   mkdirs,
   initEnv,
-  render
+  render,
+  renderToBuff
 }
