@@ -181,8 +181,10 @@ controller/*
 router.js
 以及接口文档注释
 
+```
 yarn noodle egg-server router ./example/design.json ./test -c
 yarn noodle egg-server model ./example/design.json ./test -c
 yarn noodle egg-server service ./example/design.json ./test -c
 yarn noodle egg-server controller ./example/design.json ./test -c
-
+yarn noodle egg-server all ./example/design.json ./test -c
+```
