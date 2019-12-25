@@ -1,6 +1,6 @@
 {
   "name": "qhkj-noodle",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "a smart code generator for qhkj project.",
   "main": "index.js",
   "bin": {
@@ -18,7 +18,7 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "noodle": "node bin/code.js"
+    "noodle": "bin/code.js"
   },
   "files": [
     "bin",
@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/qianhaikeji/noodle.git"
   },
   "homepage": "http://www.qianhaikeji.com.cn",
   "author": "qianhaikeji",
