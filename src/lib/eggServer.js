@@ -5,184 +5,127 @@ const utils = require('./utils')
 
 const MODEL_ATTRS = ['type', 'primaryKey', 'autoIncrement', 'allowNull', 'unique', 'faker', 'comment']
 
-function parseModel (modelDir) {
-  const mockApp = {
-    model: {
-      define: (modelName, model) => {
-        const attrs = []
-        for (let key in model) {
-          if (key === 'id') {
-            continue
-          }
-
-          const typeAttr = model[key] instanceof Object ? model[key].type() : model[key]
-          const fieldType = typeAttr instanceof Function ? typeAttr() : typeAttr
-          attrs.push({
-            field: key,
-            type: fieldType
-          })
-        }
-        return {
-          name: modelName,
-          attrs: attrs,
-          prototype: {}
-        }
-      }
-    },
-    Sequelize: {
-      STRING: () => 'string',
-      INTEGER: () => 'int',
-      DATE: () => 'date',
-      JSON: () => 'json',
-      DOUBLE: () => 'double',
-      BOOLEAN: () => 'boolean',
-    }
-  }
-
-  const modelFiles = fs.readdirSync(modelDir)
-  // console.log(modelFiles)
-  const modelDict = []
-  for (let mf of _.take(modelFiles, 1)) {
-    if (path.basename(mf) === 'utils.js') {
-      continue
-    }
-    const modelFunc = require(path.join(modelDir, mf))
-    const modelData = modelFunc(mockApp)
-    modelDict[modelData.name] = modelData.attrs
-  }
-  return modelDict
-}
-
-// todo: 处理多个model
-async function genRouterCode (srcFile, dstPath, {cover = false, specModules=''}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-  const env = utils.initEnv()
-
-  const list = require(absolutesrcPath)
-
-  const routerDir = path.join(absoluteDstPath)
-  utils.mkdirs(routerDir)
-
-  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
-  for (let ele of list) {
-    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.modelName)) {
-      continue
-    }
-
-    const filename = path.join(routerDir, 'router') + '.js'
-    const content = await utils.renderToBuff(env, path.join('egg-server', 'routerContent.njk'), {
-      controllerClass: _.upperFirst(ele.controller.name) + 'Controller',
-      apiBase: ele.api.base,
-      modelName: ele.modelName,
-      creatable: ele.creatable,
-      editable: ele.editable,
-      deletable: ele.deletable
-    })
-    await utils.render(env, path.join('egg-server', 'routerFramework.njk'), filename, {content}, cover)
-  }
-}
-
-// todo: 处理多个model公用一个service的场景
-async function genServiceCode (srcFile, dstPath, {cover = false, specModules=''}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-  const env = utils.initEnv()
-
-  const list = require(absolutesrcPath)
-
-  const serviceDir = path.join(absoluteDstPath, 'service')
-  utils.mkdirs(serviceDir)
-
-  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
-  for (let ele of list) {
-    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.modelName)) {
-      continue
-    }
-
-    const filename = path.join(serviceDir, ele.service.name) + '.js'
-    const content = await utils.renderToBuff(env, path.join('egg-server', 'serviceContent.njk'), {
-      modelName: ele.modelName,
-      modelFields: ele.modelFields
-    })
-    await utils.render(env, path.join('egg-server', 'serviceFramework.njk'), filename, {
-      serviceName: ele.service.name,
-      serviceClass: _.upperFirst(ele.service.name) + 'Service',
-      serviceNamespace: ele.service.namespace,
-      content}, cover)
-  }
-}
-
-async function genControllerCode (srcFile, dstPath, {cover = false, specModules=''}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-  const env = utils.initEnv()
-
-  const list = require(absolutesrcPath)
-
-  const controllerDir = path.join(absoluteDstPath, 'controller')
-  utils.mkdirs(controllerDir)
-
-  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
-  for (let ele of list) {
-    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.modelName)) {
-      continue
-    }
-
-    const context = {
-      controllerClass: _.upperFirst(ele.controller.name) + 'Controller',
-      apiBase: ele.api.base,
-      apiVersion: ele.api.version,
-      apiGroupValue: ele.api.groupValue,
-      apiGroupLabel: ele.api.groupLabel,
-      servicePath: `${ele.service.namespace}.${ele.service.name}`,
-      modelName: ele.modelName,
-      modelText: ele.modelText,
-      modelFields: ele.modelFields
-    }
-
-    const filename = path.join(controllerDir, ele.controller.name) + '.js'
-    await utils.render(env, path.join('egg-server', 'controller.njk'), filename, context, cover)
-  }
-}
-
 async function genModelCode (srcFile, dstPath, {cover = false, specModules=''}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-  const env = utils.initEnv()
-
-  const list = require(absolutesrcPath)
-
-  const modelDir = path.join(absoluteDstPath, 'model')
-  utils.mkdirs(modelDir)
-
-  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'model'))
+  const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
-    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.modelName)) {
-      continue
-    }
-
     const context = {
-      modelName: ele.modelName,
-      modelText: ele.modelText,
-      tableName: _.snakeCase(ele.modelName),
-      fileds: _.reduce(ele.modelFields, (result, it) => {
+      modelName: ele.name,
+      modelText: ele.label,
+      tableName: _.snakeCase(ele.name),
+      fields: _.reduce(ele.fields, (result, it) => {
         result[it.name] = _.pickBy(it,  (value, key) => MODEL_ATTRS.includes(key))
         return result
       }, {}),
     }
 
-    const modelFilename = path.join(modelDir, ele.modelName) + '.js'
-    await utils.render(env, path.join('egg-server', 'model.njk'), modelFilename, context, cover)
+    const filename = path.join(dstDir, ele.name) + '.js'
+    await utils.render(env, path.join('egg-server', 'model.njk'), filename, context, cover)
   }
-  // console.log(result)
+}
+
+async function genRouterCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, dstPath)
+  const list = utils.fiterModules(json.controllers, specModules)
+
+  const renderContents = []
+  for (let ele of list) {
+    for (let modelName of ele.models) {
+      const model = _.find(json.models, ['name', modelName])
+      if (!model) {
+        continue
+      }
+
+      const content = await utils.renderToBuff(env, path.join('egg-server', 'routerContent.njk'), {
+        controllerClass: _.upperFirst(ele.name) + 'Controller',
+        apiBase: ele.api.base,
+        model
+      })
+      renderContents.push(content)
+    }
+  }
+
+  const filename = path.join(dstDir, 'router') + '.js'
+  await utils.render(env, path.join('egg-server', 'routerFramework.njk'), filename, {list: renderContents}, cover)
+}
+
+async function genServiceCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'service'))
+  const list = utils.fiterModules(json.services, specModules)
+  for (let ele of list) {
+    const renderContents = []
+    for (let modelName of ele.models) {
+      const model = _.find(json.models, ['name', modelName])
+      if (!model) {
+        continue
+      }
+
+      const content = await utils.renderToBuff(env, path.join('egg-server', 'serviceContent.njk'), {
+        model
+      })
+      renderContents.push(content)
+    }
+
+
+    let serviceDir = path.join(dstDir, ele.namespace)
+    utils.mkdirs(serviceDir)
+    const filename = path.join(serviceDir, ele.name) + '.js'
+    await utils.render(env, path.join('egg-server', 'serviceFramework.njk'), filename, {
+      serviceName: ele.name,
+      serviceClass: _.upperFirst(ele.name) + 'Service',
+      serviceNamespace: ele.namespace,
+      list: renderContents
+    }, cover)
+  }
+}
+
+async function genControllerCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'controller'))
+  const list = utils.fiterModules(json.controllers, specModules)
+  for (let ele of list) {
+    const renderContents = []
+    for (let modelName of ele.models) {
+      const model = _.find(json.models, ['name', modelName])
+      if (!model) {
+        continue
+      }
+
+      const service = _.find(json.services, ele => ele.models.includes(model.name))
+
+      const content = await utils.renderToBuff(env, path.join('egg-server', 'controllerContent.njk'), {
+        apiBase: ele.api.base,
+        apiVersion: ele.api.version,
+        apiGroupValue: ele.api.groupValue,
+        apiGroupLabel: ele.api.groupLabel,
+        servicePath: `${service.namespace}.${service.name}`,
+        model
+      })
+      renderContents.push(content)
+    }
+
+    const filename = path.join(dstDir, ele.name) + '.js'
+    await utils.render(env, path.join('egg-server', 'controllerFramework.njk'), filename, {
+      controllerClass: _.upperFirst(ele.name) + 'Controller',
+      apiGroupValue: ele.api.groupValue,
+      apiGroupLabel: ele.api.groupLabel,
+      list: renderContents
+    }, cover)
+  }
+}
+
+async function genAllCode (...args) {
+  await genRouterCode(...args)
+  await genModelCode(...args)
+  await genServiceCode(...args)
+  await genControllerCode(...args)
 }
 
 module.exports = {
   model: genModelCode,
   service: genServiceCode,
   controller: genControllerCode,
-  router: genRouterCode
+  router: genRouterCode,
+  all: genAllCode
 }
 
 

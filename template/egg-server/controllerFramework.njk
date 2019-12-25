@@ -1,0 +1,20 @@
+'use strict'
+const fs = require('fs')
+const path = require('path')
+const BaseController = require('./base')
+
+/**
+ * @apiDefine {{apiGroupValue}}
+ * {{apiGroupLabel}}
+ */
+class {{controllerClass}} extends BaseController {
+  constructor(ctx) {
+    super(ctx)
+  }
+
+  {% for content in list %}
+  {{content}}
+  {% endfor %}
+}
+
+module.exports = {{controllerClass}}

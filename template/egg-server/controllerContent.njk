@@ -1,0 +1,82 @@
+  {% set ModelName = model.name | upperFirstLetter %}
+  
+  /**
+   * @api {get} {{apiBase}}/{{model.name}}s 获取{{model.label}}列表
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 获取{{model.label}}列表
+  {% for field in model.fields %}
+  {% if field.filterable %}
+   * @apiParam { {{field.type}} } [{{field.name}}] (query参数) {{field.comment}}
+  {% endif %}
+  {% endfor %}
+   * @apiUse pagination
+   * @apiUse pageResult
+   * @apiUse {{model.name}}ResponseEntity
+   */
+  async get{{ModelName}}List () {
+    let res = await this.service.{{servicePath}}.get{{ModelName}}List(this.queryParams)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {get} {{apiBase}}/{{model.name}}s/:id 获取{{model.label}}详情
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 获取{{model.label}}详情
+   * @apiParam {Integer} id (path参数){{model.label}}id
+   * @apiUse {{model.name}}ResponseEntity
+   */
+  async get{{ModelName}}Detail () {
+    const { id } = this.pathParams
+    const res = await this.service.{{servicePath}}.get{{ModelName}}(id)
+    this.restful.success(res)
+  }
+
+
+  {% if model.creatable %}
+  /**
+   * @api {post} {{apiBase}}/{{model.name}}s 创建{{model.label}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 创建{{model.label}}
+   * @apiUse {{model.name}}RequestEntity
+   * @apiUse {{model.name}}ResponseEntity
+   */
+  async create{{ModelName}} () {
+    const res = await this.service.{{servicePath}}.add{{ModelName}}(this.requestBody)
+    this.restful.created(res)
+  }
+  {% endif %}
+
+  {% if model.editable %}
+  /**
+   * @api {put} {{apiBase}}/{{model.name}}s/:id 修改{{model.label}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 修改{{model.label}}
+   * @apiParam {Integer} id (path参数){{model.label}}id
+   * @apiUse {{model.name}}RequestEntity
+   * @apiUse {{model.name}}ResponseEntity
+   */
+  async modify{{ModelName}} () {
+    const { id } = this.pathParams
+    const res = await this.service.{{servicePath}}.modify{{ModelName}}(id, this.requestBody)
+    this.restful.success(res)
+  }
+  {% endif %}
+
+  {% if model.deletable %}
+  /**
+   * @api {delete} {{apiBase}}/{{model.name}}s/:id 删除{{model.label}}
+   * @apiVersion {{apiVersion}}
+   * @apiGroup {{apiGroupValue}}
+   * @apiDescription 根据 id 删除一条{{model.label}}
+   * @apiParam {Integer} id (path参数){{model.label}}id
+   */
+  async delete{{ModelName}} () {
+    const { id } = this.pathParams
+    await this.service.{{servicePath}}.delete{{ModelName}}(id)
+    this.restful.deleted()
+  }
+  {% endif %}

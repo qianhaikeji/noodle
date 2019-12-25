@@ -2,12 +2,6 @@
 const fs = require('fs')
 const path = require('path')
 const BaseController = require('./base')
-// 自动生成路由代码，拷贝到router.js中配置
-// router.get('/api/users', controller.UserController.getUserList)
-// router.get('/api/users/:id', controller.UserController.getUserDetail)
-// router.post('/api/users', controller.UserController.createUser)
-// router.put('/api/users/:id', controller.UserController.modifyUser)
-// router.delete('/api/users/:id', controller.UserController.deleteUser)
 
 /**
  * @apiDefine user
@@ -18,6 +12,7 @@ class UserController extends BaseController {
     super(ctx)
   }
 
+    
   /**
    * @api {get} /users 获取用户列表
    * @apiVersion 1.0.0
@@ -46,6 +41,7 @@ class UserController extends BaseController {
     const res = await this.service.common.user.getUser(id)
     this.restful.success(res)
   }
+
 
   /**
    * @api {post} /users 创建用户
@@ -87,6 +83,79 @@ class UserController extends BaseController {
     await this.service.common.user.deleteUser(id)
     this.restful.deleted()
   }
+
+    
+  /**
+   * @api {get} /admins 获取管理员列表
+   * @apiVersion 1.0.0
+   * @apiGroup user
+   * @apiDescription 获取管理员列表
+   * @apiParam { INTEGER } [name] (query参数) '字段说明'
+   * @apiUse pagination
+   * @apiUse pageResult
+   * @apiUse adminResponseEntity
+   */
+  async getAdminList () {
+    let res = await this.service.common.user.getAdminList(this.queryParams)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {get} /admins/:id 获取管理员详情
+   * @apiVersion 1.0.0
+   * @apiGroup user
+   * @apiDescription 获取管理员详情
+   * @apiParam {Integer} id (path参数)管理员id
+   * @apiUse adminResponseEntity
+   */
+  async getAdminDetail () {
+    const { id } = this.pathParams
+    const res = await this.service.common.user.getAdmin(id)
+    this.restful.success(res)
+  }
+
+
+  /**
+   * @api {post} /admins 创建管理员
+   * @apiVersion 1.0.0
+   * @apiGroup user
+   * @apiDescription 创建管理员
+   * @apiUse adminRequestEntity
+   * @apiUse adminResponseEntity
+   */
+  async createAdmin () {
+    const res = await this.service.common.user.addAdmin(this.requestBody)
+    this.restful.created(res)
+  }
+
+  /**
+   * @api {put} /admins/:id 修改管理员
+   * @apiVersion 1.0.0
+   * @apiGroup user
+   * @apiDescription 修改管理员
+   * @apiParam {Integer} id (path参数)管理员id
+   * @apiUse adminRequestEntity
+   * @apiUse adminResponseEntity
+   */
+  async modifyAdmin () {
+    const { id } = this.pathParams
+    const res = await this.service.common.user.modifyAdmin(id, this.requestBody)
+    this.restful.success(res)
+  }
+
+  /**
+   * @api {delete} /admins/:id 删除管理员
+   * @apiVersion 1.0.0
+   * @apiGroup user
+   * @apiDescription 根据 id 删除一条管理员
+   * @apiParam {Integer} id (path参数)管理员id
+   */
+  async deleteAdmin () {
+    const { id } = this.pathParams
+    await this.service.common.user.deleteAdmin(id)
+    this.restful.deleted()
+  }
+
 }
 
 module.exports = UserController

@@ -3,13 +3,13 @@
 const utils = require('./utils')
 
 /**
- * @apiDefine userTestRequestEntity 请求实体
+ * @apiDefine adminRequestEntity 管理员请求实体
  * @apiParam { INTEGER } [id] (body参数) '字段说明'
  * @apiParam { INTEGER } [name] (body参数) '字段说明'
 */
 
 /**
- * @apiDefine userTestResponseEntity 响应实体
+ * @apiDefine adminResponseEntity 管理员响应实体
  * @apiSuccess { INTEGER } rows.id '字段说明'
  * @apiSuccess { INTEGER } rows.name '字段说明'
 */
@@ -17,7 +17,7 @@ const utils = require('./utils')
 module.exports = app => {
   const { STRING, INTEGER, DATE, DATEONLY, TEXT, JSON, FLOAT, DOUBLE, BOOLEAN } = app.Sequelize
 
-  const Table = app.model.define('userTest', {
+  const Table = app.model.define('admin', {
     id: {
       type: INTEGER,
       primaryKey: true,
@@ -35,7 +35,7 @@ module.exports = app => {
       comment: '字段说明',
     },
   }, {
-    tableName: 'user_test'
+    tableName: 'admin'
   })
   
   utils.extendModel(Table)

@@ -6,5 +6,7 @@
 module.exports = app => {
   const { router, controller, middleware } = app
   const jwtMiddleware = middleware.jwt()
+  {% for content in list %}
   {{content}}
+  {% endfor %}
 }

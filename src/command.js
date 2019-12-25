@@ -14,7 +14,7 @@ function initCommand(){
     .command('egg-server <template> <src> <dst>')
     .option('-c --cover', '覆盖原来的文件')
     .option('-s --specModules <specModules>', '指定模块，数组')
-    .description('自动生成egg server. template: [service, controller, model, router] src: 原数据 dst：代码输出路径')
+    .description('自动生成egg server. template: [service, controller, model, router, all] src: 原数据 dst：代码输出路径')
     .action(function(cmd, src, dst, options){
       if (!eggServer[cmd]) {
         console.log(`无效的命令：${cmd}`);

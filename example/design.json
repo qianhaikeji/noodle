@@ -1,55 +1,103 @@
-[
-  {
-    "modelName": "user",
-    "modelText": "用户",
-    "modelFields": [
-      {
-        "name": "id",
-        "type": "INTEGER",
-        "primaryKey": true,
-        "autoIncrement": true,
-        "allowNull": false,
-        "unique": true,
-        "faker": "`faker.internet.userName()`",
-        "comment": "'字段说明'",
-        "editable": true,
-        "listable": true,
-        "filterable": false,
-        "required": true,
-        "creatable": true
-      },
-      {
-        "name": "name",
-        "type": "INTEGER",
-        "allowNull": false,
-        "unique": true,
-        "faker": "`faker.internet.userName()`",
-        "comment": "'字段说明'",
-        "editable": false,
-        "listable": true,
-        "filterable": true,
-        "required": false,
-        "creatable": true
-      }
-    ],
-    "creatable": true,
-    "editable": true,
-    "deletable": true,
-    "exportable": true,
-    "importable": false,
-    "batchable": false,
-    "service": {
+{
+  "models": [
+    {
       "name": "user",
-      "namespace": "common"
+      "label": "用户",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'字段说明'",
+          "editable": true,
+          "listable": true,
+          "filterable": false,
+          "required": true,
+          "creatable": true
+        },
+        {
+          "name": "name",
+          "type": "INTEGER",
+          "allowNull": false,
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'字段说明'",
+          "editable": false,
+          "listable": true,
+          "filterable": true,
+          "required": false,
+          "creatable": true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
     },
-    "controller": {
-      "name": "user"
-    },
-    "api": {
-      "base": "",
-      "version": "1.0.0",
-      "groupValue": "user",
-      "groupLabel": "用户" 
+    {
+      "name": "admin",
+      "label": "管理员",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'字段说明'",
+          "editable": true,
+          "listable": true,
+          "filterable": false,
+          "required": true,
+          "creatable": true
+        },
+        {
+          "name": "name",
+          "type": "INTEGER",
+          "allowNull": false,
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'字段说明'",
+          "editable": false,
+          "listable": true,
+          "filterable": true,
+          "required": false,
+          "creatable": true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
     }
-  }
-]
+  ],
+  "services": [
+    {
+      "name": "user",
+      "namespace": "common",
+      "models": ["user", "admin"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "user",
+      "models": ["user", "admin"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "user",
+        "groupLabel": "用户" 
+      }
+    }
+  ]
+}

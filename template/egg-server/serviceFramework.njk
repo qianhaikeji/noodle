@@ -9,8 +9,10 @@ class {{ serviceClass }} extends Service {
   constructor(ctx) {
     super(ctx, '{{ serviceNamespace }}')
   }
-
+  
+  {% for content in list %}
   {{content}}
+  {% endfor %}
 }
 
 module.exports = {{ serviceClass }}

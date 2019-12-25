@@ -2,6 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 const nunjucks = require('nunjucks')
+const _ = require('lodash')
 
 const templateDir = path.resolve(__dirname, '../../template')
 
@@ -73,10 +74,34 @@ async function renderToBuff (env, templateFile, context) {
   
 }
 
+function prepare (srcFile, dstPath) {
+  const absolutesrcPath = path.resolve(srcFile)
+  const absoluteDstPath = path.resolve(dstPath)
+  const env = initEnv()
+
+  const json = require(absolutesrcPath)
+
+  const dstDir = path.join(absoluteDstPath)
+  mkdirs(dstDir)
+
+  return {env, dstDir, json}
+}
+
+function fiterModules (list, specModules='') {
+  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
+  if (specModuleList.length > 0) {
+    return _.filter(list, ele => _.includes(specModuleList, ele.name))
+  } else { 
+    return list
+  }
+}
+
 
 module.exports = {
   mkdirs,
   initEnv,
   render,
-  renderToBuff
+  renderToBuff,
+  prepare,
+  fiterModules
 }
