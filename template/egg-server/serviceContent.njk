@@ -1,8 +1,6 @@
   {% set UpperCaseModelName = model.name | upperFirstLetter %}
 
   async get{{UpperCaseModelName}}List (params) {
-    throw new ReferenceError("method not implement!")
-
     let conditions = [
     ]
     
@@ -52,8 +50,6 @@
   }
 
   async add{{UpperCaseModelName}} (data) {
-    throw new ReferenceError("method not implement!")
-
     try {
       utils.checkInputParams([
       {% for field in model.fields %}
@@ -77,8 +73,6 @@
   }
 
   async modify{{UpperCaseModelName}} (id, data) {
-    throw new ReferenceError("method not implement!")
-
     let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的{{model.label}}!')
@@ -110,8 +104,6 @@
   }  
 
   async delete{{UpperCaseModelName}} (id) {
-    throw new ReferenceError("method not implement!")
-
     let exist = await this.models.{{UpperCaseModelName}}.findByPk(id)
     if (!exist) {
       return

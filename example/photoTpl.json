@@ -1,0 +1,454 @@
+{
+  "models": [
+    {
+      "name": "user",
+      "label": "用户",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "unionId",
+          "type": "STRING(100)",
+          "comment": "'unionId'",
+          "listable": true
+        },
+        {
+          "name": "openIdWxpub",
+          "type": "STRING(100)",
+          "unique": true,
+          "comment": "'公众号openId'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "openIdWeapp",
+          "type": "STRING(100)",
+          "unique": true,
+          "comment": "'小程序openId'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "isMpcrawler",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "faker": "false",
+          "comment": "'是否微信爬虫'",
+          "listable": false
+        },
+        {
+          "name": "inviteUserId",
+          "type": "INTEGER",
+          "comment": "'邀请者ID'",
+          "listable": false
+        },
+        {
+          "name": "skey",
+          "type": "STRING(100)",
+          "comment": "'skey'",
+          "listable": false
+        },
+        {
+          "name": "sessionKey",
+          "type": "STRING(100)",
+          "comment": "'sessionKey'",
+          "listable": false
+        },
+        {
+          "name": "wxNickname",
+          "type": "STRING(100)",
+          "allowNull": true,
+          "comment": "'微信昵称'",
+          "listable":  true
+        },
+        {
+          "name": "wxAvatar",
+          "type": "STRING",
+          "allowNull": true,
+          "comment": "'微信头像'",
+          "listable":  true
+        },
+        {
+          "name": "nickname",
+          "type": "STRING(100)",
+          "allowNull": true,
+          "comment": "'昵称'",
+          "listable":  true,
+          "filterable": true
+        },
+        {
+          "name": "avatar",
+          "type": "STRING",
+          "allowNull": true,
+          "comment": "'头像'",
+          "listable":  true
+        },
+        {
+          "name": "gender",
+          "type": "INTEGER",
+          "comment": "'性别'",
+          "listable":  true,
+          "filterable": true
+        },
+        {
+          "name": "phone",
+          "type": "STRING(20)",
+          "comment": "'手机'",
+          "listable":  true,
+          "filterable": true
+        },
+        {
+          "name": "country",
+          "type": "STRING",
+          "comment": "'国家'",
+          "listable":  true
+        },
+        {
+          "name": "province",
+          "type": "STRING",
+          "comment": "'省'",
+          "listable":  true
+        },
+        {
+          "name": "city",
+          "type": "STRING",
+          "comment": "'市'",
+          "listable":  true
+        },
+        {
+          "name": "point",
+          "type": "INTEGER",
+          "defaultValue": 0,
+          "comment": "'积分'",
+          "editable": true,
+          "listable":  true
+        },
+        {
+          "name": "lastVisitTime",
+          "type": "DATE",
+          "comment": "'最后访问'",
+          "listable":  true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": false,
+      "editable": true,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "room",
+      "label": "房间",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "creatorId",
+          "type": "INTEGER",
+          "comment": "'创建者ID'"
+        },
+        {
+          "name": "name",
+          "type": "STRING(30)",
+          "comment": "'群名'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "participation",
+      "label": "参与关系",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "userId",
+          "type": "INTEGER",
+          "comment": "'参与者ID'",
+          "listable": true
+        },
+        {
+          "name": "roomId",
+          "type": "INTEGER",
+          "comment": "'房间ID'",
+          "listable": true
+        },
+        {
+          "name": "avatar",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'头像'",
+          "listable":  true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "tag",
+      "label": "标签",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "name",
+          "type": "STRING(10)",
+          "comment": "'标签名'",
+          "creatable": true,
+          "editable": true,
+          "listable": true,
+          "filterable": true,
+          "required": true
+        },
+        {
+          "name": "order",
+          "type": "INTEGER",
+          "comment": "'顺序'",
+          "creatable": true,
+          "editable": true,
+          "listable": true,
+          "required": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": false
+    },
+    {
+      "name": "library",
+      "label": "图库",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "value",
+          "type": "STRING",
+          "comment": "'路径'",
+          "creatable": true,
+          "editable": true,
+          "listable": true,
+          "required": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": false
+    },
+    {
+      "name": "libraryTag",
+      "label": "图库标签关系",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "comment": "'id'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "libraryId",
+          "type": "INTEGER",
+          "comment": "'图库ID'",
+          "listable": true
+        },
+        {
+          "name": "tagId",
+          "type": "INTEGER",
+          "comment": "'标签ID'",
+          "listable": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "user",
+      "namespace": "common",
+      "models": ["user"]
+    },
+    {
+      "name": "room",
+      "namespace": "common",
+      "models": ["room"]
+    },
+    {
+      "name": "participation",
+      "namespace": "common",
+      "models": ["participation"]
+    },
+    {
+      "name": "library",
+      "namespace": "common",
+      "models": ["tag", "library", "libraryTag"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "user",
+      "models": ["user"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "user",
+        "groupLabel": "用户" 
+      }
+    },
+    {
+      "name": "room",
+      "models": ["room"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "room",
+        "groupLabel": "房间" 
+      }
+    },
+    {
+      "name": "participation",
+      "models": ["participation"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "participation",
+        "groupLabel": "参与关系" 
+      }
+    },
+    {
+      "name": "tag",
+      "models": ["tag"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "tag",
+        "groupLabel": "标签" 
+      }
+    },
+    {
+      "name": "library",
+      "models": ["library"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "library",
+        "groupLabel": "图库" 
+      }
+    },
+    {
+      "name": "libraryTag",
+      "models": ["libraryTag"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "libraryTag",
+        "groupLabel": "图库标签关系" 
+      }
+    }
+  ]
+}

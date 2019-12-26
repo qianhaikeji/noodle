@@ -135,7 +135,7 @@ const createFormItems = [
     options: {
       rules: [
         {
-          required: {{ele.required}},
+          required: {{"true" if ele.required else "false"}},
         }
       ],
       {% if ele.type === 'BOOLEAN' %}
@@ -182,7 +182,7 @@ const updateFormItems = [
     options: {
       rules: [
         {
-          required: {{ele.required}},
+          required: {{"true" if ele.required else "false"}},
         }
       ],
       {% if ele.type === 'BOOLEAN' %}
@@ -367,7 +367,7 @@ const Widget = ({
           {% endif %}
         ></QueryForm>
         <div style={ {marginBottom: 10} }>
-          {% if creatable %}
+          {% if model.creatable %}
           <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
               title: '新建{{model.label}}', 
               items: createFormItems,
