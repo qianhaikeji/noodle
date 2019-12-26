@@ -188,3 +188,7 @@ yarn noodle egg-server service ./example/design.json ./test -c
 yarn noodle egg-server controller ./example/design.json ./test -c
 yarn noodle egg-server all ./example/design.json ./test -c
 ```
+
+
+## 规划功能
+- egg server 支持关系表类型的model
