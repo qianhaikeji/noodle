@@ -31,6 +31,19 @@
           "filterable": true,
           "required": false,
           "creatable": true
+        },
+        {
+          "name": "date",
+          "type": "DATE",
+          "allowNull": false,
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'日期'",
+          "editable": true,
+          "listable": true,
+          "filterable": true,
+          "required": false,
+          "creatable": true
         }
       ],
       "creatable": true,

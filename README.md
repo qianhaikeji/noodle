@@ -192,3 +192,6 @@ yarn noodle egg-server all ./example/design.json ./test -c
 
 ## 规划功能
 - egg server 支持关系表类型的model
+- model支持枚举类型的处理
+- 设计文档中，model名称文本和描述分离
+- 管理后台中支持显示model中自动生成的createdAt

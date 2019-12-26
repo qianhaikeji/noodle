@@ -4,6 +4,7 @@ import {
   Card,
   Col,
   DatePicker,
+  TimePicker,
   Divider,
   Dropdown,
   Form,
@@ -18,26 +19,33 @@ import {
   Alert,
   Modal,
   notification,
+  Switch,
 } from 'antd'
 import { PageHeaderWrapper } from '@ant-design/pro-layout'
 import React, { userEffect, useState, Fragment, useEffect } from 'react'
 import { connect } from 'dva'
 import moment from 'moment'
+import _ from 'lodash'
 import excel from '@/services/excel'
 import {downloadAllPage} from '@/utils/utils'
 import TableList from '@/components/TableList'
 import editForm from '@/components/Dialog/EditForm'
 import QueryForm from '@/components/QueryForm'
 import toast from '@/components/Toast'
-{% set getMethodList = 'get' + modelName | upperFirstLetter + 'List' -%}
+import {ENUM_SWITCH_STATUS} from '@/enum'
+import StatusSelect from '@/widgets/StatusSelect'
+import SwitchStatusTag from '@/widgets/SwitchStatusTag'
+import QueryRangePicker from '@/widgets/QueryRangePicker'
 import { 
-  {{getMethodList}}, 
-}  from '@/services/api/{{apiModule}}'
+  getUserList, 
+}  from '@/services/api/user'
 
 const {Text} = Typography
 const FormItem = Form.Item
 const { Option } = Select
 const { confirm } = Modal
+const { TextArea } = Input
+const { RangePicker } = DatePicker
 
 /**
  * columns 此处写入列数据
@@ -48,14 +56,19 @@ const { confirm } = Modal
 },
 */
 const columns = [
-  {% for ele in modelFields -%}
-  {% if ele.listable -%}
   {
-    title: '{{ele.desc}}',
-    dataIndex: '{{ele.name}}',
+    title: '字段说明',
+    dataIndex: 'id',
   },
-  {%- endif %}
-  {%- endfor %}
+  {
+    title: '字段说明',
+    dataIndex: 'name',
+  },
+  {
+    title: '日期',
+    dataIndex: 'date',
+    render: (text, record) => moment(text).format('YYYY-MM-DD HH:mm:ss')
+  },
 ];
 
 /**
@@ -67,15 +80,16 @@ const columns = [
   }
 */
 const queryFormItems = [
-  {% for ele in modelFields -%}
-  {% if ele.filterable -%}
   {
-    label: '{{ele.desc}}',
-    field: '{{ele.name}}',
+    label: '字段说明',
+    field: 'name',
     component: <Input placeholder="请输入" />
   },
-  {%- endif %}
-  {%- endfor %}
+  {
+    label: '日期',
+    field: 'date',
+    component: <QueryRangePicker placeholder="选择范围" format='YYYY-MM-DD' />
+  },
 ]
 
 /**
@@ -96,22 +110,42 @@ const queryFormItems = [
   }
 */
 const createFormItems = [
-  {% for ele in modelFields -%}
-  {% if ele.creatable -%}
   {
-    label: '{{ele.desc}}',
-    field: '{{ele.name}}',
+    label: '字段说明',
+    field: 'id',
     component: <Input placeholder="请输入" />,
     options: {
       rules: [
         {
-          required: {{ele.required}},
+          required: true,
         }
       ],
     }
   },
-  {%- endif %}
-  {%- endfor %}
+  {
+    label: '字段说明',
+    field: 'name',
+    component: <Input placeholder="请输入" />,
+    options: {
+      rules: [
+        {
+          required: false,
+        }
+      ],
+    }
+  },
+  {
+    label: '日期',
+    field: 'date',
+    component: <DatePicker placeholder="选择日期" />,
+    options: {
+      rules: [
+        {
+          required: false,
+        }
+      ],
+    }
+  },
 ]
 
 /**
@@ -132,22 +166,30 @@ const createFormItems = [
   }
 */
 const updateFormItems = [
-  {% for ele in modelFields -%}
-  {% if ele.editable -%}
   {
-    label: '{{ele.desc}}',
-    field: '{{ele.name}}',
+    label: '字段说明',
+    field: 'id',
     component: <Input placeholder="请输入" />,
     options: {
       rules: [
         {
-          required: {{ele.required}},
+          required: true,
         }
       ],
     }
   },
-  {%- endif %}
-  {%- endfor %}
+  {
+    label: '日期',
+    field: 'date',
+    component: <DatePicker placeholder="选择日期" />,
+    options: {
+      rules: [
+        {
+          required: false,
+        }
+      ],
+    }
+  },
 ]
 
 const Widget = ({
@@ -160,9 +202,6 @@ const Widget = ({
   createItem
 }) => {
   const [queryParams, setQueryParams] = useState({})
-  {% if batchable -%}
-  const [selectedRows, setSelectedRows] = useState([])
-  {%- endif %}
 
   useEffect(() => {
     loadList({
@@ -170,6 +209,7 @@ const Widget = ({
       pageSize: pagination.pageSize,
     })
   }, [])
+
 
   const handleTableChange = (pagination, filters, sorter) => {
     const params = {
@@ -184,6 +224,12 @@ const Widget = ({
   }
 
   const onQuery = (params) => {
+    if (params.date && params.date.length === 2) {
+      params.startDate = params.date[0]
+      params.endDate = params.date[1]
+      delete params.date
+    }
+
     setQueryParams(params)
     const cond = {
       page: 1,
@@ -194,29 +240,56 @@ const Widget = ({
     loadList(cond)
   }
 
+  const onExport = async (params) => {
+    if (params.date && params.date.length === 2) {
+      params.startDate = params.date[0]
+      params.endDate = params.date[1]
+      delete params.date
+    }
+
+    toast.show({message: '正在导出数据...'})
+    try {
+      const allData = await downloadAllPage(getUserList, params)
+      excel.exportJsonToXlsx('用户', _.map(allData, ele => {
+        return {
+          '字段说明': ele.id,
+          '字段说明': ele.name,
+          '日期': moment(ele.date).format('YYYY-MM-DD HH:mm:ss'),
+        }
+      }))
+    } catch (err) {
+      console.log(err)
+      notification.error({
+        message: `导出excel失败`,
+        description: err.message,
+      })
+    }
+    toast.hide()
+  }
+
   const opColums = [
-    {% if editable or deletable -%}
     {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          {% if editable -%}
           <a onClick={() => {
             editForm({
-              title: '编辑{{modelText}}', 
+              title: '编辑用户', 
               items: _.map(updateFormItems, ele => {
                 if (record[ele.field] !== undefined) {
                   ele.options.initialValue = record[ele.field]
                 }
                 return ele
               }),
-              onSubmit: (data) => {
-                modifyItem(record.id, data)
+              onSubmit: async (data) => {
+                await modifyItem({...data, ids: [record.id]})
+                loadList({
+                  page: pagination.current,
+                  pageSize: pagination.pageSize,
+                })
               },
             })
           }}>编辑</a>
-          {%- endif %}
-          {% if deletable -%}
           <a style={ {marginLeft: '15px'} } onClick={ () => {
             confirm({
               title: '确定删除此纪录吗？',
@@ -229,70 +302,21 @@ const Widget = ({
               },             
             })
           } }>删除</a>
-          {%- endif %}
         </Fragment>
       ),
     },
-    {%- endif %}
   ]
 
   return (
     <PageHeaderWrapper>
       <Card bordered={false}>
-        <QueryForm items={queryFormItems} onSubmit={onQuery}></QueryForm>
+        <QueryForm 
+          items={queryFormItems} onSubmit={onQuery} 
+          onExport={onExport} exportable
+        ></QueryForm>
         <div style={ {marginBottom: 10} }>
-          {% if creatable -%}
-          <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
-              title: '新建{{modelText}}', 
-              items: createFormItems,
-              onSubmit: (data) => createItem(data),
-            })}>
-            新建
-          </Button>
-          {%- endif %}
-          {% if exportable -%}
-          <Button style={ {marginRight: '10px'} } icon="export" type="primary" onClick={async () => {
-            toast.show({message: '正在导出数据...'})
-            try {
-              const allData = await downloadAllPage({{getMethodList}}, queryParams)
-              excel.exportJsonToXlsx('{{modelText}}', _.map(allData, ele => {
-                return {
-                  {% for ele in modelFields -%}
-                  {% if ele.listable -%}
-                  '{{ele.desc}}': ele.{{ele.name}},
-                  {% endif -%}
-                  {%- endfor %}
-                }
-              }))
-            } catch (err) {
-              console.log(err)
-              notification.error({
-                message: `导出excel失败`,
-                description: err.message,
-              })
-            }
-            toast.hide()
-          }}>
-            导出Excel
-          </Button>
-          {%- endif %}
-          {% if batchable -%}
-          { 
-            selectedRows.length > 0 && (
-              <>
-                <Button>批量开启</Button>
-                <Button>批量关闭</Button>
-              </>
-            ) 
-          }
-          {%- endif %}
         </div>
         <TableList
-          {% if batchable -%}
-          enableSelect
-          onSelectRow={setSelectedRows}
-          selectedRows={selectedRows}
-          {%- endif %}
           loading={loading}
           data={ {list, pagination} }
           columns={[...columns, ...opColums]}
@@ -303,36 +327,29 @@ const Widget = ({
   )
 }
 
-{% set storeModelName = modelName + 'List' -%}
-const mapState = ({ {{storeModelName}}, loading }) => ({
-  list: {{storeModelName}}.list,
-  pagination: {{storeModelName}}.pagination,
-  loading: loading.models.{{storeModelName}},
+const mapState = ({ userList, loading }) => ({
+  list: userList.list,
+  pagination: userList.pagination,
+  loading: loading.models.userList,
 })
 
 const mapDispatch = (dispatch) => ({
   loadList: (payload) => dispatch({
-    type: '{{storeModelName}}/fetch',
+    type: 'userList/fetch',
     payload
   }),
-  {% if deletable -%}
   deleteItem: (id) => dispatch({
-    type: '{{storeModelName}}/deleteItem',
+    type: 'userList/deleteItem',
     payload: {id}
   }),
-  {%- endif %}
-  {% if creatable -%}
   createItem: (data) => dispatch({
-    type: '{{storeModelName}}/createItem',
+    type: 'userList/createItem',
     payload: {data}
   }),
-  {%- endif %}
-  {% if editable -%}
   modifyItem: (id, data) => dispatch({
-    type: '{{storeModelName}}/modifyItem',
+    type: 'userList/modifyItem',
     payload: {id, data}
   })
-  {%- endif %}
 })
 
 export default connect(mapState, mapDispatch)(Widget)

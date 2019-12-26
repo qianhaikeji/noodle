@@ -1,0 +1,441 @@
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  TimePicker,
+  Divider,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Menu,
+  Row,
+  Select,
+  message,
+  Typography,
+  Alert,
+  Modal,
+  notification,
+  Switch,
+} from 'antd'
+import { PageHeaderWrapper } from '@ant-design/pro-layout'
+import React, { userEffect, useState, Fragment, useEffect } from 'react'
+import { connect } from 'dva'
+import moment from 'moment'
+import _ from 'lodash'
+import excel from '@/services/excel'
+import {downloadAllPage} from '@/utils/utils'
+import TableList from '@/components/TableList'
+import editForm from '@/components/Dialog/EditForm'
+import QueryForm from '@/components/QueryForm'
+import toast from '@/components/Toast'
+import {ENUM_SWITCH_STATUS} from '@/enum'
+import StatusSelect from '@/widgets/StatusSelect'
+import SwitchStatusTag from '@/widgets/SwitchStatusTag'
+import QueryRangePicker from '@/widgets/QueryRangePicker'
+{% set getMethodList = 'get' + model.name | upperFirstLetter + 'List' %}
+import { 
+  {{getMethodList}}, 
+}  from '@/services/api/{{model.name}}'
+
+const {Text} = Typography
+const FormItem = Form.Item
+const { Option } = Select
+const { confirm } = Modal
+const { TextArea } = Input
+const { RangePicker } = DatePicker
+
+/**
+ * columns 此处写入列数据
+{
+  title: '项目名',
+  dataIndex: 'name',
+  sorter: true,
+},
+*/
+const columns = [
+  {% for ele in model.fields %}
+  {% if ele.listable %}
+  {
+    title: {{ele.comment}},
+    dataIndex: '{{ele.name}}',
+    {% if ele.type === 'DATE' %}
+    render: (text, record) => moment(text).format('YYYY-MM-DD HH:mm:ss')
+    {% elif ele.type === 'DATEONLY' %}
+    render: (text, record) => moment(text).format('YYYY-MM-DD')
+    {% elif ele.type === 'BOOLEAN' %}
+    render: (text, record) => <SwitchStatusTag status={text} />
+    {% endif %}
+  },
+  {% endif %}
+  {% endfor %}
+];
+
+/**
+ * queryFormItems 此处设计查询条件form
+  {
+    label: '模糊搜索',
+    field: 'fuzzy',
+    component: <Input placeholder="请输入" />
+  }
+*/
+const queryFormItems = [
+  {% for ele in model.fields %}
+  {% if ele.filterable %}
+  {
+    label: {{ele.comment}},
+    field: '{{ele.name}}',
+    {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    component: <QueryRangePicker placeholder="选择范围" format='YYYY-MM-DD' />
+    {% elif ele.type === 'BOOLEAN' %}
+    component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
+    {% else %}
+    component: <Input placeholder="请输入" />
+    {% endif %}
+  },
+  {% endif %}
+  {% endfor %}
+]
+
+/**
+ * createFormItems 此处设计新建窗口属性
+  {
+    label: '项目名称',
+    field: 'name',
+    component: <Input placeholder="请输入" />,
+    options: {
+      rules: [
+        {
+          required: true,
+          message: '请输入至少五个字符的规则描述！',
+          min: 5,
+        }
+      ],
+    }
+  }
+*/
+const createFormItems = [
+  {% for ele in model.fields %}
+  {% if ele.creatable %}
+  {
+    label: {{ele.comment}},
+    field: '{{ele.name}}',
+    {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    component: <DatePicker placeholder="选择日期" />,
+    {% elif ele.type === 'BOOLEAN' %}
+    component: <Switch></Switch>,
+    {% elif ele.type === 'TEXT' %}
+    component: <TextArea rows={4} placeholder="填写内容" />,
+    {% else %}
+    component: <Input placeholder="请输入" />,
+    {% endif %}
+    options: {
+      rules: [
+        {
+          required: {{ele.required}},
+        }
+      ],
+      {% if ele.type === 'BOOLEAN' %}
+      valuePropName: 'checked'
+      {% endif %}
+    }
+  },
+  {% endif %}
+  {% endfor %}
+]
+
+/**
+ * updateFormItems 此处设计编辑窗口属性
+  {
+    label: '项目名称',
+    field: 'name',
+    component: <Input placeholder="请输入" />,
+    options: {
+      rules: [
+        {
+          required: true,
+          message: '请输入至少五个字符的规则描述！',
+          min: 5,
+        }
+      ],
+    }
+  }
+*/
+const updateFormItems = [
+  {% for ele in model.fields %}
+  {% if ele.editable %}
+  {
+    label: {{ele.comment}},
+    field: '{{ele.name}}',
+    {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    component: <DatePicker placeholder="选择日期" />,
+    {% elif ele.type === 'BOOLEAN' %}
+    component: <Switch></Switch>,
+    {% elif ele.type === 'TEXT' %}
+    component: <TextArea rows={4} placeholder="填写内容" />,
+    {% else %}
+    component: <Input placeholder="请输入" />,
+    {% endif %}
+    options: {
+      rules: [
+        {
+          required: {{ele.required}},
+        }
+      ],
+      {% if ele.type === 'BOOLEAN' %}
+      valuePropName: 'checked'
+      {% endif %}
+    }
+  },
+  {% endif %}
+  {% endfor %}
+]
+
+const Widget = ({
+  loading,
+  list,
+  pagination,
+  loadList,
+  deleteItem,
+  modifyItem,
+  createItem
+}) => {
+  const [queryParams, setQueryParams] = useState({})
+  {% if model.batchable %}
+  const [selectedRows, setSelectedRows] = useState([])
+  {% endif %}
+
+  useEffect(() => {
+    loadList({
+      page: pagination.current,
+      pageSize: pagination.pageSize,
+    })
+  }, [])
+
+  {% if model.batchable %}
+  const batchOp = async () => {
+    const ids = selectedRows.map(ele => ele.id)
+    editForm({
+      title: '批量编辑', 
+      items: updateFormItems,
+      onSubmit: async (data) => {
+        await modifyItem({...data, ids})
+
+        loadList({
+          page: pagination.current,
+          pageSize: pagination.pageSize,
+        })
+      },
+    })
+  }
+  {% endif %}
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    const params = {
+      page: pagination.current,
+      pageSize: pagination.pageSize,
+      ...queryParams,
+      ...filters,
+      ...sorter
+    }
+
+    loadList(params)
+  }
+
+  const onQuery = (params) => {
+    {% for ele in model.fields %}
+    {% if ele.filterable %}
+    {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    if (params.{{ele.name}} && params.{{ele.name}}.length === 2) {
+      params.startDate = params.{{ele.name}}[0]
+      params.endDate = params.{{ele.name}}[1]
+      delete params.{{ele.name}}
+    }
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    setQueryParams(params)
+    const cond = {
+      page: 1,
+      pageSize: pagination.pageSize,
+      ...params,
+    }
+
+    loadList(cond)
+  }
+
+  {% if model.exportable %}
+  const onExport = async (params) => {
+    {% for ele in model.fields %}
+    {% if ele.filterable %}
+    {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    if (params.{{ele.name}} && params.{{ele.name}}.length === 2) {
+      params.startDate = params.{{ele.name}}[0]
+      params.endDate = params.{{ele.name}}[1]
+      delete params.{{ele.name}}
+    }
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    toast.show({message: '正在导出数据...'})
+    try {
+      const allData = await downloadAllPage({{getMethodList}}, params)
+      excel.exportJsonToXlsx('{{model.label}}', _.map(allData, ele => {
+        return {
+          {% for ele in model.fields %}
+          {% if ele.type === 'DATE' %}
+          {{ele.comment}}: moment(ele.{{ele.name}}).format('YYYY-MM-DD HH:mm:ss'),
+          {% elif ele.type === 'DATEONLY' %}
+          {{ele.comment}}: moment(ele.{{ele.name}}).format('YYYY-MM-DD'),
+          {% elif ele.type === 'BOOLEAN' %}
+          {{ele.comment}}: ele.{{ele.name}} ? '是' : '否',
+          {% else %}
+          {{ele.comment}}: ele.{{ele.name}},
+          {% endif %}
+          {% endfor %}
+        }
+      }))
+    } catch (err) {
+      console.log(err)
+      notification.error({
+        message: `导出excel失败`,
+        description: err.message,
+      })
+    }
+    toast.hide()
+  }
+  {% endif %}
+
+  const opColums = [
+    {% if model.editable or model.deletable %}
+    {
+      title: '操作',
+      render: (text, record) => (
+        <Fragment>
+          {% if model.editable %}
+          <a onClick={() => {
+            editForm({
+              title: '编辑{{model.label}}', 
+              items: _.map(updateFormItems, ele => {
+                if (record[ele.field] !== undefined) {
+                  ele.options.initialValue = record[ele.field]
+                }
+                return ele
+              }),
+              onSubmit: async (data) => {
+                await modifyItem({...data, ids: [record.id]})
+                loadList({
+                  page: pagination.current,
+                  pageSize: pagination.pageSize,
+                })
+              },
+            })
+          }}>编辑</a>
+          {% endif %}
+          {% if model.deletable %}
+          <a style={ {marginLeft: '15px'} } onClick={ () => {
+            confirm({
+              title: '确定删除此纪录吗？',
+              content: '删除后不可恢复',
+              okText: '删除',
+              okType: 'danger',
+              cancelText: '取消',
+              onOk: async() => {
+                deleteItem(record.id)
+              },             
+            })
+          } }>删除</a>
+          {% endif %}
+        </Fragment>
+      ),
+    },
+    {% endif %}
+  ]
+
+  return (
+    <PageHeaderWrapper>
+      <Card bordered={false}>
+        <QueryForm 
+          items={queryFormItems} onSubmit={onQuery} 
+          {% if model.exportable %}
+          onExport={onExport} exportable
+          {% endif %}
+        ></QueryForm>
+        <div style={ {marginBottom: 10} }>
+          {% if creatable %}
+          <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
+              title: '新建{{model.label}}', 
+              items: createFormItems,
+              onSubmit: async (data) => {
+                await createItem(data)
+                loadList({
+                  page: 1,
+                  pageSize: pagination.pageSize,
+                })
+              }
+            })}>
+            新建
+          </Button>
+          {% endif %}
+          {% if model.batchable %}
+          { 
+            selectedRows.length > 0 && (
+              <Button onClick={() => batchOp()}>批量操作</Button>
+            ) 
+          }
+          {% endif %}
+        </div>
+        <TableList
+          {% if model.batchable %}
+          enableSelect
+          onSelectRow={setSelectedRows}
+          selectedRows={selectedRows}
+          {% endif %}
+          loading={loading}
+          data={ {list, pagination} }
+          columns={[...columns, ...opColums]}
+          onChange={handleTableChange}
+        />
+      </Card>
+    </PageHeaderWrapper>
+  )
+}
+
+{% set storeModelName = model.name + 'List' %}
+const mapState = ({ {{storeModelName}}, loading }) => ({
+  list: {{storeModelName}}.list,
+  pagination: {{storeModelName}}.pagination,
+  loading: loading.models.{{storeModelName}},
+})
+
+const mapDispatch = (dispatch) => ({
+  loadList: (payload) => dispatch({
+    type: '{{storeModelName}}/fetch',
+    payload
+  }),
+  {% if model.deletable %}
+  deleteItem: (id) => dispatch({
+    type: '{{storeModelName}}/deleteItem',
+    payload: {id}
+  }),
+  {% endif %}
+  {% if model.creatable %}
+  createItem: (data) => dispatch({
+    type: '{{storeModelName}}/createItem',
+    payload: {data}
+  }),
+  {% endif %}
+  {% if model.editable %}
+  modifyItem: (id, data) => dispatch({
+    type: '{{storeModelName}}/modifyItem',
+    payload: {id, data}
+  })
+  {% endif %}
+})
+
+export default connect(mapState, mapDispatch)(Widget)

@@ -4,106 +4,58 @@ const path = require('path')
 const _ = require('lodash')
 const utils = require('./utils')
 
-const templateDir = path.resolve(__dirname, '../../template/antd-pro')
-
-// controller比较复杂，暂时先放在Temp中，手动合并
-function genApiCode (srcFile, dstPath, {cover = false}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-
-  const data = fs.readFileSync(absolutesrcPath, 'utf8')
-  // console.log(data)
-  const regx = new RegExp(/router\.(.*)\('(\/api.*)'.*controller\.(.*)\.(.*)\)/g)
-
-  const list = []
-  while ((match = regx.exec(data)) !== null) {
-    list.push({
-      method: match[1],
-      path: match[2],
-      module: match[3],
-      func: match[4],
-    })
-    // console.log(`Found ${match[0]} start=${match.index} end=${regexp.lastIndex}.`);
-    // expected output: "Found football start=6 end=14."
-    // expected output: "Found foosball start=16 end=24."
-  }
-
-  const groupList = _
-    .chain(list)
-    .groupBy('module')
-    .value()
-
-  utils.mkdirs(absoluteDstPath)
-
-  for (let module in groupList) {
-    const filename = path.join(absoluteDstPath, module) + '.js'
+async function genPageCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'pages'))
+  const list = utils.fiterModules(json.models, specModules)
+  for (let ele of list) {
     const context = {
-      apiList: _.map(groupList[module], api => {
-        const urlRegx = new RegExp(/:(.+?)(\/|$)/g)
-        const pathParams = _.map(api.path.match(urlRegx), ele => ele.replace(/(:|\/)/g, ''))
-        // /api/platform/admins/:id/exchanges/abc/:pid => /api/platform/admins/${id}/exchanges/abc/${pid}
-        api.path = api.path.replace(urlRegx, '${$1}$2')
-        api.pathParams = pathParams
-        // console.log(api)
-        return api
-      })
+      model: ele
     }
 
-    if (fs.existsSync(filename) && !cover) {
-      console.log(`${filename} 文件已存在，不再创建!`)
-      continue
-    }
-
-    nunjucks.render(path.join(templateDir, 'api.njk'), context, (err, res) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-      fs.writeFileSync(`${filename}`, res)
-      // console.log(res)
-  
-      console.log(`${filename} 创建完毕!`)
-    })
+    const filename = path.join(dstDir, ele.name) + '.js'
+    await utils.render(env, path.join('antd-pro', 'pageList.njk'), filename, context, cover)
   }
-  // console.log(result)
 }
 
-async function genMainCode (srcFile, dstPath, {cover = false, specModules=''}) {
-  const absolutesrcPath = path.resolve(srcFile)
-  const absoluteDstPath = path.resolve(dstPath)
-  const env = utils.initEnv()
-
-  const list = require(absolutesrcPath)
-
-  const modelDir = path.join(absoluteDstPath, 'models')
-  const pageDir = path.join(absoluteDstPath, 'pages')
-  utils.mkdirs(modelDir)
-  utils.mkdirs(pageDir)
-
-  const specModuleList = !specModules || specModules.trim() === '' ? [] : specModules.split(',')
+async function genModelListCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'models'))
+  const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
-    if (specModuleList.length > 0 && !_.includes(specModuleList, ele.name)) {
-      continue
-    }
-
     const context = {
-      ...ele
+      model: ele
     }
 
-    if (ele.type === 'table') {
-      const modelFilename = path.join(modelDir, ele.modelName) + 'List.js'
-      const pageFilename = path.join(pageDir, ele.name) + '.jsx'
-      await utils.render(env, path.join('antd-pro', 'listModel.njk'), modelFilename, context, cover)
-      await utils.render(env, path.join('antd-pro', 'tablePage.njk'), pageFilename, context, cover)
-    }
-    
+    const filename = path.join(dstDir, ele.name) + 'List.js'
+    await utils.render(env, path.join('antd-pro', 'modelList.njk'), filename, context, cover)
   }
-  // console.log(result)
+}
+
+async function genApiCode (srcFile, dstPath, {cover = false, specModules=''}) {
+  const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'api'))
+  const list = utils.fiterModules(json.models, specModules)
+  for (let ele of list) {
+    const controller = _.find(json.controllers, it => it.models.includes(ele.name))
+    const context = {
+      model: ele,
+      apiBase: controller.api.base
+    }
+
+    const filename = path.join(dstDir, ele.name) + '.js'
+    await utils.render(env, path.join('antd-pro', 'api.njk'), filename, context, cover)
+  }
+}
+
+async function genAllCode (...args) {
+  await genApiCode(...args)
+  await genModelListCode(...args)
+  await genPageCode(...args)
 }
 
 module.exports = {
   api: genApiCode,
-  main: genMainCode,
+  model: genModelListCode,
+  page: genPageCode,
+  all: genAllCode
 }
 
 

@@ -1,22 +1,42 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
-{%- macro strPathParams(api) -%}
-  {%- if api.pathParams and api.pathParams.length > 0 -%}
-    {{api.pathParams | join(', ') + ', '}}
-  {%- endif -%}
-{%- endmacro -%}
-
-
-{% for api in apiList %}
-export async function {{api.func}} ({{strPathParams(api)}}{%- if api.method !== 'delete' %}params{%- endif %}) {
-  return request(`{{api.path}}`, {
-    method: '{{api.method}}',
-    {%- if api.method === 'post' or api.method === 'put' %}
-    data: params,
-    {%- elif api.method === 'get' %}
+{% set ModelName = model.name | upperFirstLetter %}
+export async function get{{ModelName}}List(params) {
+  return request(`/api{{apiBase}}/{{model.name}}s`, {
+    method: 'get',
     params: params,
-    {%- endif %}
-  })
+  });
 }
-{% endfor %}
 
+export async function get{{ModelName}}Detail(id, params) {
+  return request(`/api{{apiBase}}/{{model.name}}s/${id}`, {
+    method: 'get',
+    params: params,
+  });
+}
+
+{% if model.creatable %}
+export async function create{{ModelName}}(params) {
+  return request(`/api{{apiBase}}/{{model.name}}s`, {
+    method: 'post',
+    data: params,
+  });
+}
+{% endif %}
+
+{% if model.editable %}
+export async function modify{{ModelName}}(id, params) {
+  return request(`/api{{apiBase}}/{{model.name}}s/${id}`, {
+    method: 'put',
+    data: params,
+  });
+}
+{% endif %}
+
+{% if model.deletable %}
+export async function delete{{ModelName}}(id) {
+  return request(`/api{{apiBase}}/{{model.name}}s/${id}`, {
+    method: 'delete',
+  });
+}
+{% endif %}

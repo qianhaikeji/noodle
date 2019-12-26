@@ -1,0 +1,41 @@
+{% set getMethodList = 'get' + model.name | upperFirstLetter + 'List' %}
+{% set namespace = model.name + 'List' %}
+{% set createMethod = 'create' + model.name | upperFirstLetter %}
+{% set deleteMethod = 'delete' + model.name | upperFirstLetter %}
+{% set modifyMethod = 'modify' + model.name | upperFirstLetter %}
+import { 
+  {{getMethodList}}, 
+  {% if model.creatable %}
+  {{createMethod}}, 
+  {% endif %}
+  {% if model.deletable %}
+  {{deleteMethod}}, 
+  {% endif %}
+  {% if model.editable %}
+  {{modifyMethod}}, 
+  {% endif %}
+}  from '@/services/api/{{model.name}}'
+import { extendServerList } from '@/utils/extendListModel'
+import _ from 'lodash'
+
+const baseModel = extendServerList({
+  namespace: '{{namespace}}',
+  getListMethod: {{getMethodList}},
+  {% if model.creatable %}
+  createMethod: {{createMethod}},
+  {% endif %}
+  {% if model.deletable %}
+  deleteMethod: {{deleteMethod}},
+  {% endif %}
+  {% if model.editable %}
+  modifyMethod: {{modifyMethod}},
+  {% endif %}
+})
+
+const Model = {
+  state: {
+    sort: 'id',
+    sortDirection: 'desc'
+  },
+}
+export default _.merge(baseModel, Model)
