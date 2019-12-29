@@ -37,7 +37,7 @@
     let queryParams = this.formatPageParams(params)
     if (conditions.length > 0) {
       queryParams.where = {
-        $and: [
+        [this.app.Sequelize.Op.and]: [
           ...conditions,
           queryParams.where
         ]
