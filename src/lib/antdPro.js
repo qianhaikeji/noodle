@@ -12,7 +12,7 @@ async function genPageCode (srcFile, dstPath, {cover = false, specModules=''}) {
       model: ele
     }
 
-    const filename = path.join(dstDir, ele.name) + '.js'
+    const filename = path.join(dstDir, _.upperFirst(ele.name)) + '.jsx'
     await utils.render(env, path.join('antd-pro', 'pageList.njk'), filename, context, cover)
   }
 }

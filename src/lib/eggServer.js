@@ -3,7 +3,7 @@ const path = require('path')
 const _ = require('lodash')
 const utils = require('./utils')
 
-const MODEL_ATTRS = ['type', 'primaryKey', 'autoIncrement', 'allowNull', 'unique', 'faker', 'comment']
+const MODEL_ATTRS = ['type', 'primaryKey', 'autoIncrement', 'allowNull', 'unique', 'faker', 'comment', 'defaultValue']
 
 async function genModelCode (srcFile, dstPath, {cover = false, specModules=''}) {
   const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'model'))
@@ -18,6 +18,8 @@ async function genModelCode (srcFile, dstPath, {cover = false, specModules=''}) 
         return result
       }, {}),
     }
+
+    console.log(context)
 
     const filename = path.join(dstDir, ele.name) + '.js'
     await utils.render(env, path.join('egg-server', 'model.njk'), filename, context, cover)

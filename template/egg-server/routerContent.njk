@@ -1,13 +1,13 @@
   {% set ModelName = model.name | upperFirstLetter %}
 
-  router.get('/api{{apiBase}}/{{model.name}}s', controller.{{controllerClass}}.get{{ModelName}}List)
-  router.get('/api{{apiBase}}/{{model.name}}s/:id', controller.{{controllerClass}}.get{{ModelName}}Detail)
+  router.get('/api{{apiBase}}/{{model.name}}s', controller.{{model.name}}.get{{ModelName}}List)
+  router.get('/api{{apiBase}}/{{model.name}}s/:id', controller.{{model.name}}.get{{ModelName}}Detail)
   {% if model.creatable %}
-  router.post('/api{{apiBase}}/{{model.name}}s', controller.{{controllerClass}}.create{{ModelName}})
+  router.post('/api{{apiBase}}/{{model.name}}s', controller.{{model.name}}.create{{ModelName}})
   {% endif %}
   {% if model.editable %}
-  router.put('/api{{apiBase}}/{{model.name}}s/:id', controller.{{controllerClass}}.modify{{ModelName}})
+  router.put('/api{{apiBase}}/{{model.name}}s/:id', controller.{{model.name}}.modify{{ModelName}})
   {% endif %}
   {% if model.deletable %}
-  router.delete('/api{{apiBase}}/{{model.name}}s/:id', controller.{{controllerClass}}.delete{{ModelName}})
+  router.delete('/api{{apiBase}}/{{model.name}}s/:id', controller.{{model.name}}.delete{{ModelName}})
   {% endif %}
