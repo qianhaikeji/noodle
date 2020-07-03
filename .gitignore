@@ -72,3 +72,5 @@ app/public/
 autocode/_*/
 
 tmp
+
+test

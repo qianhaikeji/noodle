@@ -8,6 +8,7 @@ async function genPageCode (srcFile, dstPath, {cover = false, specModules=''}) {
   const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'pages'))
   const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
+    utils.normalizeModelJson(ele)
     const context = {
       model: ele
     }
@@ -21,6 +22,8 @@ async function genModelListCode (srcFile, dstPath, {cover = false, specModules='
   const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'models'))
   const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
+    utils.normalizeModelJson(ele)
+
     const context = {
       model: ele
     }
@@ -34,6 +37,7 @@ async function genApiCode (srcFile, dstPath, {cover = false, specModules=''}) {
   const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'api'))
   const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
+    utils.normalizeModelJson(ele)
     const controller = _.find(json.controllers, it => it.models.includes(ele.name))
     const context = {
       model: ele,

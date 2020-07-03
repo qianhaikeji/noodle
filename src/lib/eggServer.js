@@ -9,6 +9,7 @@ async function genModelCode (srcFile, dstPath, {cover = false, specModules=''}) 
   const {env, dstDir, json} = utils.prepare(srcFile, path.join(dstPath, 'model'))
   const list = utils.fiterModules(json.models, specModules)
   for (let ele of list) {
+    utils.normalizeModelJson(ele)
     const context = {
       modelName: ele.name,
       modelText: ele.label,
@@ -38,6 +39,8 @@ async function genRouterCode (srcFile, dstPath, {cover = false, specModules=''})
         continue
       }
 
+      utils.normalizeModelJson(model)
+
       const content = await utils.renderToBuff(env, path.join('egg-server', 'routerContent.njk'), {
         controllerClass: _.upperFirst(ele.name) + 'Controller',
         apiBase: ele.api.base,
@@ -61,6 +64,8 @@ async function genServiceCode (srcFile, dstPath, {cover = false, specModules=''}
       if (!model) {
         continue
       }
+
+      utils.normalizeModelJson(model)
 
       const content = await utils.renderToBuff(env, path.join('egg-server', 'serviceContent.njk'), {
         model
@@ -92,6 +97,8 @@ async function genControllerCode (srcFile, dstPath, {cover = false, specModules=
         continue
       }
 
+      utils.normalizeModelJson(model)
+      
       const service = _.find(json.services, ele => ele.models.includes(model.name))
 
       const content = await utils.renderToBuff(env, path.join('egg-server', 'controllerContent.njk'), {

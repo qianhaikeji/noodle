@@ -96,6 +96,22 @@ function fiterModules (list, specModules='') {
   }
 }
 
+function normalizeModelJson (model) {
+  if (!model.fields) {
+    return model
+  }
+  model.fields = model.fields.map(field => {
+    if (field.opList && field.opList instanceof Array) {
+      field.editable = field.opList.includes('edit')
+      field.listable = field.opList.includes('list')
+      field.filterable = field.opList.includes('filter')
+      field.required = field.opList.includes('required')
+      field.creatable = field.opList.includes('create')
+    }
+    return field
+  })
+}
+
 
 module.exports = {
   mkdirs,
@@ -103,5 +119,6 @@ module.exports = {
   render,
   renderToBuff,
   prepare,
-  fiterModules
+  fiterModules,
+  normalizeModelJson
 }

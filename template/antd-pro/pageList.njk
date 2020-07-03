@@ -27,7 +27,7 @@ import { connect } from 'dva'
 import moment from 'moment'
 import _ from 'lodash'
 import excel from '@/services/excel'
-import {downloadAllPage} from '@/utils/utils'
+import {downloadAllPage, convertDateRangeForQuery} from '@/utils/utils'
 import TableList from '@/components/TableList'
 import editForm from '@/components/Dialog/EditForm'
 import QueryForm from '@/components/QueryForm'
@@ -35,7 +35,6 @@ import toast from '@/components/Toast'
 import {ENUM_SWITCH_STATUS} from '@/enum'
 import StatusSelect from '@/widgets/StatusSelect'
 import SwitchStatusTag from '@/widgets/SwitchStatusTag'
-import QueryRangePicker from '@/widgets/QueryRangePicker'
 {% set getMethodList = 'get' + model.name | upperFirstLetter + 'List' %}
 import { 
   {{getMethodList}}, 
@@ -89,7 +88,7 @@ const queryFormItems = [
     label: {{ele.comment}},
     field: '{{ele.name}}',
     {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
-    component: <QueryRangePicker placeholder="选择范围" format='YYYY-MM-DD' />
+    component: <RangePicker placeholder="选择范围" format='YYYY-MM-DD' />,
     {% elif ele.type === 'BOOLEAN' %}
     component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
     {% else %}
@@ -250,10 +249,13 @@ const Widget = ({
     {% if ele.filterable %}
     {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
     if (params.{{ele.name}} && params.{{ele.name}}.length === 2) {
-      params.startDate = params.{{ele.name}}[0]
-      params.endDate = params.{{ele.name}}[1]
-      delete params.{{ele.name}}
+      const dates = convertDateRangeForQuery(params.{{ele.name}})
+      params.startDate = dates[0]
+      params.endDate = dates[1]
     }
+
+    delete params.{{ele.name}}
+    
     {% endif %}
     {% endif %}
     {% endfor %}
@@ -274,10 +276,13 @@ const Widget = ({
     {% if ele.filterable %}
     {% if ele.type === 'DATE' or ele.type === 'DATEONLY' %}
     if (params.{{ele.name}} && params.{{ele.name}}.length === 2) {
-      params.startDate = params.{{ele.name}}[0]
-      params.endDate = params.{{ele.name}}[1]
-      delete params.{{ele.name}}
+      const dates = convertDateRangeForQuery(params.{{ele.name}})
+      params.startDate = dates[0]
+      params.endDate = dates[1]
     }
+
+    delete params.{{ele.name}}
+
     {% endif %}
     {% endif %}
     {% endfor %}
