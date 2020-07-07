@@ -13,8 +13,14 @@ async function genPageCode (srcFile, dstPath, {cover = false, specModules=''}) {
       model: ele
     }
 
-    const filename = path.join(dstDir, _.upperFirst(ele.name)) + '.jsx'
+    const filename = path.join(dstDir, _.upperFirst(ele.name)) + 'List.jsx'
     await utils.render(env, path.join('antd-pro', 'pageList.njk'), filename, context, cover)
+
+    // 编辑实体时，使用详情页而不是modal
+    if (ele.hasDetailPage) {
+      const filename = path.join(dstDir, _.upperFirst(ele.name)) + '.jsx'
+      await utils.render(env, path.join('antd-pro', 'pageDetail.njk'), filename, context, cover)
+    }
   }
 }
 
@@ -39,6 +45,10 @@ async function genApiCode (srcFile, dstPath, {cover = false, specModules=''}) {
   for (let ele of list) {
     utils.normalizeModelJson(ele)
     const controller = _.find(json.controllers, it => it.models.includes(ele.name))
+    if (!controller) {
+      continue
+    }
+
     const context = {
       model: ele,
       apiBase: controller.api.base

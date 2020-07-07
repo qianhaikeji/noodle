@@ -61,7 +61,9 @@ const columns = [
   {
     title: {{ele.comment}},
     dataIndex: '{{ele.name}}',
-    {% if ele.type === 'DATE' %}
+    {% if ele.isImage %}
+    render: (text, record) => text && <img width={100} src={text} />
+    {% elif ele.type === 'DATE' %}
     render: (text, record) => moment(text).format('YYYY-MM-DD HH:mm:ss')
     {% elif ele.type === 'DATEONLY' %}
     render: (text, record) => moment(text).format('YYYY-MM-DD')
@@ -99,6 +101,7 @@ const queryFormItems = [
   {% endfor %}
 ]
 
+{% if model.hasDetailPage !== true %}
 /**
  * createFormItems 此处设计新建窗口属性
   {
@@ -192,6 +195,7 @@ const updateFormItems = [
   {% endif %}
   {% endfor %}
 ]
+{% endif %}
 
 const Widget = ({
   loading,
@@ -200,7 +204,8 @@ const Widget = ({
   loadList,
   deleteItem,
   modifyItem,
-  createItem
+  createItem,
+  history
 }) => {
   const [queryParams, setQueryParams] = useState({})
   {% if model.batchable %}
@@ -323,6 +328,12 @@ const Widget = ({
       render: (text, record) => (
         <Fragment>
           {% if model.editable %}
+          {% if model.hasDetailPage %}
+          <a onClick={() => history.push({
+            pathname: '/{{model.name}}/detail',
+            state: {id: record.id}
+          })}>编辑</a>
+          {% else %}
           <a onClick={() => {
             editForm({
               title: '编辑{{model.label}}', 
@@ -341,6 +352,7 @@ const Widget = ({
               },
             })
           }}>编辑</a>
+          {% endif %}
           {% endif %}
           {% if model.deletable %}
           <a style={ {marginLeft: '15px'} } onClick={ () => {
@@ -373,6 +385,13 @@ const Widget = ({
         ></QueryForm>
         <div style={ {marginBottom: 10} }>
           {% if model.creatable %}
+          {% if model.hasDetailPage %}
+           <Button style={ {marginRight: '10px'} } icon="plus" type="primary" 
+            onClick={() => history.push('/{{model.name}}/detail')}
+          >
+            新建
+          </Button>
+          {% else %}
           <Button style={ {marginRight: '10px'} } icon="plus" type="primary" onClick={() => editForm({
               title: '新建{{model.label}}', 
               items: createFormItems,
@@ -386,6 +405,7 @@ const Widget = ({
             })}>
             新建
           </Button>
+          {% endif %}
           {% endif %}
           {% if model.batchable %}
           { 

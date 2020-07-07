@@ -1,0 +1,266 @@
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  TimePicker,
+  Divider,
+  Dropdown,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Menu,
+  Row,
+  Select,
+  message,
+  Typography,
+  Alert,
+  Modal,
+  notification,
+  Switch,
+  Upload
+} from 'antd'
+import { PageHeaderWrapper } from '@ant-design/pro-layout'
+import React, { userEffect, useState, Fragment, useEffect, forwardRef } from 'react'
+import { connect } from 'dva'
+import moment from 'moment'
+import _ from 'lodash'
+import excel from '@/services/excel'
+import toast from '@/components/Toast'
+import {ENUM_LANGUAGE_TYPE} from '@/enum'
+import StatusSelect from '@/widgets/StatusSelect'
+import ImageUploader from '@/widgets/ImageUploader'
+import {
+  uploadImages
+} from '@/services/api/upload'
+import BraftEditor from 'braft-editor'
+import 'braft-editor/dist/index.css'
+import { InboxOutlined } from '@ant-design/icons';
+  
+{% set createMethod = 'create' + model.name | upperFirstLetter %}
+{% set modifyMethod = 'modify' + model.name | upperFirstLetter %}
+{% set getMethodDetail = 'get' + model.name | upperFirstLetter + 'Detail' %}
+import { 
+  {{createMethod}}, {{modifyMethod}}, {{getMethodDetail}}, 
+}  from '@/services/api/{{model.name}}'
+
+const {Text} = Typography
+
+const { Option } = Select
+const { confirm } = Modal
+const { TextArea } = Input
+const { RangePicker } = DatePicker
+const FormItem = Form.Item;
+const { Dragger } = Upload
+const formItemLayout = {
+  labelCol: {
+    span: 2,
+  },
+  wrapperCol: {
+    span: 22,
+  }
+}
+
+
+const loadDetail = async (id, setFields) => {
+  try {
+    const item = await {{getMethodDetail}}(id)
+    setFields({
+      {% for ele in model.fields %}
+      {{ele.name}}: {
+        {% if ele.isRichText %}
+        value: BraftEditor.createEditorState(item.{{ele.name}})
+        {% elif ele.type === 'BOOLEAN' %}
+        value: true //item.{{ele.name}}
+        {% else %}
+        value: item.{{ele.name}}
+        {% endif %}
+      },
+      {% endfor %}
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/**
+ * formItems 此处设计表单属性
+  {
+    label: '项目名称',
+    field: 'name',
+    component: <Input placeholder="请输入" />,
+    options: {
+      rules: [
+        {
+          required: true,
+          message: '请输入至少五个字符的规则描述！',
+          min: 5,
+        }
+      ],
+    },
+    isRichText: false
+  }
+*/
+const formItems = [
+  {% for ele in model.fields %}
+  {% if ele.creatable %}
+  {
+    label: {{ele.comment}},
+    field: '{{ele.name}}',
+    {% if ele.isImage %}
+    component: <ImageUploader />,
+    {% elif ele.type === 'DATE' or ele.type === 'DATEONLY' %}
+    component: <DatePicker placeholder="选择日期" />,
+    {% elif ele.type === 'BOOLEAN' %}
+    component: <Switch></Switch>,
+    {% elif ele.type === 'TEXT' %}
+    component: <TextArea rows={4} placeholder="填写内容" />,
+    {% else %}
+    component: <Input placeholder="请输入" />,
+    {% endif %}
+    options: {
+      rules: [
+        {
+          required: {{"true" if ele.required else "false"}},
+        }
+      ],
+      {% if ele.type === 'BOOLEAN' %}
+      valuePropName: 'checked'
+      {% endif %}
+    },
+     {% if ele.isRichText %}
+     isRichText: true
+     {% endif %}
+  },
+  {% endif %}
+  {% endfor %}
+]
+
+const Widget = ({
+  history,
+  location,
+  form
+}) => {
+  const [id, setId] = useState(null)
+  const {getFieldDecorator, setFieldsValue, setFields} = form
+
+  useEffect(() => {
+    const {id} = location.state || {}
+    setId(id)
+
+    if (id) {
+      loadDetail(id, setFields)
+    }
+  }, [])
+
+  return (
+    <PageHeaderWrapper>
+      <Card bordered={false}>
+        <Form>
+          {
+            formItems.map(item => {
+              if (item.isRichText) {
+                return (
+                  <FormItem>
+                    {getFieldDecorator(item.field, {
+                      validateTrigger: 'onBlur',
+                      rules: [{
+                        required: true,
+                        validator: (_, value, callback) => {
+                          if (value.isEmpty()) {
+                            callback('请输入正文内容')
+                          } else {
+                            callback()
+                          }
+                        }
+                      }],
+                    })(
+                      <BraftEditor
+                        placeholder="请输入正文内容"
+                        media={ {
+                          uploadFn: async (param) => {
+                            // 文件上传处理方法：https://www.yuque.com/braft-editor/be/gz44tn
+                            const {file, progress, libraryId, success, error} = param
+                            try {
+                              const res = await uploadImages([file])
+                              success({
+                                url: res.urls[0],
+                              })
+                            } catch (err) {
+                              console.log(err)
+                              error({
+                                msg: err.messsage
+                              })
+                            }
+                          },
+                          validateFn: (file) => {
+                            if (file.size > 1024 * 1024) {
+                              notification.warning({
+                                message: '上传失败，文件大小不能超过1MB',
+                              })
+                              return false
+                            }
+                            return true
+                          }
+                        } }
+                      />
+                    )}
+                  </FormItem>
+                )
+              }
+
+              return (
+                <FormItem {...formItemLayout} label={item.label}>
+                  {getFieldDecorator(item.field, item.options)(
+                    item.component
+                  )}
+                </FormItem>
+              )
+            })
+          }
+          
+          <FormItem {...formItemLayout}>
+            <Button type="primary" onClick={() => {
+              form.validateFields(async (err, fieldsValue) => {
+                if (err) return
+                try {
+                  if (id) {
+                    await {{modifyMethod}}(id, {
+                      ...fieldsValue,
+                      // 如果有富文本字段需要在此转换一下,比如 content: fieldsValue.content.toHTML()
+                    })
+                  } else {
+                    const ret = await {{createMethod}}({
+                      ...fieldsValue,
+                      // 如果有富文本字段需要在此转换一下,比如 content: fieldsValue.content.toHTML()
+                    })
+                    setId(ret.id)
+                  }
+
+                  notification.success({
+                    message: `保存成功!`,
+                  })
+                } catch (err) {
+                  console.log(err)
+                }
+              });
+            }}>保存</Button>
+            <Button style={ {marginLeft: 20} } onClick={() => {
+              history.goBack()
+            }}>返回列表</Button>
+          </FormItem>
+        </Form>
+      </Card>
+    </PageHeaderWrapper>
+  )
+}
+
+const mapState = ({ loading }) => ({
+})
+
+const mapDispatch = (dispatch) => ({
+})
+
+export default connect(mapState, mapDispatch)(Form.create()(Widget))
