@@ -1,0 +1,629 @@
+{
+  "models": [
+    {
+      "name": "user",
+      "label": "会员",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "username",
+          "type": "STRING",
+          "unique": true,
+          "faker": "`faker.internet.userName()`",
+          "comment": "'用户登录账号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "password",
+          "type": "STRING",
+          "comment": "'密码'"
+        },
+        {
+          "name": "nickname",
+          "type": "STRING",
+          "faker": "`faker.internet.userName()`",
+          "comment": "'用户昵称，首次从微信同步过来，可修改'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "realname",
+          "type": "STRING",
+          "faker": "`faker.internet.userName()`",
+          "comment": "'用户真实名称'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "phone",
+          "type": "STRING",
+          "comment": "'手机号码'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "email",
+          "type": "STRING",
+          "comment": "'邮箱'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "avatar",
+          "type": "STRING",
+          "comment": "'头像'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "gender",
+          "type": "INTEGER",
+          "comment": "'性别'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "birthday",
+          "type": "DATEONLY",
+          "comment": "'生日'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "vipId",
+          "type": "INTEGER",
+          "comment": "'会员等级id'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "registerTime",
+          "type": "DATE",
+          "comment": "'注册时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "loginTime",
+          "type": "DATE",
+          "comment": "'登录时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "registerIP",
+          "type": "STRING",
+          "comment": "'注册IP'",
+          "opList": []
+        },
+        {
+          "name": "loginIP",
+          "type": "STRING",
+          "comment": "'登录IP'",
+          "opList": []
+        },
+        {
+          "name": "firstComsumeTime",
+          "type": "DATE",
+          "comment": "'第一次消费时间'",
+          "opList": []
+        },
+        {
+          "name": "lastComsumeTime",
+          "type": "DATE",
+          "comment": "'最后一次消费时间'",
+          "opList": []
+        },
+        {
+          "name": "firstComsumeShop",
+          "type": "STRING",
+          "comment": "'第一次消费店铺'",
+          "opList": []
+        },
+        {
+          "name": "lastComsumeShop",
+          "type": "STRING",
+          "comment": "'最后一次消费店铺'",
+          "opList": []
+        },
+        {
+          "name": "country",
+          "type": "STRING",
+          "comment": "'国家'",
+          "opList": ["list"]
+        },
+        {
+          "name": "province",
+          "type": "STRING",
+          "comment": "'省份'",
+          "opList": ["list"]
+        },
+        {
+          "name": "city",
+          "type": "STRING",
+          "comment": "'城市'",
+          "opList": ["list"]
+        },
+        {
+          "name": "point",
+          "type": "INTEGER",
+          "comment": "'当前积分'",
+          "opList": ["list"]
+        },
+        {
+          "name": "sumPoint",
+          "type": "INTEGER",
+          "comment": "'总共获得积分'",
+          "opList": ["list"]
+        },
+        {
+          "name": "balance",
+          "type": "DOUBLE",
+          "comment": "'余额'",
+          "opList": ["list"]
+        },
+        {
+          "name": "cosumeMoney",
+          "type": "DOUBLE",
+          "comment": "'累计消费'",
+          "opList": ["list"]
+        },
+        {
+          "name": "refundMoney",
+          "type": "DOUBLE",
+          "comment": "'累计退款'",
+          "opList": ["list"]
+        },
+        {
+          "name": "consumeCount",
+          "type": "INTEGER",
+          "comment": "'累计购买件数'",
+          "opList": ["list"]
+        },
+        {
+          "name": "refundCount",
+          "type": "INTEGER",
+          "comment": "'累计退货件数'",
+          "opList": ["list"]
+        },
+        {
+          "name": "isSaler",
+          "type": "BOOLEAN",
+          "comment": "'成为分销商'",
+          "opList": ["list"]
+        },
+        {
+          "name": "source",
+          "type": "INTEGER",
+          "comment": "'用户来源'",
+          "opList": ["list"]
+        },
+        {
+          "name": "inviteId",
+          "type": "INTEGER",
+          "comment": "'邀请用户id'",
+          "opList": []
+        },
+        {
+          "name": "guideId",
+          "type": "INTEGER",
+          "comment": "'导购员Id'",
+          "opList": []
+        },
+        {
+          "name": "shopId",
+          "type": "INTEGER",
+          "comment": "'所属门店id'",
+          "opList": []
+        },
+        {
+          "name": "shopName",
+          "type": "STRING",
+          "comment": "'所属门店名称'",
+          "opList": ["list"]
+        },
+        {
+          "name": "growthValue",
+          "type": "INTEGER",
+          "comment": "'成长值，预留'",
+          "defaultValue": 0
+        },
+        {
+          "name": "actived",
+          "type": "BOOLEAN",
+          "comment": "'是否激活会员卡'",
+          "defaultValue": false
+        },
+        {
+          "name": "tags",
+          "type": "STRING",
+          "comment": "'用户标签'"
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'扩展json'"
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },{
+      "name": "wechatUser",
+      "label": "用户关联微信",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "comment": "'关联用户 user id'"
+        },
+        {
+          "name": "openId",
+          "type": "STRING",
+          "comment": "'微信公众号openId'"
+        },
+        {
+          "name": "weappOpenId",
+          "type": "STRING",
+          "comment": "'小程序openId'"
+        },
+        {
+          "name": "unionId",
+          "type": "STRING",
+          "comment": "'微信unionId'"
+        },
+        {
+          "name": "nickname",
+          "type": "STRING",
+          "comment": "'微信昵称'"
+        },
+        {
+          "name": "avatarUrl",
+          "type": "STRING",
+          "comment": "'微信头像'"
+        },
+        {
+          "name": "remark",
+          "type": "STRING",
+          "comment": "'公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注'"
+        },
+        {
+          "name": "groupId",
+          "type": "INTEGER",
+          "comment": "'用户所在的分组ID'"
+        },
+        {
+          "name": "tag",
+          "type": "STRING",
+          "comment": "'用户被打上的标签ID列表'"
+        },
+        {
+          "name": "subscribed",
+          "type": "BOOLEAN",
+          "comment": "'用户是否订阅该公众号'"
+        },
+        {
+          "name": "subscribeTime",
+          "type": "DATE",
+          "comment": "'关注公众号时间'"
+        },
+        {
+          "name": "subscribeTime",
+          "type": "DATE",
+          "comment": "'关注公众号时间'"
+        },
+        {
+          "name": "sessionKey",
+          "type": "STRING",
+          "comment": "'小程序用户会话密匙'"
+        },
+        {
+          "name": "wxCardId",
+          "type": "STRING",
+          "comment": "'微信卡包id'"
+        },
+        {
+          "name": "wxCardCode",
+          "type": "STRING",
+          "comment": "'微信卡包号'"
+        },
+        {
+          "name": "language",
+          "type": "STRING",
+          "comment": "'语言'"
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "userLevel",
+      "label": "会员卡等级",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'等级名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "discount",
+          "type": "DOUBLE",
+          "comment": "'折扣'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "order",
+          "type": "INTEGER",
+          "comment": "'排序'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "thresholdMoney",
+          "type": "DOUBLE",
+          "comment": "'升级此等级的消费金额门槛'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "comment": "'是否启用'",
+          "opList": ["edit", "list", "filter", "create"],
+          "defaultValue": false
+        },
+        {
+          "name": "userNum",
+          "type": "INTEGER",
+          "comment": "'此等级的会员数'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'等级扩展json'"
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "userBill",
+      "label": "用户账单",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "comment": "'关联用户 user id'"
+        },
+        {
+          "name": "payType",
+          "type": "INTEGER",
+          "comment": "'收支类型: 1-收入，2-支出'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "number",
+          "type": "DOUBLE",
+          "comment": "'账单值(费用、积分)'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "balance",
+          "type": "DOUBLE",
+          "comment": "'剩余'",
+          "defaultValue": 0,
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "title",
+          "type": "STRING",
+          "comment": "'账单标题'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'账单类型, 余额、积分，可扩展'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "reason",
+          "type": "INTEGER",
+          "comment": "'变动原因'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "remark",
+          "type": "STRING",
+          "comment": "'备注'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "dateTime",
+          "type": "DATE",
+          "comment": "'账单发生时间'"
+        },
+        {
+          "name": "invalid",
+          "type": "BOOLEAN",
+          "comment": "'是否无效'",
+          "defaultValue": false
+        }
+      ],
+      "creatable": true,
+      "editable": false,
+      "deletable": false,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "wechatQrcode",
+      "label": "用户关联微信",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'二维码类型,系统内部使用'"
+        },
+        {
+          "name": "sceneId",
+          "type": "INTEGER",
+          "comment": "'场景值ID'"
+        },
+        {
+          "name": "sceneStr",
+          "type": "STRING",
+          "comment": "'场景值ID(字符串)'"
+        },
+        {
+          "name": "ticket",
+          "type": "STRING",
+          "comment": "'二维码ticket'"
+        },
+        {
+          "name": "expireSeconds",
+          "type": "INTEGER",
+          "comment": "'二维码有效时间，以秒为单位。 最大不超过2592000（即30天）'"
+        },
+        {
+          "name": "expireTime",
+          "type": "DATE",
+          "comment": "'二维码过期时间'"
+        },
+        {
+          "name": "url",
+          "type": "STRING",
+          "comment": "'用于生成自定义二维码图片的URL'"
+        },
+        {
+          "name": "qrcodeUrl",
+          "type": "STRING",
+          "comment": "'直接使用的普通二维码图片的URL'"
+        },
+        {
+          "name": "scanCount",
+          "type": "INTEGER",
+          "comment": "'被扫码次数'"
+        },
+        {
+          "name": "status",
+          "type": "INTEGER",
+          "comment": "'状态'"
+        },
+        {
+          "name": "permanent",
+          "type": "BOOLEAN",
+          "comment": "'是否为永久二维码'"
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "user",
+      "namespace": "crm",
+      "models": ["user"]
+    },
+    {
+      "name": "userLevel",
+      "namespace": "crm",
+      "models": ["userLevel"]
+    },
+    {
+      "name": "userBill",
+      "namespace": "crm",
+      "models": ["userBill"]
+    },
+    {
+      "name": "wechatQrcode",
+      "namespace": "crm",
+      "models": ["wechatQrcode"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "user",
+      "models": ["user"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "user",
+        "groupLabel": "用户" 
+      }
+    },
+    {
+      "name": "userLevel",
+      "models": ["userLevel"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "userLevel",
+        "groupLabel": "会员等级" 
+      }
+    },
+    {
+      "name": "userBill",
+      "models": ["userBill"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "userBill",
+        "groupLabel": "用户账单" 
+      }
+    }
+  ]
+}

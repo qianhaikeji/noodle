@@ -1,0 +1,1199 @@
+{
+  "models": [
+    {
+      "name": "doctor",
+      "label": "专家",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "phone", 
+          "unique": true,
+          "comment": "'手机'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "sex", 
+          "comment": "'性别'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "title", 
+          "comment": "'职称'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "avatar", 
+          "comment": "'头像'",
+          "opList": ["edit", "list", "create"],
+          "isImage": true
+        },
+        {
+          "type": "INTEGER", 
+          "name": "hospitalId", 
+          "comment": "'医院id'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "hospitalName", 
+          "comment": "'所属医院'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "department", 
+          "comment": "'科室'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "intro", 
+          "comment": "'专家介绍'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "enbale", 
+          "comment": "'有效'",
+          "opList": ["edit", "list", "filter", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": true,
+      "importable": false,
+      "batchable": false,
+      "hasDetailPage": true
+    },
+    {
+      "name": "hospital",
+      "label": "医院",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "unique": true,
+          "comment": "'名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "image", 
+          "comment": "'图片'",
+          "opList": ["edit", "list", "create"],
+          "isImage": true
+        },
+        {
+          "type": "FLOAT", 
+          "name": "lng", 
+          "comment": "'经度'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "FLOAT", 
+          "name": "lat", 
+          "comment": "'纬度'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "showInMap", 
+          "comment": "'是否地图显示'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "intro", 
+          "comment": "'医院介绍'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "intro2", 
+          "comment": "'科室介绍'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "intro3", 
+          "comment": "'MDT介绍'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false,
+      "hasDetailPage": true
+    },
+    {
+      "name": "education",
+      "label": "患教",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "title", 
+          "comment": "'标题'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "DATE", 
+          "name": "openTime", 
+          "comment": "'开播时间'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "doctorId", 
+          "comment": "'专家id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "doctorName", 
+          "comment": "'专家名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "status", 
+          "comment": "'状态'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "intro", 
+          "comment": "'介绍'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "remindOwner", 
+          "comment": "'开播提醒专家'",
+          "defaultValue": "true",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "questionCount", 
+          "comment": "'提问数'",
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "appointCount", 
+          "comment": "'预约数'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "educationQuestion",
+      "label": "患教提问",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "educationId", 
+          "comment": "'患教id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "patientId", 
+          "comment": "'患者id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "patientName", 
+          "comment": "'患者名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "content", 
+          "comment": "'问题内容'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "JSON", 
+          "name": "images", 
+          "comment": "'图片列表'",
+          "defaultValue": "[]",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "patient",
+      "label": "患者",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "avatar", 
+          "comment": "'头像'",
+          "opList": ["edit", "list", "create"],
+          "isImage": true
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "phone", 
+          "unique": true,
+          "comment": "'手机'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "nickName", 
+          "comment": "'昵称'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "sex", 
+          "comment": "'性别'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "city", 
+          "comment": "'城市'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "DATEONLY", 
+          "name": "birthday", 
+          "comment": "'生日'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "JSON", 
+          "name": "groupList", 
+          "comment": "'分组'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "JSON", 
+          "name": "tagList", 
+          "comment": "'标签'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "brandName", 
+          "comment": "'药厂品牌名称'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "illState", 
+          "comment": "'病情分期'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": false,
+      "editable": true,
+      "deletable": false,
+      "exportable": true,
+      "importable": false,
+      "batchable": false,
+      "hasDetailPage": true
+    },
+    {
+      "name": "patientDoc",
+      "label": "患者档案",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "patientId", 
+          "comment": "'患者id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "visitHospital", 
+          "comment": "'就诊医院'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "visitDoctor", 
+          "comment": "'就诊医生'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "DATEONLY", 
+          "name": "visitDate", 
+          "comment": "'就诊日期'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "DATEONLY", 
+          "name": "operationDate", 
+          "comment": "'手术日期'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "TEXT", 
+          "name": "diagnose", 
+          "comment": "'诊断结果'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "JSON", 
+          "name": "images", 
+          "comment": "'图片'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": false,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "patientRecord",
+      "label": "病情记录",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "patientId", 
+          "comment": "'患者id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "brief", 
+          "comment": "'摘要'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "scale",
+      "label": "量表模板",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'量表名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "desc", 
+          "comment": "'量表描述'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "JSON", 
+          "name": "items", 
+          "comment": "'量表问卷内容'",
+          "defaultValue": "[]",
+          "opList": ["edit", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "enable", 
+          "comment": "'启用'",
+          "defaultValue": true,
+          "opList": ["edit", "list", "filter", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false,
+      "hasDetailPage": true
+    },
+    {
+      "name": "scaleRecord",
+      "label": "病历量表",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "scaleId", 
+          "comment": "'量表模板id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "recordId", 
+          "comment": "'病情id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "summary", 
+          "comment": "'量表答题总结'",
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "score", 
+          "comment": "'量表得分'",
+          "opList": ["list"]
+        },
+        {
+          "type": "JSON", 
+          "name": "items", 
+          "comment": "'量表问卷内容'",
+          "defaultValue": "[]",
+          "opList": ["edit", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "indexRecord",
+      "label": "病情关键指标",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "recordId", 
+          "comment": "'病情id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'指标名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "value", 
+          "comment": "'指标值'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "medicationRecord",
+      "label": "病情用药",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "recordId", 
+          "comment": "'病情id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "medicationName", 
+          "comment": "'药品名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "JSON", 
+          "name": "medicationDose", 
+          "comment": "'服药剂量'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "medicationNotify",
+      "label": "用药提醒",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "patientId", 
+          "comment": "'患者id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "medicationName", 
+          "comment": "'药品名称'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "articleCategory",
+      "label": "文章分类",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'分类名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "type", 
+          "comment": "'分类类型'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "article",
+      "label": "资讯",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "title", 
+          "comment": "'标题'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "image", 
+          "comment": "'题图'",
+          "opList": ["edit", "list", "create"],
+          "isImage": true
+        },
+        {
+          "type": "STRING", 
+          "name": "video", 
+          "comment": "'视频'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "author", 
+          "comment": "'作者'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "type", 
+          "comment": "'文章类型'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "categoryId", 
+          "comment": "'分类id'",
+          "opList": ["edit", "filter", "create"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "categoryName", 
+          "comment": "'分类名称'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "isVideo", 
+          "defaultValue": false,
+          "comment": "'是否是视频'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "enable", 
+          "defaultValue": true,
+          "comment": "'启用'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "DATE", 
+          "name": "publishDate", 
+          "comment": "'发布时间'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "likeCount", 
+          "comment": "'点赞数'",
+          "defaultValue": 0,
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "vewCount", 
+          "comment": "'阅读数'",
+          "defaultValue": 0,
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "collectCount", 
+          "comment": "'收藏数'",
+          "defaultValue": 0,
+          "opList": ["list"]
+        },
+        {
+          "type": " STRING", 
+          "name": "content", 
+          "comment": "'内容'",
+          "opList": ["edit", "create", "required"],
+          "isRichText": true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false,
+      "hasDetailPage": true
+    },
+    {
+      "name": "medication",
+      "label": "药品",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "brandId", 
+          "comment": "'品牌id'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "brandName", 
+          "comment": "'品牌名称'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "type": "STRING", 
+          "name": "code", 
+          "comment": "'编码'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "brand",
+      "label": "药厂品牌",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "code", 
+          "comment": "'编码'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "keyIndex",
+      "label": "关键指标",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "code", 
+          "comment": "'编码'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "unit", 
+          "comment": "'单位'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "desc", 
+          "comment": "'描述'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "illState",
+      "label": "病情分期",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "code", 
+          "comment": "'编码'",
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "patientCollect",
+      "label": "患者收藏",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "patientId", 
+          "comment": "'患者id'",
+          "opList": ["filter"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "articleId", 
+          "comment": "'资讯id'",
+          "opList": ["filter"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "type", 
+          "comment": "'收藏类型'",
+          "opList": ["filter"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "patientGroup",
+      "label": "患者分组",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "doctorId", 
+          "comment": "'所属医生id'",
+          "opList": ["filter"]
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": true,
+      "editable": false,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "patientTag",
+      "label": "患者标签",
+      "fields": [
+        {
+          "type": "INTEGER", 
+          "name": "doctorId", 
+          "comment": "'所属医生id'",
+          "opList": ["filter"]
+        },
+        {
+          "type": "STRING", 
+          "name": "name", 
+          "comment": "'名称'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": true,
+      "editable": false,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "pushTask",
+      "label": "推送任务",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "title", 
+          "comment": "'标题'",
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "type", 
+          "comment": "'类型'",
+          "opList": ["list"]
+        },
+        {
+          "type": "STRING", 
+          "name": "creator", 
+          "comment": "'发送者'",
+          "opList": ["list"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "finished", 
+          "comment": "'是否完成'",
+          "opList": ["list", "filter"],
+          "defaultValue": false
+        },
+        {
+          "type": "STRING", 
+          "name": "result", 
+          "comment": "'执行结果'",
+          "opList": ["list"]
+        },
+        {
+          "type": "DATE", 
+          "name": "finishTime", 
+          "comment": "'完成时间'",
+          "opList": ["list"]
+        },
+        {
+          "type": "INTEGER", 
+          "name": "receiverCount", 
+          "comment": "'受众数量'",
+          "opList": ["list"]
+        },
+        {
+          "type": "JSON", 
+          "name": "content", 
+          "comment": "'任务内容'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "doctor",
+      "namespace": "core",
+      "models": ["doctor"]
+    },
+    {
+      "name": "hospital",
+      "namespace": "core",
+      "models": ["hospital"]
+    },
+    {
+      "name": "patient",
+      "namespace": "core",
+      "models": ["patient", "patientCollect"]
+    },
+    {
+      "name": "medication",
+      "namespace": "core",
+      "models": ["medication", "medicationNotify"]
+    },
+    {
+      "name": "brand",
+      "namespace": "core",
+      "models": ["brand"]
+    },
+    {
+      "name": "illState",
+      "namespace": "core",
+      "models": ["illState"]
+    },
+    {
+      "name": "patientGroup",
+      "namespace": "core",
+      "models": ["patientGroup"]
+    },
+    {
+      "name": "patientTag",
+      "namespace": "core",
+      "models": ["patientTag"]
+    },
+    {
+      "name": "education",
+      "namespace": "core",
+      "models": ["education", "educationQuestion"]
+    },
+    {
+      "name": "article",
+      "namespace": "core",
+      "models": ["article", "articleCategory"]
+    },
+    {
+      "name": "scale",
+      "namespace": "core",
+      "models": ["scale"]
+    },
+    {
+      "name": "archive",
+      "namespace": "record",
+      "models": ["patientDoc"]
+    },
+    {
+      "name": "record",
+      "namespace": "record",
+      "models": ["patientRecord"]
+    },
+    {
+      "name": "index",
+      "namespace": "record",
+      "models": ["indexRecord"]
+    },
+    {
+      "name": "medication",
+      "namespace": "record",
+      "models": ["medicationRecord"]
+    },
+    {
+      "name": "scale",
+      "namespace": "record",
+      "models": ["scaleRecord"]
+    },
+    {
+      "name": "keyIndex",
+      "namespace": "core",
+      "models": ["keyIndex"]
+    },
+    {
+      "name": "pushTask",
+      "namespace": "core",
+      "models": ["pushTask"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "doctor",
+      "models": ["doctor"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "专家" 
+      }
+    },
+    {
+      "name": "patient",
+      "models": ["patient"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "患者" 
+      }
+    },
+    {
+      "name": "article",
+      "models": ["article", "articleCategory"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "资讯" 
+      }
+    },
+    {
+      "name": "hospital",
+      "models": ["hospital"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "医院" 
+      }
+    },
+    {
+      "name": "education",
+      "models": ["education", "educationQuestion"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "患教" 
+      }
+    },
+    {
+      "name": "brand",
+      "models": ["brand"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "品牌" 
+      }
+    },
+    {
+      "name": "keyIndex",
+      "models": ["keyIndex"],
+      "api": {
+        "base": "/adminKeyIndex",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "关键指标" 
+      }
+    },
+    {
+      "name": "illState",
+      "models": ["illState"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "病情分期" 
+      }
+    },
+    {
+      "name": "patientGroup",
+      "models": ["patientGroup"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "患者分组" 
+      }
+    },
+    {
+      "name": "patientTag",
+      "models": ["patientTag"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "患者标签" 
+      }
+    },
+    {
+      "name": "medication",
+      "models": ["medication"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "药品" 
+      }
+    },
+    {
+      "name": "scale",
+      "models": ["scale"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "量表" 
+      }
+    },
+    {
+      "name": "record",
+      "models": ["patientDoc", "patientRecord", "indexRecord", "medicationRecord", "scaleRecord"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "病历" 
+      }
+    },
+    {
+      "name": "pushTask",
+      "models": ["pushTask"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "admin",
+        "groupLabel": "推送任务" 
+      }
+    }
+  ]
+}

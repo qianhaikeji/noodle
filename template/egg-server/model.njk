@@ -11,6 +11,7 @@ const utils = require('./utils')
 
 /**
  * @apiDefine {{modelName}}ResponseEntity {{modelText}}响应实体
+ * @apiSuccess { INTEGER } rows.id 'id'
 {% for name, attrs in fields %}
  * @apiSuccess { {{attrs.type}} } rows.{{name}} {{attrs.comment}}
 {% endfor -%}
@@ -20,6 +21,11 @@ module.exports = app => {
   const { STRING, INTEGER, DATE, DATEONLY, TEXT, JSON, FLOAT, DOUBLE, BOOLEAN } = app.Sequelize
 
   const Table = app.model.define('{{modelName}}', {
+    id: {
+      type: INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     {% for name, attrs in fields %}
     {{name}}: {
     {% for key, value in attrs %}

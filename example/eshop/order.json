@@ -1,0 +1,580 @@
+{
+  "models": [
+    {
+      "name": "order",
+      "label": "主订单",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "sn",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'订单流水号'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "comment": "'客户id'",
+          "allowNull": false,
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "shopId",
+          "type": "INTEGER",
+          "comment": "'订单所属门店id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "status",
+          "type": "INTEGER",
+          "comment": "'订单状态'",
+          "allowNull": false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "refunded",
+          "type": "BOOLEAN",
+          "comment": "'是否执行了退款'",
+          "defaultValue":false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "refundStatus",
+          "type": "INTEGER",
+          "comment": "'订单退款状态'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "payment",
+          "type": "INTEGER",
+          "comment": "'支付方式'",
+          "allowNull": false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "kindCount",
+          "type": "INTEGER",
+          "comment": "'商品条目总数'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "comment": "'商品总数'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "priceAmount",
+          "type": "DOUBLE",
+          "comment": "'订单吊牌总价'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "salePriceAmount",
+          "type": "DOUBLE",
+          "comment": "'订单销售总价'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "deductionAmount",
+          "type": "DOUBLE",
+          "comment": "'抵扣总金额'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "deductionDetail",
+          "type": "JSON",
+          "comment": "'优惠明细'",
+          "defaultValue": "[]",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "couponAmount",
+          "type": "DOUBLE",
+          "comment": "'优惠券金额'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "couponDetail",
+          "type": "JSON",
+          "comment": "'使用优惠券明细'",
+          "defaultValue": "[]",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "freight",
+          "type": "DOUBLE",
+          "comment": "'快递费'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "payAmount",
+          "type": "DOUBLE",
+          "comment": "'实际支付金额'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "paid",
+          "type": "BOOLEAN",
+          "comment": "'是否支付'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "deleted",
+          "type": "BOOLEAN",
+          "comment": "'是否已删除'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "consignee",
+          "type": "STRING",
+          "comment": "'收货人'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "consigneePhone",
+          "type": "STRING",
+          "comment": "'收货人手机'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "consigneeAddr",
+          "type": "STRING",
+          "comment": "'收货地址'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "deliveryType",
+          "type": "INTEGER",
+          "comment": "'配送方式：快递，自提'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "salerId",
+          "type": "INTEGER",
+          "comment": "'销售ID'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "salerName",
+          "type": "STRING",
+          "comment": "'销售名称'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "customerRemark",
+          "type": "STRING",
+          "comment": "'客户订单备注'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "cancelReason",
+          "type": "STRING",
+          "comment": "'订单取消原因'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "source",
+          "type": "INTEGER",
+          "comment": "'订单来源'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "payTime",
+          "type": "DATE",
+          "comment": "'支付时间'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "auditTime",
+          "type": "DATE",
+          "comment": "'审核时间'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "deliverTime",
+          "type": "DATE",
+          "comment": "'发货时间'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "recvTime",
+          "type": "DATE",
+          "comment": "'确认收货时间'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "cancelTime",
+          "type": "DATE",
+          "comment": "'取消时间'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "deleteTime",
+          "type": "DATE",
+          "comment": "'删除时间'",
+          "opList": ["list", "filter"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },{
+      "name": "orderItem",
+      "label": "订单明细",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "orderId",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'订单id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "image",
+          "type": "TEXT",
+          "comment": "'图片'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "spuName",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'商品名称'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "spuId",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'spuId'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuId",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'skuId'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "spuCode",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'spu货号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuCode",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'sku条码'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuSpec",
+          "type": "STRING",
+          "comment": "'sku规格描述'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "price",
+          "type": "DOUBLE",
+          "allowNull": false,
+          "comment": "'商品吊牌价'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "salePrice",
+          "type": "DOUBLE",
+          "allowNull": false,
+          "comment": "'商品售价'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'数量'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "amount",
+          "type": "DOUBLE",
+          "allowNull": false,
+          "comment": "'实付总金额'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "packageId",
+          "type": "INTEGER",
+          "comment": "'订单包裹id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "commented",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否已评价'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "repaired",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否已申请售后'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "repairOrderId",
+          "type": "STRING",
+          "comment": "'售后单id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "repairOrderSn",
+          "type": "STRING",
+          "comment": "'售后单sn'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "commented",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否已评价'",
+          "opList": ["list", "filter"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },{
+      "name": "orderPackage",
+      "label": "订单包裹",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "orderId",
+          "type": "INTEGER",
+          "comment": "'订单id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressNo",
+          "type": "STRING",
+          "comment": "'物流单号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressId",
+          "type": "STRING",
+          "comment": "'快递公司id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressName",
+          "type": "STRING",
+          "comment": "'快递公司名称'",
+          "opList": ["list", "filter"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },{
+      "name": "repairOrder",
+      "label": "售后单",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "sn",
+          "type": "STRING",
+          "allowNull": false,
+          "unique": true,
+          "comment": "'售后单序号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "relateOrderId",
+          "type": "INTEGER",
+          "comment": "'关联订单id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "image",
+          "type": "TEXT",
+          "comment": "'图片'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "spuName",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'商品名称'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuId",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'skuId'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuCode",
+          "type": "STRING",
+          "allowNull": false,
+          "comment": "'sku条码'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "skuSpec",
+          "type": "STRING",
+          "comment": "'sku规格描述'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "buyPrice",
+          "type": "DOUBLE",
+          "comment": "'商品售价'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "buyCount",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'数量'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "repairCount",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'申请售后数量数量'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "refundAmount",
+          "type": "DOUBLE",
+          "allowNull": false,
+          "comment": "'退款金额'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "refunded",
+          "type": "BOOLEAN",
+          "comment": "'是否退款'",
+          "defaultValue":false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "refundStatus",
+          "type": "INTEGER",
+          "comment": "'订单退款状态'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "reason",
+          "type": "STRING",
+          "comment": "'退货原因'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "images",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'相关图片'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressNo",
+          "type": "STRING",
+          "comment": "'退货物流单号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressId",
+          "type": "STRING",
+          "comment": "'退货快递公司id'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "expressName",
+          "type": "STRING",
+          "comment": "'退货快递公司名称'",
+          "opList": ["list", "filter"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "order",
+      "namespace": "order",
+      "models": ["order", "orderItem"]
+    }
+  ],
+  "controllers": [
+    
+  ]
+}

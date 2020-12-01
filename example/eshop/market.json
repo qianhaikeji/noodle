@@ -1,0 +1,272 @@
+{
+  "models": [
+    {
+      "name": "coupon",
+      "label": "优惠券",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "title",
+          "type": "STRING",
+          "comment": "'优惠券名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "subtitle",
+          "type": "STRING",
+          "comment": "'优惠券副标题'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "description",
+          "type": "STRING",
+          "comment": "'使用说明'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "getType",
+          "type": "INTEGER",
+          "comment": "'优惠券获取方式类型: 直接发放、任务领取'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'优惠券类型: 代金券、折扣券'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "discount",
+          "type": "INTEGER",
+          "comment": "'折扣1~100'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "leastCost",
+          "type": "DOUBLE",
+          "comment": "'满减门槛，0表示无门槛'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "reduceCost",
+          "type": "DOUBLE",
+          "comment": "'满减金额'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "validPeriodType",
+          "type": "INTEGER",
+          "comment": "'有效期类型: 指定时间范围，指定天数，永久有效'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "beginDate",
+          "type": "DATEONLY",
+          "comment": "'有效起始日期'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "endDate",
+          "type": "DATEONLY",
+          "comment": "'有效截止日期'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "fixedTerm",
+          "type": "INTEGER",
+          "comment": "'有效天数'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "disabled",
+          "type": "BOOLEAN",
+          "comment": "'失效'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "total",
+          "type": "INTEGER",
+          "comment": "'券总数'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "limitCount",
+          "type": "INTEGER",
+          "comment": "'用户限领数量'",
+          "defaultValue": 1,
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "storeType",
+          "type": "INTEGER",
+          "comment": "'可使用的门店类型:线上、线下、全部'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "storeScope",
+          "type": "JSON",
+          "comment": "'可使用的门店范围'",
+          "defaultValue": [],
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "spuScope",
+          "type": "JSON",
+          "comment": "'可使用的商品范围'",
+          "defaultValue": [],
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "qrcode",
+          "type": "STRING",
+          "comment": "'优惠券二维码'",
+          "opList": ["list"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'扩展字段'"
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },{
+      "name": "userCoupon",
+      "label": "用户领取的优惠券",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "comment": "'关联用户 user id'"
+        },
+        {
+          "name": "couponId",
+          "type": "INTEGER",
+          "comment": "'优惠券id'"
+        },
+        {
+          "name": "orderId",
+          "type": "INTEGER",
+          "comment": "'使用的订单id'"
+        },
+        {
+          "name": "getTime",
+          "type": "DATE",
+          "comment": "'领取时间'"
+        },
+        {
+          "name": "expireTime",
+          "type": "DATE",
+          "comment": "'过期时间'"
+        },
+        {
+          "name": "useTime",
+          "type": "DATE",
+          "comment": "'过期时间'"
+        },
+        {
+          "name": "status",
+          "type": "INTEGER",
+          "comment": "'状态：可用、已用、过期'"
+        },
+        {
+          "name": "disabled",
+          "type": "BOOLEAN",
+          "comment": "'失效'"
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },{
+      "name": "signin",
+      "label": "用户签到记录",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "allowNull": false,
+          "comment": "'关联用户 user id'"
+        },
+        {
+          "name": "date",
+          "type": "DATEONLY",
+          "allowNull": false,
+          "comment": "'签到日期'"
+        },
+        {
+          "name": "continuous",
+          "type": "INTEGER",
+          "defaultValue": 0,
+          "comment": "'连续签到次数'"
+        },
+        {
+          "name": "point",
+          "type": "INTEGER",
+          "defaultValue": 0,
+          "comment": "'奖励积分'"
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'扩展'"
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "coupon",
+      "namespace": "market",
+      "models": ["coupon", "userCoupon"]
+    },
+    {
+      "name": "signin",
+      "namespace": "market",
+      "models": ["signin"]
+    }
+  ],
+  "controllers": [
+    
+  ]
+}

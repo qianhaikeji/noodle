@@ -1,0 +1,686 @@
+{
+  "models": [
+    {
+      "name": "spu",
+      "label": "商品spu",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "spuCode",
+          "unique": true,
+          "type": "STRING",
+          "comment": "'货号'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'商品名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "brandId",
+          "type": "INTEGER",
+          "comment": "'品牌id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "brandName",
+          "type": "STRING",
+          "comment": "'品牌'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "catIds",
+          "type": "JSON",
+          "comment": "'所属分类列表'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "attrGroupId",
+          "type": "INTEGER",
+          "comment": "'扩展属性分组'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "thumbPic",
+          "type": "STRING",
+          "comment": "'封面图'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "onSale",
+          "type": "BOOLEAN",
+          "comment": "'是否上架'",
+          "defaultValue": false
+        },
+        {
+          "name": "cost",
+          "type": "DOUBLE",
+          "comment": "'成本价'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "price",
+          "type": "DOUBLE",
+          "comment": "'吊牌价'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "salePrice",
+          "type": "DOUBLE",
+          "comment": "'销售价'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "colorPicList",
+          "type": "JSON",
+          "comment": "'颜色图片'",
+          "defaultValue": []
+        },
+        {
+          "name": "gallery",
+          "type": "JSON",
+          "comment": "'商品照片墙'",
+          "defaultValue": []
+        },
+        {
+          "name": "breif",
+          "type": "STRING",
+          "comment": "'商品简介'",
+          "defaultValue": ""
+        },
+        {
+          "name": "detail",
+          "type": "TEXT",
+          "comment": "'图文描述'",
+          "defaultValue": ""
+        },
+        {
+          "name": "unit",
+          "type": "STRING",
+          "comment": "'单位'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "keyword",
+          "type": "STRING",
+          "comment": "'关键字'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "sortOrder",
+          "type": "INTEGER",
+          "comment": "'默认排序顺序'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "sales",
+          "type": "INTEGER",
+          "comment": "'销量'",
+          "defaultValue": 0
+        },
+        {
+          "name": "postFree",
+          "type": "BOOLEAN",
+          "comment": "'是否免邮'",
+          "defaultValue": false
+        },
+        {
+          "name": "deleted",
+          "type": "BOOLEAN",
+          "comment": "'是否删除'",
+          "defaultValue": false
+        },
+        {
+          "name": "isSeckill",
+          "type": "BOOLEAN",
+          "comment": "'是否参与秒杀'",
+          "defaultValue": false
+        },
+        {
+          "name": "isBargain",
+          "type": "BOOLEAN",
+          "comment": "'是否参与砍价'",
+          "defaultValue": false
+        },
+        {
+          "name": "isRecommend",
+          "type": "BOOLEAN",
+          "comment": "'是否推荐'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "pageview",
+          "type": "INTEGER",
+          "comment": "'浏览量'",
+          "defaultValue": 0
+        },
+        {
+          "name": "qrcode",
+          "type": "STRING",
+          "comment": "'产品二维码，用于小程序推广'",
+          "defaultValue": 0
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "spuAttrValue",
+      "label": "商品属性值",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "spuId",
+          "type": "INTEGER",
+          "comment": "'商品id'"
+        },
+        {
+          "name": "attrId",
+          "type": "STRING",
+          "comment": "'属性id'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "attrName",
+          "type": "STRING",
+          "comment": "'属性名称'"
+        },
+        {
+          "name": "value",
+          "type": "STRING",
+          "comment": "'属性值'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "spuAttr",
+      "label": "商品可用属性",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'属性名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "inputType",
+          "type": "INTEGER",
+          "comment": "'属性输入类型：文本、选择'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "values",
+          "type": "JSON",
+          "comment": "'可选值'",
+          "defaultValue": [],
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "sortOrder",
+          "type": "INTEGER",
+          "comment": "'排序'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": false
+    },
+    {
+      "name": "spuAttrGroup",
+      "label": "商品扩展属性分组",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'分组名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "attrIds",
+          "type": "JSON",
+          "comment": "'属性id列表'",
+          "defaultValue": [],
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": false
+    },
+    {
+      "name": "spuCategory",
+      "label": "商品分类",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'分类名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "pid",
+          "type": "INTEGER",
+          "comment": "'父id'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "sortOrder",
+          "type": "INTEGER",
+          "comment": "'排序'",
+          "defaultValue": 0,
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "comment": "'是否展示'",
+          "defaultValue": false,
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "pic",
+          "type": "STRING",
+          "comment": "'分类图片'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "brand",
+      "label": "品牌",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'品牌名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "desc",
+          "type": "TEXT",
+          "comment": "'品牌介绍'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "pic",
+          "type": "STRING",
+          "comment": "'分类图片'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "spuCount",
+          "type": "INTEGER",
+          "comment": "'品牌下的商品数量'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "spec",
+      "label": "商品规格",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },{
+          "name": "name",
+          "unique": true,
+          "type": "STRING",
+          "comment": "'规格名称（颜色、尺码）'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "code",
+          "type": "STRING",
+          "comment": "'规格编码'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "specGroup",
+      "label": "商品规格分组",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'分组名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "code",
+          "type": "STRING",
+          "comment": "'分组编码'",
+          "opList": ["edit", "list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "specValue",
+      "label": "商品规格值",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },{
+          "name": "specId",
+          "type": "INTEGER",
+          "comment": "'规格id'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'规格值名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "code",
+          "type": "STRING",
+          "comment": "'规格值编码'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "groupId",
+          "type": "STRING",
+          "comment": "'所属分组id'"
+        },
+        {
+          "name": "sortOrder",
+          "type": "INTEGER",
+          "comment": "'排序'",
+          "defaultValue": 0
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "spuSpecRel",
+      "label": "商品使用的规格",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },{
+          "name": "spuId",
+          "type": "INTEGER",
+          "comment": "'商品id'",
+          "opList": ["edit", "list", "create", "required"]
+        },{
+          "name": "specId",
+          "type": "INTEGER",
+          "comment": "'规格id'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "values",
+          "type": "JSON",
+          "comment": "'使用的规格值'",
+          "defaultValue": [],
+          "opList": ["edit", "list", "create", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "sku",
+      "label": "商品sku",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "skuCode",
+          "unique": true,
+          "type": "STRING",
+          "comment": "'条码'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "spuCode",
+          "type": "STRING",
+          "comment": "'货号'",
+          "opList": ["list"]
+        },
+        {
+          "name": "spuId",
+          "type": "INTEGER",
+          "comment": "'spu id'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "spec1Code",
+          "type": "STRING",
+          "comment": "'规格1编码'"
+        },
+        {
+          "name": "spec1Name",
+          "type": "STRING",
+          "comment": "'规格1名称'"
+        },
+        {
+          "name": "spec2Code",
+          "type": "STRING",
+          "comment": "'规格2编码'"
+        },
+        {
+          "name": "spec2Name",
+          "type": "STRING",
+          "comment": "'规格2名称'"
+        },
+        {
+          "name": "spec3Code",
+          "type": "STRING",
+          "comment": "'规格3编码'"
+        },
+        {
+          "name": "spec3Name",
+          "type": "STRING",
+          "comment": "'规格3名称'"
+        },
+        {
+          "name": "cost",
+          "type": "DOUBLE",
+          "comment": "'sku成本，默认与spu一致'"
+        },
+        {
+          "name": "price",
+          "type": "DOUBLE",
+          "comment": "'sku吊牌价，默认与spu一致'"
+        },
+        {
+          "name": "salePrice",
+          "type": "DOUBLE",
+          "comment": "'sku销售价，默认与spu一致'"
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "comment": "'启用'",
+          "defaultValue": true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    }
+  ],
+  "services": [
+    {
+      "name": "spu",
+      "namespace": "product",
+      "models": ["spu"]
+    },
+    {
+      "name": "sku",
+      "namespace": "product",
+      "models": ["sku"]
+    },
+    {
+      "name": "spuAttr",
+      "namespace": "product",
+      "models": ["spuAttr", "spuAttrValue", "spuAttrGroup"]
+    },
+    {
+      "name": "spuCategory",
+      "namespace": "product",
+      "models": ["spuCategory"]
+    },
+    {
+      "name": "brand",
+      "namespace": "product",
+      "models": ["brand"]
+    },
+    {
+      "name": "spec",
+      "namespace": "product",
+      "models": ["spec", "specGroup", "specValue", "spuSpecRel"]
+    }
+  ],
+  "controllers": [
+    
+  ]
+}

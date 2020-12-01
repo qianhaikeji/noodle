@@ -1,0 +1,100 @@
+{
+  "models": [
+    {
+      "name": "cart",
+      "label": "购物车",
+      "fields": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "primaryKey": true,
+          "autoIncrement": true,
+          "allowNull": false,
+          "unique": true,
+          "comment": "'id'"
+        },
+        {
+          "name": "uid",
+          "type": "INTEGER",
+          "comment": "'用户名'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "wechatUid",
+          "type": "INTEGER",
+          "comment": "'微信用户id'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "skuId",
+          "type": "INTEGER",
+          "comment": "'sku id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "spuId",
+          "type": "INTEGER",
+          "comment": "'spu id'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "skuCode",
+          "type": "STRING",
+          "comment": "'sku条码'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "spuCode",
+          "type": "STRING",
+          "comment": "'spu编码'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "spuName",
+          "type": "STRING",
+          "comment": "'商品名'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "skuDesc",
+          "type": "STRING",
+          "comment": "'商品描述'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "joinSalePrice",
+          "type": "DOUBLE",
+          "comment": "'商品加入购物车时的售价'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "comment": "'商品数量'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'扩展字段'"
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    }
+  ],
+  "services": [
+    {
+      "name": "cart",
+      "namespace": "mall",
+      "models": ["cart"]
+    }
+  ],
+  "controllers": [
+    
+  ]
+}

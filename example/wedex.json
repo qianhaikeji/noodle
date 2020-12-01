@@ -1,0 +1,60 @@
+{
+  "models": [
+    {
+      "name": "notice",
+      "label": "滚动信息栏",
+      "fields": [
+        {
+          "type": "STRING", 
+          "name": "text", 
+          "comment": "'文本'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "color", 
+          "comment": "'文本颜色'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "type": "STRING", 
+          "name": "link", 
+          "comment": "'链接'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "type": "BOOLEAN", 
+          "name": "enable", 
+          "defaultValue": true,
+          "comment": "'启用'",
+          "opList": ["edit", "list", "filter", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "notice",
+      "namespace": "common",
+      "models": ["notice"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "notice",
+      "models": ["notice"],
+      "api": {
+        "base": "/platform",
+        "version": "1.0.0",
+        "groupValue": "platform",
+        "groupLabel": "平台" 
+      }
+    }
+  ]
+}

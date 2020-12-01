@@ -1,0 +1,93 @@
+{
+  "models": [
+    {
+      "name": "promotion",
+      "label": "优惠活动",
+      "fields": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'活动名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "image",
+          "type": "STRING",
+          "comment": "'活动标题图片'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "desc",
+          "type": "STRING",
+          "comment": "'活动描述'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "rule",
+          "type": "STRING",
+          "comment": "'活动规则'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "startTime",
+          "type": "DATE",
+          "comment": "'开始时间'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "endTime",
+          "type": "DATE",
+          "comment": "'结束时间'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "comment": "'是否启用'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "isTimeLimit",
+          "type": "BOOLEAN",
+          "comment": "'是否限时'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "productGroupId",
+          "type": "STRING",
+          "comment": "'关联商品组id'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "clientScope",
+          "type": "JSON",
+          "comment": "'可用客户端范围'",
+          "defaultValue": "[]",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "comment": "'扩展字段'",
+          "defaultValue": false
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "promotion",
+      "namespace": "market",
+      "models": ["promotion"]
+    }
+  ],
+  "controllers": [
+    
+  ]
+}
