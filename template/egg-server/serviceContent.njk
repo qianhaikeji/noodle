@@ -54,7 +54,7 @@
       utils.checkInputParams([
       {% for field in model.fields %}
       {% if field.creatable and field.required %}
-        {value: data.{{field.name}}, error: '请填写xxxx'},
+        {value: data.{{field.name}}, error: '请填写{{field.name}}'},
       {% endif %}
       {% endfor %}
       ])
@@ -83,7 +83,7 @@
       utils.checkInputParams([
       {% for field in model.fields %}
       {% if field.editable and field.required %}
-        {value: data.{{field.name}}, error: '请填写xxxx'},
+        {value: data.{{field.name}}, error: '请填写{{field.name}}'},
       {% endif %}
       {% endfor %}
       ])

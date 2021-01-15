@@ -74,3 +74,5 @@ autocode/_*/
 tmp
 
 test
+
+.history
