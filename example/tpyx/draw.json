@@ -1,0 +1,317 @@
+{
+  "models": [
+    {
+      "name": "advertisement",
+      "label": "广告位",
+      "fields": [
+        {
+          "name": "channelId",
+          "type": "INTEGER",
+          "comment": "'渠道ID'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "position",
+          "type": "INTEGER",
+          "comment": "'广告位置'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "title",
+          "type": "STRING(30)",
+          "comment": "'文案'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "image",
+          "type": "STRING",
+          "comment": "'广告图'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'广告类型'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "appId",
+          "type": "STRING(30)",
+          "comment": "'小程序appId(紧跳转小程序需要)'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "link",
+          "type": "STRING",
+          "comment": "'跳转链接'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "content",
+          "type": "STRING(500)",
+          "comment": "'广告内容'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "order",
+          "type": "INTEGER",
+          "comment": "'广告顺序（个别广告位支持多个广告，因此需要设置展示顺序）'",
+          "opList": ["edit", "list", "create"],
+          "listable": true
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "defaultValue": true,
+          "faker": "true",
+          "comment": "'是否启用'",
+          "opList": ["edit", "list", "create"],
+          "listable": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "channel",
+      "label": "渠道",
+      "fields": [
+        {
+          "name": "pId",
+          "type": "STRING",
+          "comment": "'渠道Id'",
+          "opList": ["edit", "list", "filter", "required"]
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'渠道名'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "umengId",
+          "type": "STRING",
+          "comment": "'友盟统计站点Id'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "baiduId",
+          "type": "STRING",
+          "comment": "'百度统计站点Id'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "drawPrize",
+      "label": "转盘奖项",
+      "fields": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'奖项名'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "image",
+          "type": "STRING",
+          "comment": "'图片路径'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "originalPrice",
+          "type": "INTEGER",
+          "comment": "'商品原价'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "couponPrice",
+          "type": "INTEGER",
+          "comment": "'优惠券额'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "couponLink",
+          "type": "STRING",
+          "comment": "'优惠券链接'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "goodsLink",
+          "type": "STRING",
+          "comment": "'商品优惠后链接'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "wxaAppId",
+          "type": "STRING",
+          "comment": "'优惠券小程序appId'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "wxaCouponLink",
+          "type": "STRING",
+          "comment": "'优惠券小程序链接'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "wxaGoodsLink",
+          "type": "STRING",
+          "comment": "'商品优惠后小程序链接'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "channelPrize",
+      "label": "渠道奖品关系",
+      "fields": [
+        {
+          "name": "channelId",
+          "type": "INTEGER",
+          "comment": "'渠道ID'",
+          "listable": true,
+          "filterable": true
+        },
+        {
+          "name": "prizeId",
+          "type": "INTEGER",
+          "comment": "'奖品ID'",
+          "listable": true
+        },
+        {
+          "name": "index",
+          "type": "INTEGER",
+          "comment": "'奖项编号(从左上开始顺时针)'",
+          "opList": ["edit", "list", "create"],
+          "listable": true
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "faker": "false",
+          "comment": "'是否启用'",
+          "opList": ["edit", "list", "create"],
+          "listable": true
+        },
+        {
+          "name": "order",
+          "type": "INTEGER",
+          "comment": "'中奖顺序'",
+          "opList": ["edit", "list", "create"],
+          "listable": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "channel",
+      "namespace": "common",
+      "models": ["channel"]
+    },
+    {
+      "name": "advertisement",
+      "namespace": "common",
+      "models": ["advertisement"]
+    },
+    {
+      "name": "draw",
+      "namespace": "draw",
+      "models": ["drawPrize", "channelPrize"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "channel",
+      "models": ["channel"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "channel",
+        "groupLabel": "渠道" 
+      }
+    },
+    {
+      "name": "advertisement",
+      "models": ["advertisement"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "advertisement",
+        "groupLabel": "广告" 
+      }
+    },
+    {
+      "name": "drawPrize",
+      "models": ["drawPrize"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "drawPrize",
+        "groupLabel": "奖品" 
+      }
+    },
+    {
+      "name": "channelPrize",
+      "models": ["channelPrize"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "channelPrize",
+        "groupLabel": "渠道奖品关系" 
+      }
+    }
+  ]
+}

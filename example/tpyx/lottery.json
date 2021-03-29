@@ -1,0 +1,280 @@
+{
+  "models": [
+    {
+      "name": "activity",
+      "label": "抽奖活动",
+      "fields": [
+        {
+          "name": "title",
+          "type": "STRING(30)",
+          "comment": "'活动标题'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "intro",
+          "type": "TEXT",
+          "comment": "'活动说明'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "thumbImage",
+          "type": "STRING",
+          "comment": "'列表题图'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'活动开奖类型，ENUM_ACTIVITY_TYPE'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "detailImages",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'活动详情图'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "galleryImages",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'活动画廊图'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "prizes",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'奖品列表'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "lotteryTime",
+          "type": "DATE",
+          "comment": "'开奖时间，当类型为按时间开奖时有效'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "lotteryPlayerCount",
+          "type": "INTEGER",
+          "comment": "'开奖人数，当类型为按人数开奖时有效'",
+          "opList": ["edit", "create"]
+        },
+        {
+          "name": "valid",
+          "type": "BOOLEAN",
+          "defaultValue": true,
+          "faker": "true",
+          "comment": "'是否启用活动'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "recommend",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否作为推荐活动'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "finished",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否已开奖'",
+          "opList": ["list", "create"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "activityPlayer",
+      "label": "参与抽奖用户记录",
+      "fields": [
+        {
+          "name": "activityId",
+          "type": "STRING",
+          "comment": "'活动id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "playerId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "playerName",
+          "type": "STRING",
+          "comment": "'用户名'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "playerIcon",
+          "type": "STRING",
+          "comment": "'用户头像'",
+          "opList": ["list"]
+        },
+        {
+          "name": "assistWXACode",
+          "type": "STRING",
+          "comment": "'助力二维码'",
+          "opList": ["list"]
+        },
+        {
+          "name": "assistCount",
+          "type": "INTEGER",
+          "comment": "'助力数'",
+          "opList": ["list"]
+        },
+        {
+          "name": "isWinner",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "comment": "'是否中奖'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "isRealUser",
+          "type": "BOOLEAN",
+          "defaultValue": true,
+          "comment": "'是否真实用户'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "prizeLevel",
+          "type": "STRING",
+          "comment": "'中奖等级'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "prize",
+          "type": "JSON",
+          "defaultValue": "null",
+          "comment": "'奖品信息'",
+          "opList": ["list"]
+        },
+        {
+          "name": "recvAddr",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'收货地址'",
+          "opList": []
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "preDrawInfo",
+      "label": "预开奖结果",
+      "fields": [
+        {
+          "name": "activityId",
+          "type": "STRING",
+          "comment": "'活动id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "playerId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "playerName",
+          "type": "STRING",
+          "comment": "'用户名'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "playerIcon",
+          "type": "STRING",
+          "comment": "'用户头像'",
+          "opList": ["list"]
+        },
+        {
+          "name": "assistCount",
+          "type": "INTEGER",
+          "comment": "'助力数'",
+          "opList": ["list"]
+        },
+        {
+          "name": "isRealUser",
+          "type": "BOOLEAN",
+          "defaultValue": true,
+          "comment": "'是否真实用户'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "prizeLevel",
+          "type": "STRING",
+          "comment": "'中奖等级'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "prize",
+          "type": "JSON",
+          "defaultValue": "null",
+          "comment": "'奖品信息'",
+          "opList": ["list"]
+        },
+        {
+          "name": "recvAddr",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'收货地址'",
+          "opList": []
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "activity",
+      "namespace": "lottery",
+      "models": ["activity"]
+    },
+    {
+      "name": "activityPlayer",
+      "namespace": "lottery",
+      "models": ["activityPlayer", "preDrawInfo"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "activity",
+      "models": ["activity"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "activity",
+        "groupLabel": "抽奖活动" 
+      }
+    },
+    {
+      "name": "activityPlayer",
+      "models": ["activityPlayer", "preDrawInfo"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "activityPlayer",
+        "groupLabel": "参与抽奖用户记录" 
+      }
+    }
+  ]
+}
