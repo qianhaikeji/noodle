@@ -1,0 +1,308 @@
+{
+  "models": [
+    {
+      "name": "welfareUser",
+      "label": "淘福利商城用户",
+      "fields": [
+        {
+          "name": "nickName",
+          "type": "STRING",
+          "comment": "'昵称'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "unionId",
+          "type": "STRING",
+          "comment": "'unionId'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "openId",
+          "type": "STRING",
+          "comment": "'openId'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "registerDatetime",
+          "type": "DATE",
+          "comment": "'注册时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "lastLoginDatetime",
+          "type": "DATE",
+          "comment": "'最后登录时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "userIcon",
+          "type": "STRING",
+          "comment": "'用户头像'",
+          "opList": ["list"]
+        },
+        {
+          "name": "coinBalance",
+          "type": "INTEGER",
+          "comment": "'福币余额'",
+          "opList": ["list"]
+        },
+        {
+          "name": "walletBalance",
+          "type": "INTEGER",
+          "comment": "'钱包余额'",
+          "opList": ["list"]
+        },
+        {
+          "name": "totalCoin",
+          "type": "INTEGER",
+          "comment": "'累计获取福币'",
+          "opList": ["list"]
+        },
+        {
+          "name": "totalPacket",
+          "type": "INTEGER",
+          "comment": "'累计获取红包'",
+          "opList": ["list"]
+        },
+        {
+          "name": "leftPacketChanceCount",
+          "type": "INTEGER",
+          "comment": "'剩余可抽取红包机会'",
+          "opList": ["list"]
+        },
+        {
+          "name": "phone",
+          "type": "STRING",
+          "comment": "'用户绑定手机号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "isFollowedWxpub",
+          "type": "BOOLEAN",
+          "comment": "'是否关注了公众号'",
+          "opList": ["list"]
+        },
+        {
+          "name": "continousSigninCount",
+          "type": "INTEGER",
+          "comment": "'连续签到天数'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "welfareOpenPacketRecord",
+      "label": "用户开红包记录",
+      "fields": [
+        {
+          "name": "userId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "awardType",
+          "type": "STRING",
+          "comment": "'红包中奖类型'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "awardValue",
+          "type": "STRING",
+          "comment": "'红包中奖内容（现金值、福币值、谢谢参与字符串等）'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "datetime",
+          "type": "DATE",
+          "comment": "'开红包时间'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "welfareCoinRecord",
+      "label": "用户福币记录",
+      "fields": [
+        {
+          "name": "userId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "desc",
+          "type": "STRING",
+          "comment": "'记录描述'",
+          "opList": ["list", "required"]
+        },
+        {
+          "name": "datetime",
+          "type": "DATE",
+          "comment": "'发生时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "count",
+          "type": "INTEGER",
+          "comment": "'数值'",
+          "opList": ["list"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'魔术字段'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "welfareWalletRecord",
+      "label": "用户钱包记录",
+      "fields": [
+        {
+          "name": "userId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "desc",
+          "type": "STRING",
+          "comment": "'记录描述'",
+          "opList": ["list", "required"]
+        },
+        {
+          "name": "datetime",
+          "type": "DATE",
+          "comment": "'发生时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "money",
+          "type": "INTEGER",
+          "comment": "'金额'",
+          "opList": ["list"]
+        },
+        {
+          "name": "meta",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'魔术字段'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    },
+    {
+      "name": "welfareDailyTask",
+      "label": "用户完成任务记录",
+      "fields": [
+        {
+          "name": "userId",
+          "type": "STRING",
+          "comment": "'用户id'",
+          "opList": ["list", "filter", "required"]
+        },
+        {
+          "name": "taskDate",
+          "type": "DATE",
+          "comment": "'任务时间'",
+          "opList": ["list"]
+        },
+        {
+          "name": "taskDateStr",
+          "type": "STRING",
+          "comment": "'任务日期'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "taskType",
+          "type": "INTEGER",
+          "comment": "'任务类型'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "taskDesc",
+          "type": "STRING",
+          "comment": "'任务描述'",
+          "opList": ["list"]
+        },
+        {
+          "name": "status",
+          "type": "INTEGER",
+          "comment": "'任务状态: 1-待处理, 2-处理成功, 3-处理失败'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "errors",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'失败原因'",
+          "opList": ["list"]
+        },
+        {
+          "name": "awarded",
+          "type": "BOOLEAN",
+          "comment": "'是否奖励'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "awardDesc",
+          "type": "STRING",
+          "comment": "'奖励处理的描述，比如当超出了奖励上限时，可记录不给用户奖励的原因'",
+          "opList": ["list"]
+        }
+      ],
+      "creatable": false,
+      "editable": false,
+      "deletable": false,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "welfare",
+      "namespace": "welfare",
+      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareDailyTask"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "welfare",
+      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareDailyTask"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "welfare",
+        "groupLabel": "淘福利商城" 
+      }
+    }
+  ]
+}
