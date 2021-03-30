@@ -219,7 +219,7 @@
       "batchable": false
     },
     {
-      "name": "welfareDailyTask",
+      "name": "welfareTaskRecord",
       "label": "用户完成任务记录",
       "fields": [
         {
@@ -290,13 +290,13 @@
     {
       "name": "welfare",
       "namespace": "welfare",
-      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareDailyTask"]
+      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareTaskRecord"]
     }
   ],
   "controllers": [
     {
       "name": "welfare",
-      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareDailyTask"],
+      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareTaskRecord"],
       "api": {
         "base": "",
         "version": "1.0.0",
