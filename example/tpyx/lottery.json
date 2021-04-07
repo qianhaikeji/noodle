@@ -74,14 +74,14 @@
           "type": "BOOLEAN",
           "defaultValue": false,
           "comment": "'是否作为推荐活动'",
-          "opList": ["edit", "list", "create"]
+          "opList": ["edit", "list", "filter", "create"]
         },
         {
           "name": "finished",
           "type": "BOOLEAN",
           "defaultValue": false,
           "comment": "'是否已开奖'",
-          "opList": ["list", "create"]
+          "opList": ["list", "filter", "create"]
         }
       ],
       "creatable": true,

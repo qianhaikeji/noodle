@@ -21,6 +21,8 @@ class ActivityController extends Controller {
    * @apiParam { STRING(30) } [title] (query参数) '活动标题'
    * @apiParam { INTEGER } [type] (query参数) '活动开奖类型，ENUM_ACTIVITY_TYPE'
    * @apiParam { BOOLEAN } [valid] (query参数) '是否启用活动'
+   * @apiParam { BOOLEAN } [recommend] (query参数) '是否作为推荐活动'
+   * @apiParam { BOOLEAN } [finished] (query参数) '是否已开奖'
    * @apiUse pagination
    * @apiUse pageResult
    * @apiUse activityResponseEntity

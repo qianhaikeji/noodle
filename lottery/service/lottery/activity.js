@@ -30,6 +30,12 @@ class ActivityService extends Service {
     if (params.valid) {
       conditions.push({ valid: JSON.parse(params.valid) })
     }
+    if (params.recommend) {
+      conditions.push({ recommend: JSON.parse(params.recommend) })
+    }
+    if (params.finished) {
+      conditions.push({ finished: JSON.parse(params.finished) })
+    }
 
     let queryParams = this.formatPageParams(params)
     if (conditions.length > 0) {
