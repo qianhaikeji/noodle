@@ -22,6 +22,9 @@ class WelfareController extends Controller {
    * @apiParam { STRING } [unionId] (query参数) 'unionId'
    * @apiParam { STRING } [openId] (query参数) 'openId'
    * @apiParam { STRING } [phone] (query参数) '用户绑定手机号'
+   * @apiParam { BOOLEAN } [isNewUser] (query参数) '是否为新用户'
+   * @apiParam { BOOLEAN } [isBindUserPhone] (query参数) '是否绑定手机号'
+   * @apiParam { STRING } [invitorId] (query参数) '邀请者userId'
    * @apiUse pagination
    * @apiUse pageResult
    * @apiUse welfareUserResponseEntity

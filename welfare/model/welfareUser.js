@@ -18,6 +18,9 @@ const utils = require('./utils')
  * @apiParam { STRING } [phone] (body参数) '用户绑定手机号'
  * @apiParam { BOOLEAN } [isFollowedWxpub] (body参数) '是否关注了公众号'
  * @apiParam { INTEGER } [continousSigninCount] (body参数) '连续签到天数'
+ * @apiParam { BOOLEAN } [isNewUser] (body参数) '是否为新用户'
+ * @apiParam { BOOLEAN } [isBindUserPhone] (body参数) '是否绑定手机号'
+ * @apiParam { STRING } [invitorId] (body参数) '邀请者userId'
 */
 
 /**
@@ -37,6 +40,9 @@ const utils = require('./utils')
  * @apiSuccess { STRING } rows.phone '用户绑定手机号'
  * @apiSuccess { BOOLEAN } rows.isFollowedWxpub '是否关注了公众号'
  * @apiSuccess { INTEGER } rows.continousSigninCount '连续签到天数'
+ * @apiSuccess { BOOLEAN } rows.isNewUser '是否为新用户'
+ * @apiSuccess { BOOLEAN } rows.isBindUserPhone '是否绑定手机号'
+ * @apiSuccess { STRING } rows.invitorId '邀请者userId'
 */
 
 module.exports = app => {
@@ -103,6 +109,18 @@ module.exports = app => {
     continousSigninCount: {
       type: INTEGER,
       comment: '连续签到天数',
+    },
+    isNewUser: {
+      type: BOOLEAN,
+      comment: '是否为新用户',
+    },
+    isBindUserPhone: {
+      type: BOOLEAN,
+      comment: '是否绑定手机号',
+    },
+    invitorId: {
+      type: STRING,
+      comment: '邀请者userId',
     },
   }, {
     tableName: 'welfare_user'

@@ -33,6 +33,15 @@ class WelfareService extends Service {
     if (params.phone) {
       conditions.push({ phone: params.phone })
     }
+    if (params.isNewUser) {
+      conditions.push({ isNewUser: JSON.parse(params.isNewUser) })
+    }
+    if (params.isBindUserPhone) {
+      conditions.push({ isBindUserPhone: JSON.parse(params.isBindUserPhone) })
+    }
+    if (params.invitorId) {
+      conditions.push({ invitorId: params.invitorId })
+    }
 
     let queryParams = this.formatPageParams(params)
     if (conditions.length > 0) {

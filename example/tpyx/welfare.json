@@ -87,6 +87,24 @@
           "type": "INTEGER",
           "comment": "'连续签到天数'",
           "opList": ["list"]
+        },
+        {
+          "name": "isNewUser",
+          "type": "BOOLEAN",
+          "comment": "'是否为新用户'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "isBindUserPhone",
+          "type": "BOOLEAN",
+          "comment": "'是否绑定手机号'",
+          "opList": ["list", "filter"]
+        },
+        {
+          "name": "invitorId",
+          "type": "STRING",
+          "comment": "'邀请者userId'",
+          "opList": ["list", "filter"]
         }
       ],
       "creatable": false,
