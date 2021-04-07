@@ -11,19 +11,19 @@ module.exports = app => {
   router.get('/api/welfareUsers/:id', controller.welfareUser.getWelfareUserDetail)
 
   
-  router.get('/api/welfareOpenPacketRecords', controller.welfareOpenPacketRecord.getWelfareOpenPacketRecordList)
-  router.get('/api/welfareOpenPacketRecords/:id', controller.welfareOpenPacketRecord.getWelfareOpenPacketRecordDetail)
+  router.get('/api/welfareUserOpenPacketRecords', controller.welfareUserOpenPacketRecord.getWelfareUserOpenPacketRecordList)
+  router.get('/api/welfareUserOpenPacketRecords/:id', controller.welfareUserOpenPacketRecord.getWelfareUserOpenPacketRecordDetail)
 
   
-  router.get('/api/welfareCoinRecords', controller.welfareCoinRecord.getWelfareCoinRecordList)
-  router.get('/api/welfareCoinRecords/:id', controller.welfareCoinRecord.getWelfareCoinRecordDetail)
+  router.get('/api/welfareUserCoinRecords', controller.welfareUserCoinRecord.getWelfareUserCoinRecordList)
+  router.get('/api/welfareUserCoinRecords/:id', controller.welfareUserCoinRecord.getWelfareUserCoinRecordDetail)
 
   
-  router.get('/api/welfareWalletRecords', controller.welfareWalletRecord.getWelfareWalletRecordList)
-  router.get('/api/welfareWalletRecords/:id', controller.welfareWalletRecord.getWelfareWalletRecordDetail)
+  router.get('/api/welfareUserWalletRecords', controller.welfareUserWalletRecord.getWelfareUserWalletRecordList)
+  router.get('/api/welfareUserWalletRecords/:id', controller.welfareUserWalletRecord.getWelfareUserWalletRecordDetail)
 
   
-  router.get('/api/welfareTaskRecords', controller.welfareTaskRecord.getWelfareTaskRecordList)
-  router.get('/api/welfareTaskRecords/:id', controller.welfareTaskRecord.getWelfareTaskRecordDetail)
+  router.get('/api/welfareUserTaskRecords', controller.welfareUserTaskRecord.getWelfareUserTaskRecordList)
+  router.get('/api/welfareUserTaskRecords/:id', controller.welfareUserTaskRecord.getWelfareUserTaskRecordDetail)
 
 }

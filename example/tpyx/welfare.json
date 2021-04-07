@@ -115,7 +115,7 @@
       "batchable": false
     },
     {
-      "name": "welfareOpenPacketRecord",
+      "name": "welfareUserOpenPacketRecord",
       "label": "用户开红包记录",
       "fields": [
         {
@@ -151,7 +151,7 @@
       "batchable": false
     },
     {
-      "name": "welfareCoinRecord",
+      "name": "welfareUserCoinRecord",
       "label": "用户福币记录",
       "fields": [
         {
@@ -194,7 +194,7 @@
       "batchable": false
     },
     {
-      "name": "welfareWalletRecord",
+      "name": "welfareUserWalletRecord",
       "label": "用户钱包记录",
       "fields": [
         {
@@ -237,7 +237,7 @@
       "batchable": false
     },
     {
-      "name": "welfareTaskRecord",
+      "name": "welfareUserTaskRecord",
       "label": "用户完成任务记录",
       "fields": [
         {
@@ -308,13 +308,13 @@
     {
       "name": "welfare",
       "namespace": "welfare",
-      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareTaskRecord"]
+      "models": ["welfareUser", "welfareUserOpenPacketRecord", "welfareUserCoinRecord", "welfareUserWalletRecord", "welfareUserTaskRecord"]
     }
   ],
   "controllers": [
     {
       "name": "welfare",
-      "models": ["welfareUser", "welfareOpenPacketRecord", "welfareCoinRecord", "welfareWalletRecord", "welfareTaskRecord"],
+      "models": ["welfareUser", "welfareUserOpenPacketRecord", "welfareUserCoinRecord", "welfareUserWalletRecord", "welfareUserTaskRecord"],
       "api": {
         "base": "",
         "version": "1.0.0",

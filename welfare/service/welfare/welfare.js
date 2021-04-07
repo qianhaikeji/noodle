@@ -108,7 +108,7 @@ class WelfareService extends Service {
     await this.models.WelfareUser.destroyById(exist.id, {transaction: this.t})
   }
   
-  async getWelfareOpenPacketRecordList (params) {
+  async getWelfareUserOpenPacketRecordList (params) {
     let conditions = [
     ]
     
@@ -138,14 +138,14 @@ class WelfareService extends Service {
       }
     }
 
-    return await this.models.WelfareOpenPacketRecord.findAndCountAll(queryParams)
+    return await this.models.WelfareUserOpenPacketRecord.findAndCountAll(queryParams)
   }
 
-  async getWelfareOpenPacketRecord (id) {
-    return await this.models.WelfareOpenPacketRecord.findByPk(id)
+  async getWelfareUserOpenPacketRecord (id) {
+    return await this.models.WelfareUserOpenPacketRecord.findByPk(id)
   }
 
-  async addWelfareOpenPacketRecord (data) {
+  async addWelfareUserOpenPacketRecord (data) {
     try {
       utils.checkInputParams([
       ])
@@ -155,16 +155,16 @@ class WelfareService extends Service {
 
     // do params check here!
 
-    let welfareOpenPacketRecord = await this.models.WelfareOpenPacketRecord.create(data, {transaction: this.t})
-    if (!welfareOpenPacketRecord) {
+    let welfareUserOpenPacketRecord = await this.models.WelfareUserOpenPacketRecord.create(data, {transaction: this.t})
+    if (!welfareUserOpenPacketRecord) {
       this.logger.error(`添加用户开红包记录失败! ${err}`)
       this.throwException(400, '添加用户开红包记录失败!')
     }
-    return welfareOpenPacketRecord
+    return welfareUserOpenPacketRecord
   }
 
-  async modifyWelfareOpenPacketRecord (id, data) {
-    let exist = await this.models.WelfareOpenPacketRecord.findByPk(id)
+  async modifyWelfareUserOpenPacketRecord (id, data) {
+    let exist = await this.models.WelfareUserOpenPacketRecord.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的用户开红包记录!')
       return
@@ -184,16 +184,16 @@ class WelfareService extends Service {
     return await exist.save({transaction: this.t})
   }  
 
-  async deleteWelfareOpenPacketRecord (id) {
-    let exist = await this.models.WelfareOpenPacketRecord.findByPk(id)
+  async deleteWelfareUserOpenPacketRecord (id) {
+    let exist = await this.models.WelfareUserOpenPacketRecord.findByPk(id)
     if (!exist) {
       return
     }
 
-    await this.models.WelfareOpenPacketRecord.destroyById(exist.id, {transaction: this.t})
+    await this.models.WelfareUserOpenPacketRecord.destroyById(exist.id, {transaction: this.t})
   }
   
-  async getWelfareCoinRecordList (params) {
+  async getWelfareUserCoinRecordList (params) {
     let conditions = [
     ]
     
@@ -217,14 +217,14 @@ class WelfareService extends Service {
       }
     }
 
-    return await this.models.WelfareCoinRecord.findAndCountAll(queryParams)
+    return await this.models.WelfareUserCoinRecord.findAndCountAll(queryParams)
   }
 
-  async getWelfareCoinRecord (id) {
-    return await this.models.WelfareCoinRecord.findByPk(id)
+  async getWelfareUserCoinRecord (id) {
+    return await this.models.WelfareUserCoinRecord.findByPk(id)
   }
 
-  async addWelfareCoinRecord (data) {
+  async addWelfareUserCoinRecord (data) {
     try {
       utils.checkInputParams([
       ])
@@ -234,16 +234,16 @@ class WelfareService extends Service {
 
     // do params check here!
 
-    let welfareCoinRecord = await this.models.WelfareCoinRecord.create(data, {transaction: this.t})
-    if (!welfareCoinRecord) {
+    let welfareUserCoinRecord = await this.models.WelfareUserCoinRecord.create(data, {transaction: this.t})
+    if (!welfareUserCoinRecord) {
       this.logger.error(`添加用户福币记录失败! ${err}`)
       this.throwException(400, '添加用户福币记录失败!')
     }
-    return welfareCoinRecord
+    return welfareUserCoinRecord
   }
 
-  async modifyWelfareCoinRecord (id, data) {
-    let exist = await this.models.WelfareCoinRecord.findByPk(id)
+  async modifyWelfareUserCoinRecord (id, data) {
+    let exist = await this.models.WelfareUserCoinRecord.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的用户福币记录!')
       return
@@ -263,16 +263,16 @@ class WelfareService extends Service {
     return await exist.save({transaction: this.t})
   }  
 
-  async deleteWelfareCoinRecord (id) {
-    let exist = await this.models.WelfareCoinRecord.findByPk(id)
+  async deleteWelfareUserCoinRecord (id) {
+    let exist = await this.models.WelfareUserCoinRecord.findByPk(id)
     if (!exist) {
       return
     }
 
-    await this.models.WelfareCoinRecord.destroyById(exist.id, {transaction: this.t})
+    await this.models.WelfareUserCoinRecord.destroyById(exist.id, {transaction: this.t})
   }
   
-  async getWelfareWalletRecordList (params) {
+  async getWelfareUserWalletRecordList (params) {
     let conditions = [
     ]
     
@@ -296,14 +296,14 @@ class WelfareService extends Service {
       }
     }
 
-    return await this.models.WelfareWalletRecord.findAndCountAll(queryParams)
+    return await this.models.WelfareUserWalletRecord.findAndCountAll(queryParams)
   }
 
-  async getWelfareWalletRecord (id) {
-    return await this.models.WelfareWalletRecord.findByPk(id)
+  async getWelfareUserWalletRecord (id) {
+    return await this.models.WelfareUserWalletRecord.findByPk(id)
   }
 
-  async addWelfareWalletRecord (data) {
+  async addWelfareUserWalletRecord (data) {
     try {
       utils.checkInputParams([
       ])
@@ -313,16 +313,16 @@ class WelfareService extends Service {
 
     // do params check here!
 
-    let welfareWalletRecord = await this.models.WelfareWalletRecord.create(data, {transaction: this.t})
-    if (!welfareWalletRecord) {
+    let welfareUserWalletRecord = await this.models.WelfareUserWalletRecord.create(data, {transaction: this.t})
+    if (!welfareUserWalletRecord) {
       this.logger.error(`添加用户钱包记录失败! ${err}`)
       this.throwException(400, '添加用户钱包记录失败!')
     }
-    return welfareWalletRecord
+    return welfareUserWalletRecord
   }
 
-  async modifyWelfareWalletRecord (id, data) {
-    let exist = await this.models.WelfareWalletRecord.findByPk(id)
+  async modifyWelfareUserWalletRecord (id, data) {
+    let exist = await this.models.WelfareUserWalletRecord.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的用户钱包记录!')
       return
@@ -342,16 +342,16 @@ class WelfareService extends Service {
     return await exist.save({transaction: this.t})
   }  
 
-  async deleteWelfareWalletRecord (id) {
-    let exist = await this.models.WelfareWalletRecord.findByPk(id)
+  async deleteWelfareUserWalletRecord (id) {
+    let exist = await this.models.WelfareUserWalletRecord.findByPk(id)
     if (!exist) {
       return
     }
 
-    await this.models.WelfareWalletRecord.destroyById(exist.id, {transaction: this.t})
+    await this.models.WelfareUserWalletRecord.destroyById(exist.id, {transaction: this.t})
   }
   
-  async getWelfareTaskRecordList (params) {
+  async getWelfareUserTaskRecordList (params) {
     let conditions = [
     ]
     
@@ -387,14 +387,14 @@ class WelfareService extends Service {
       }
     }
 
-    return await this.models.WelfareTaskRecord.findAndCountAll(queryParams)
+    return await this.models.WelfareUserTaskRecord.findAndCountAll(queryParams)
   }
 
-  async getWelfareTaskRecord (id) {
-    return await this.models.WelfareTaskRecord.findByPk(id)
+  async getWelfareUserTaskRecord (id) {
+    return await this.models.WelfareUserTaskRecord.findByPk(id)
   }
 
-  async addWelfareTaskRecord (data) {
+  async addWelfareUserTaskRecord (data) {
     try {
       utils.checkInputParams([
       ])
@@ -404,16 +404,16 @@ class WelfareService extends Service {
 
     // do params check here!
 
-    let welfareTaskRecord = await this.models.WelfareTaskRecord.create(data, {transaction: this.t})
-    if (!welfareTaskRecord) {
+    let welfareUserTaskRecord = await this.models.WelfareUserTaskRecord.create(data, {transaction: this.t})
+    if (!welfareUserTaskRecord) {
       this.logger.error(`添加用户完成任务记录失败! ${err}`)
       this.throwException(400, '添加用户完成任务记录失败!')
     }
-    return welfareTaskRecord
+    return welfareUserTaskRecord
   }
 
-  async modifyWelfareTaskRecord (id, data) {
-    let exist = await this.models.WelfareTaskRecord.findByPk(id)
+  async modifyWelfareUserTaskRecord (id, data) {
+    let exist = await this.models.WelfareUserTaskRecord.findByPk(id)
     if (!exist) {
       this.throwException(400, '无效的用户完成任务记录!')
       return
@@ -433,13 +433,13 @@ class WelfareService extends Service {
     return await exist.save({transaction: this.t})
   }  
 
-  async deleteWelfareTaskRecord (id) {
-    let exist = await this.models.WelfareTaskRecord.findByPk(id)
+  async deleteWelfareUserTaskRecord (id) {
+    let exist = await this.models.WelfareUserTaskRecord.findByPk(id)
     if (!exist) {
       return
     }
 
-    await this.models.WelfareTaskRecord.destroyById(exist.id, {transaction: this.t})
+    await this.models.WelfareUserTaskRecord.destroyById(exist.id, {transaction: this.t})
   }
 }
 

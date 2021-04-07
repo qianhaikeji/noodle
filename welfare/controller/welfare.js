@@ -54,7 +54,7 @@ class WelfareController extends Controller {
 
     
   /**
-   * @api {get} /welfareOpenPacketRecords 获取用户开红包记录列表
+   * @api {get} /welfareUserOpenPacketRecords 获取用户开红包记录列表
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户开红包记录列表
@@ -63,24 +63,24 @@ class WelfareController extends Controller {
    * @apiParam { STRING } [awardValue] (query参数) '红包中奖内容（现金值、福币值、谢谢参与字符串等）'
    * @apiUse pagination
    * @apiUse pageResult
-   * @apiUse welfareOpenPacketRecordResponseEntity
+   * @apiUse welfareUserOpenPacketRecordResponseEntity
    */
-  async getWelfareOpenPacketRecordList () {
-    let res = await this.service.welfare.welfare.getWelfareOpenPacketRecordList(this.queryParams)
+  async getWelfareUserOpenPacketRecordList () {
+    let res = await this.service.welfare.welfare.getWelfareUserOpenPacketRecordList(this.queryParams)
     this.restful.success(res)
   }
 
   /**
-   * @api {get} /welfareOpenPacketRecords/:id 获取用户开红包记录详情
+   * @api {get} /welfareUserOpenPacketRecords/:id 获取用户开红包记录详情
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户开红包记录详情
    * @apiParam {Integer} id (path参数)用户开红包记录id
-   * @apiUse welfareOpenPacketRecordResponseEntity
+   * @apiUse welfareUserOpenPacketRecordResponseEntity
    */
-  async getWelfareOpenPacketRecordDetail () {
+  async getWelfareUserOpenPacketRecordDetail () {
     const { id } = this.pathParams
-    const res = await this.service.welfare.welfare.getWelfareOpenPacketRecord(id)
+    const res = await this.service.welfare.welfare.getWelfareUserOpenPacketRecord(id)
     this.restful.success(res)
   }
 
@@ -90,31 +90,31 @@ class WelfareController extends Controller {
 
     
   /**
-   * @api {get} /welfareCoinRecords 获取用户福币记录列表
+   * @api {get} /welfareUserCoinRecords 获取用户福币记录列表
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户福币记录列表
    * @apiParam { STRING } [userId] (query参数) '用户id'
    * @apiUse pagination
    * @apiUse pageResult
-   * @apiUse welfareCoinRecordResponseEntity
+   * @apiUse welfareUserCoinRecordResponseEntity
    */
-  async getWelfareCoinRecordList () {
-    let res = await this.service.welfare.welfare.getWelfareCoinRecordList(this.queryParams)
+  async getWelfareUserCoinRecordList () {
+    let res = await this.service.welfare.welfare.getWelfareUserCoinRecordList(this.queryParams)
     this.restful.success(res)
   }
 
   /**
-   * @api {get} /welfareCoinRecords/:id 获取用户福币记录详情
+   * @api {get} /welfareUserCoinRecords/:id 获取用户福币记录详情
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户福币记录详情
    * @apiParam {Integer} id (path参数)用户福币记录id
-   * @apiUse welfareCoinRecordResponseEntity
+   * @apiUse welfareUserCoinRecordResponseEntity
    */
-  async getWelfareCoinRecordDetail () {
+  async getWelfareUserCoinRecordDetail () {
     const { id } = this.pathParams
-    const res = await this.service.welfare.welfare.getWelfareCoinRecord(id)
+    const res = await this.service.welfare.welfare.getWelfareUserCoinRecord(id)
     this.restful.success(res)
   }
 
@@ -124,31 +124,31 @@ class WelfareController extends Controller {
 
     
   /**
-   * @api {get} /welfareWalletRecords 获取用户钱包记录列表
+   * @api {get} /welfareUserWalletRecords 获取用户钱包记录列表
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户钱包记录列表
    * @apiParam { STRING } [userId] (query参数) '用户id'
    * @apiUse pagination
    * @apiUse pageResult
-   * @apiUse welfareWalletRecordResponseEntity
+   * @apiUse welfareUserWalletRecordResponseEntity
    */
-  async getWelfareWalletRecordList () {
-    let res = await this.service.welfare.welfare.getWelfareWalletRecordList(this.queryParams)
+  async getWelfareUserWalletRecordList () {
+    let res = await this.service.welfare.welfare.getWelfareUserWalletRecordList(this.queryParams)
     this.restful.success(res)
   }
 
   /**
-   * @api {get} /welfareWalletRecords/:id 获取用户钱包记录详情
+   * @api {get} /welfareUserWalletRecords/:id 获取用户钱包记录详情
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户钱包记录详情
    * @apiParam {Integer} id (path参数)用户钱包记录id
-   * @apiUse welfareWalletRecordResponseEntity
+   * @apiUse welfareUserWalletRecordResponseEntity
    */
-  async getWelfareWalletRecordDetail () {
+  async getWelfareUserWalletRecordDetail () {
     const { id } = this.pathParams
-    const res = await this.service.welfare.welfare.getWelfareWalletRecord(id)
+    const res = await this.service.welfare.welfare.getWelfareUserWalletRecord(id)
     this.restful.success(res)
   }
 
@@ -158,7 +158,7 @@ class WelfareController extends Controller {
 
     
   /**
-   * @api {get} /welfareTaskRecords 获取用户完成任务记录列表
+   * @api {get} /welfareUserTaskRecords 获取用户完成任务记录列表
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户完成任务记录列表
@@ -169,24 +169,24 @@ class WelfareController extends Controller {
    * @apiParam { BOOLEAN } [awarded] (query参数) '是否奖励'
    * @apiUse pagination
    * @apiUse pageResult
-   * @apiUse welfareTaskRecordResponseEntity
+   * @apiUse welfareUserTaskRecordResponseEntity
    */
-  async getWelfareTaskRecordList () {
-    let res = await this.service.welfare.welfare.getWelfareTaskRecordList(this.queryParams)
+  async getWelfareUserTaskRecordList () {
+    let res = await this.service.welfare.welfare.getWelfareUserTaskRecordList(this.queryParams)
     this.restful.success(res)
   }
 
   /**
-   * @api {get} /welfareTaskRecords/:id 获取用户完成任务记录详情
+   * @api {get} /welfareUserTaskRecords/:id 获取用户完成任务记录详情
    * @apiVersion 1.0.0
    * @apiGroup welfare
    * @apiDescription 获取用户完成任务记录详情
    * @apiParam {Integer} id (path参数)用户完成任务记录id
-   * @apiUse welfareTaskRecordResponseEntity
+   * @apiUse welfareUserTaskRecordResponseEntity
    */
-  async getWelfareTaskRecordDetail () {
+  async getWelfareUserTaskRecordDetail () {
     const { id } = this.pathParams
-    const res = await this.service.welfare.welfare.getWelfareTaskRecord(id)
+    const res = await this.service.welfare.welfare.getWelfareUserTaskRecord(id)
     this.restful.success(res)
   }
 
