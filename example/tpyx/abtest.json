@@ -1,0 +1,239 @@
+{
+  "models": [
+    {
+      "name": "abTest",
+      "label": "AB测试实验",
+      "fields": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'实验名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "description",
+          "type": "STRING",
+          "comment": "'实验描述'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "type",
+          "type": "INTEGER",
+          "comment": "'实验类型(客户端实验、服务端实验)'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "targets",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'指标'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "enable",
+          "type": "BOOLEAN",
+          "defaultValue": false,
+          "faker": "false",
+          "comment": "'是否启用'",
+          "opList": ["edit", "list", "filter", "create"],
+          "listable": true
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "abTarget",
+      "label": "AB测试指标",
+      "fields": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'指标名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "description",
+          "type": "STRING",
+          "comment": "'指标描述'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "abGroup",
+      "label": "ab对照组",
+      "fields": [
+        {
+          "name": "abTestId",
+          "type": "INTEGER",
+          "comment": "'实验ID'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "abTestName",
+          "type": "STRING",
+          "comment": "'实验名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "comment": "'对照组名称'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "description",
+          "type": "STRING",
+          "comment": "'对照组描述'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "isDefault",
+          "type": "STRING",
+          "comment": "'是否默认'",
+          "opList": ["edit", "list", "filter", "create"]
+        },
+        {
+          "name": "flowRatio",
+          "type": "FLOAT",
+          "comment": "'流量比例'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "params",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'实验参数'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "whiteList",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'白名单'",
+          "opList": ["edit", "create", "required"]
+        },
+        {
+          "name": "allocTimes",
+          "type": "INTEGER",
+          "defaultValue": 0,
+          "comment": "'对照组分配次数'",
+          "opList": ["list"]
+        },
+        {
+          "name": "indicators",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'指标结果'",
+          "opList": ["edit", "list", "create"]
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    },
+    {
+      "name": "abAllocation",
+      "label": "AB测试分配记录",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "STRING",
+          "comment": "'用户标识'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "abTestId",
+          "type": "STRING",
+          "comment": "'实验ID'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "abTestName",
+          "type": "STRING",
+          "comment": "'实验名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "abGroupId",
+          "type": "DATE",
+          "comment": "'对照组ID'",
+          "opList": ["edit", "list", "filter", "create", "required"]
+        },
+        {
+          "name": "abGroupName",
+          "type": "STRING",
+          "comment": "'对照组名称'",
+          "opList": ["edit", "list", "create", "required"]
+        },
+        {
+          "name": "customFields",
+          "type": "JSON",
+          "defaultValue": "{}",
+          "comment": "'自定义字段'",
+          "listable":  true
+        }
+      ],
+      "creatable": false,
+      "editable": true,
+      "deletable": true,
+      "exportable": true,
+      "importable": true,
+      "batchable": true
+    }
+  ],
+  "services": [
+    {
+      "name": "abTest",
+      "namespace": "common",
+      "models": ["abTest", "abTarget", "abGroup", "abAllocation"]
+    }
+  ],
+  "controllers": [
+    {
+      "name": "abTest",
+      "models": ["abTest", "abTarget", "abGroup", "abAllocation"],
+      "api": {
+        "base": "/admin",
+        "version": "1.0.0",
+        "groupValue": "abTest",
+        "groupLabel": "AB测试" 
+      }
+    }
+  ]
+}
