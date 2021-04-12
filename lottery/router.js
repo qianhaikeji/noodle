@@ -24,4 +24,11 @@ module.exports = app => {
   router.get('/api/preDrawInfos', controller.preDrawInfo.getPreDrawInfoList)
   router.get('/api/preDrawInfos/:id', controller.preDrawInfo.getPreDrawInfoDetail)
 
+  
+  router.get('/api/prizeShows', controller.prizeShow.getPrizeShowList)
+  router.get('/api/prizeShows/:id', controller.prizeShow.getPrizeShowDetail)
+  router.post('/api/prizeShows', controller.prizeShow.createPrizeShow)
+  router.put('/api/prizeShows/:id', controller.prizeShow.modifyPrizeShow)
+  router.delete('/api/prizeShows/:id', controller.prizeShow.deletePrizeShow)
+
 }
