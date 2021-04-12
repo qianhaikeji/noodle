@@ -166,7 +166,7 @@ class AbTestController extends Controller {
    * @apiDescription 获取ab对照组列表
    * @apiParam { INTEGER } [abTestId] (query参数) '实验ID'
    * @apiParam { STRING } [name] (query参数) '对照组名称'
-   * @apiParam { STRING } [isDefault] (query参数) '是否默认'
+   * @apiParam { BOOLEAN } [isDefault] (query参数) '是否默认'
    * @apiUse pagination
    * @apiUse pageResult
    * @apiUse abGroupResponseEntity
@@ -238,9 +238,9 @@ class AbTestController extends Controller {
    * @apiVersion 1.0.0
    * @apiGroup abTest
    * @apiDescription 获取AB测试分配记录列表
-   * @apiParam { STRING } [clientId] (query参数) '用户标识'
-   * @apiParam { STRING } [abTestId] (query参数) '实验ID'
-   * @apiParam { DATE } [abGroupId] (query参数) '对照组ID'
+   * @apiParam { INTEGER } [clientId] (query参数) '用户标识'
+   * @apiParam { INTEGER } [abTestId] (query参数) '实验ID'
+   * @apiParam { INTEGER } [abGroupId] (query参数) '对照组ID'
    * @apiUse pagination
    * @apiUse pageResult
    * @apiUse abAllocationResponseEntity

@@ -98,7 +98,7 @@
           "name": "abTestName",
           "type": "STRING",
           "comment": "'实验名称'",
-          "opList": ["edit", "list", "create", "required"]
+          "opList": ["edit", "list", "create"]
         },
         {
           "name": "name",
@@ -114,7 +114,7 @@
         },
         {
           "name": "isDefault",
-          "type": "STRING",
+          "type": "BOOLEAN",
           "comment": "'是否默认'",
           "opList": ["edit", "list", "filter", "create"]
         },
@@ -173,13 +173,13 @@
       "fields": [
         {
           "name": "clientId",
-          "type": "STRING",
+          "type": "INTEGER",
           "comment": "'用户标识'",
           "opList": ["edit", "list", "filter", "create", "required"]
         },
         {
           "name": "abTestId",
-          "type": "STRING",
+          "type": "INTEGER",
           "comment": "'实验ID'",
           "opList": ["edit", "list", "filter", "create", "required"]
         },
@@ -187,11 +187,11 @@
           "name": "abTestName",
           "type": "STRING",
           "comment": "'实验名称'",
-          "opList": ["edit", "list", "create", "required"]
+          "opList": ["edit", "list", "create"]
         },
         {
           "name": "abGroupId",
-          "type": "DATE",
+          "type": "INTEGER",
           "comment": "'对照组ID'",
           "opList": ["edit", "list", "filter", "create", "required"]
         },
@@ -199,7 +199,7 @@
           "name": "abGroupName",
           "type": "STRING",
           "comment": "'对照组名称'",
-          "opList": ["edit", "list", "create", "required"]
+          "opList": ["edit", "list", "create"]
         },
         {
           "name": "customFields",

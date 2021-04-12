@@ -205,7 +205,7 @@ class AbTestService extends Service {
       conditions.push({ name: params.name })
     }
     if (params.isDefault) {
-      conditions.push({ isDefault: params.isDefault })
+      conditions.push({ isDefault: JSON.parse(params.isDefault) })
     }
 
     let queryParams = this.formatPageParams(params)
@@ -229,7 +229,6 @@ class AbTestService extends Service {
     try {
       utils.checkInputParams([
         {value: data.abTestId, error: '请填写abTestId'},
-        {value: data.abTestName, error: '请填写abTestName'},
         {value: data.name, error: '请填写name'},
         {value: data.flowRatio, error: '请填写flowRatio'},
         {value: data.params, error: '请填写params'},
@@ -259,7 +258,6 @@ class AbTestService extends Service {
     try {
       utils.checkInputParams([
         {value: data.abTestId, error: '请填写abTestId'},
-        {value: data.abTestName, error: '请填写abTestName'},
         {value: data.name, error: '请填写name'},
         {value: data.flowRatio, error: '请填写flowRatio'},
         {value: data.params, error: '请填写params'},
@@ -310,12 +308,8 @@ class AbTestService extends Service {
     if (params.abTestId) {
       conditions.push({ abTestId: params.abTestId })
     }
-    if (params.startDate) {
-      conditions.push({ abGroupId : { [this.app.Sequelize.Op.gte]: params.startDate }})
-    }
-
-    if (params.endDate) {
-      conditions.push({ abGroupId : { [this.app.Sequelize.Op.lt]: params.endDate }})
+    if (params.abGroupId) {
+      conditions.push({ abGroupId: params.abGroupId })
     }
 
     let queryParams = this.formatPageParams(params)
@@ -340,9 +334,7 @@ class AbTestService extends Service {
       utils.checkInputParams([
         {value: data.clientId, error: '请填写clientId'},
         {value: data.abTestId, error: '请填写abTestId'},
-        {value: data.abTestName, error: '请填写abTestName'},
         {value: data.abGroupId, error: '请填写abGroupId'},
-        {value: data.abGroupName, error: '请填写abGroupName'},
       ])
     } catch (err) {
       this.throwException(400, err.message)
@@ -369,9 +361,7 @@ class AbTestService extends Service {
       utils.checkInputParams([
         {value: data.clientId, error: '请填写clientId'},
         {value: data.abTestId, error: '请填写abTestId'},
-        {value: data.abTestName, error: '请填写abTestName'},
         {value: data.abGroupId, error: '请填写abGroupId'},
-        {value: data.abGroupName, error: '请填写abGroupName'},
       ])
     } catch (err) {
       this.throwException(400, err.message)

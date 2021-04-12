@@ -4,10 +4,10 @@ const utils = require('./utils')
 
 /**
  * @apiDefine abAllocationRequestEntity AB测试分配记录请求实体
- * @apiParam { STRING } [clientId] (body参数) '用户标识'
- * @apiParam { STRING } [abTestId] (body参数) '实验ID'
+ * @apiParam { INTEGER } [clientId] (body参数) '用户标识'
+ * @apiParam { INTEGER } [abTestId] (body参数) '实验ID'
  * @apiParam { STRING } [abTestName] (body参数) '实验名称'
- * @apiParam { DATE } [abGroupId] (body参数) '对照组ID'
+ * @apiParam { INTEGER } [abGroupId] (body参数) '对照组ID'
  * @apiParam { STRING } [abGroupName] (body参数) '对照组名称'
  * @apiParam { JSON } [customFields] (body参数) '自定义字段'
 */
@@ -15,10 +15,10 @@ const utils = require('./utils')
 /**
  * @apiDefine abAllocationResponseEntity AB测试分配记录响应实体
  * @apiSuccess { INTEGER } rows.id 'id'
- * @apiSuccess { STRING } rows.clientId '用户标识'
- * @apiSuccess { STRING } rows.abTestId '实验ID'
+ * @apiSuccess { INTEGER } rows.clientId '用户标识'
+ * @apiSuccess { INTEGER } rows.abTestId '实验ID'
  * @apiSuccess { STRING } rows.abTestName '实验名称'
- * @apiSuccess { DATE } rows.abGroupId '对照组ID'
+ * @apiSuccess { INTEGER } rows.abGroupId '对照组ID'
  * @apiSuccess { STRING } rows.abGroupName '对照组名称'
  * @apiSuccess { JSON } rows.customFields '自定义字段'
 */
@@ -33,11 +33,11 @@ module.exports = app => {
       autoIncrement: true,
     },
     clientId: {
-      type: STRING,
+      type: INTEGER,
       comment: '用户标识',
     },
     abTestId: {
-      type: STRING,
+      type: INTEGER,
       comment: '实验ID',
     },
     abTestName: {
@@ -45,7 +45,7 @@ module.exports = app => {
       comment: '实验名称',
     },
     abGroupId: {
-      type: DATE,
+      type: INTEGER,
       comment: '对照组ID',
     },
     abGroupName: {

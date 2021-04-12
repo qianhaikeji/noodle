@@ -74,6 +74,7 @@ const columns = [
   {
     title: '是否默认',
     dataIndex: 'isDefault',
+    render: (text, record) => <SwitchStatusTag status={text} />
   },
   {
     title: '流量比例',
@@ -119,7 +120,7 @@ const queryFormItems = [
   {
     label: '是否默认',
     field: 'isDefault',
-    component: <Input placeholder="请输入" />
+    component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
   },
 ]
 
@@ -160,7 +161,7 @@ const createFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -192,13 +193,14 @@ const createFormItems = [
   {
     label: '是否默认',
     field: 'isDefault',
-    component: <Input placeholder="请输入" />,
+    component: <Switch></Switch>,
     options: {
       rules: [
         {
           required: false,
         }
       ],
+      valuePropName: 'checked'
     }
   },
   {
@@ -288,7 +290,7 @@ const updateFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -320,13 +322,14 @@ const updateFormItems = [
   {
     label: '是否默认',
     field: 'isDefault',
-    component: <Input placeholder="请输入" />,
+    component: <Switch></Switch>,
     options: {
       rules: [
         {
           required: false,
         }
       ],
+      valuePropName: 'checked'
     }
   },
   {
@@ -450,7 +453,7 @@ const Widget = ({
           '实验名称': ele.abTestName,
           '对照组名称': ele.name,
           '对照组描述': ele.description,
-          '是否默认': ele.isDefault,
+          '是否默认': ele.isDefault ? '是' : '否',
           '流量比例': ele.flowRatio,
           '实验参数': ele.params,
           '白名单': ele.whiteList,

@@ -70,7 +70,6 @@ const columns = [
   {
     title: '对照组ID',
     dataIndex: 'abGroupId',
-    render: (text, record) => moment(text).format('YYYY-MM-DD HH:mm:ss')
   },
   {
     title: '对照组名称',
@@ -104,7 +103,7 @@ const queryFormItems = [
   {
     label: '对照组ID',
     field: 'abGroupId',
-    component: <RangePicker placeholder="选择范围" format='YYYY-MM-DD' />,
+    component: <Input placeholder="请输入" />
   },
 ]
 
@@ -157,7 +156,7 @@ const createFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -165,7 +164,7 @@ const createFormItems = [
   {
     label: '对照组ID',
     field: 'abGroupId',
-    component: <DatePicker placeholder="选择日期" />,
+    component: <Input placeholder="请输入" />,
     options: {
       rules: [
         {
@@ -181,7 +180,7 @@ const createFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -237,7 +236,7 @@ const updateFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -245,7 +244,7 @@ const updateFormItems = [
   {
     label: '对照组ID',
     field: 'abGroupId',
-    component: <DatePicker placeholder="选择日期" />,
+    component: <Input placeholder="请输入" />,
     options: {
       rules: [
         {
@@ -261,7 +260,7 @@ const updateFormItems = [
     options: {
       rules: [
         {
-          required: true,
+          required: false,
         }
       ],
     }
@@ -317,14 +316,6 @@ const Widget = ({
   }
 
   const onQuery = (params) => {
-    if (params.abGroupId && params.abGroupId.length === 2) {
-      const dates = convertDateRangeForQuery(params.abGroupId)
-      params.startDate = dates[0]
-      params.endDate = dates[1]
-    }
-
-    delete params.abGroupId
-    
 
     setQueryParams(params)
     const cond = {
@@ -337,14 +328,6 @@ const Widget = ({
   }
 
   const onExport = async (params) => {
-    if (params.abGroupId && params.abGroupId.length === 2) {
-      const dates = convertDateRangeForQuery(params.abGroupId)
-      params.startDate = dates[0]
-      params.endDate = dates[1]
-    }
-
-    delete params.abGroupId
-
 
     toast.show({message: '正在导出数据...'})
     try {
@@ -354,7 +337,7 @@ const Widget = ({
           '用户标识': ele.clientId,
           '实验ID': ele.abTestId,
           '实验名称': ele.abTestName,
-          '对照组ID': moment(ele.abGroupId).format('YYYY-MM-DD HH:mm:ss'),
+          '对照组ID': ele.abGroupId,
           '对照组名称': ele.abGroupName,
           '自定义字段': ele.customFields,
         }

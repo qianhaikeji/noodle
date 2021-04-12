@@ -8,7 +8,7 @@ const utils = require('./utils')
  * @apiParam { STRING } [abTestName] (body参数) '实验名称'
  * @apiParam { STRING } [name] (body参数) '对照组名称'
  * @apiParam { STRING } [description] (body参数) '对照组描述'
- * @apiParam { STRING } [isDefault] (body参数) '是否默认'
+ * @apiParam { BOOLEAN } [isDefault] (body参数) '是否默认'
  * @apiParam { FLOAT } [flowRatio] (body参数) '流量比例'
  * @apiParam { JSON } [params] (body参数) '实验参数'
  * @apiParam { JSON } [whiteList] (body参数) '白名单'
@@ -24,7 +24,7 @@ const utils = require('./utils')
  * @apiSuccess { STRING } rows.abTestName '实验名称'
  * @apiSuccess { STRING } rows.name '对照组名称'
  * @apiSuccess { STRING } rows.description '对照组描述'
- * @apiSuccess { STRING } rows.isDefault '是否默认'
+ * @apiSuccess { BOOLEAN } rows.isDefault '是否默认'
  * @apiSuccess { FLOAT } rows.flowRatio '流量比例'
  * @apiSuccess { JSON } rows.params '实验参数'
  * @apiSuccess { JSON } rows.whiteList '白名单'
@@ -59,7 +59,7 @@ module.exports = app => {
       comment: '对照组描述',
     },
     isDefault: {
-      type: STRING,
+      type: BOOLEAN,
       comment: '是否默认',
     },
     flowRatio: {
