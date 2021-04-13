@@ -241,6 +241,49 @@
       "exportable": false,
       "importable": false,
       "batchable": false
+    },
+    {
+      "name": "prizeShow",
+      "label": "中奖晒单",
+      "fields": [
+        {
+          "name": "playerName",
+          "type": "STRING",
+          "comment": "'用户名'",
+          "opList": ["list", "create", "edit", "required"]
+        },
+        {
+          "name": "playerIcon",
+          "type": "STRING",
+          "comment": "'用户头像'",
+          "opList": ["list", "create", "edit", "required"]
+        },
+        {
+          "name": "content",
+          "type": "STRING",
+          "comment": "'晒单内容'",
+          "opList": ["list", "create", "edit", "required"]
+        },
+        {
+          "name": "images",
+          "type": "JSON",
+          "defaultValue": "[]",
+          "comment": "'晒单图片'",
+          "opList": ["create", "edit"]
+        },
+        {
+          "name": "time",
+          "type": "DATE",
+          "comment": "'晒单日期'",
+          "opList": ["list", "create", "edit", "required"]
+        }
+      ],
+      "creatable": true,
+      "editable": true,
+      "deletable": true,
+      "exportable": false,
+      "importable": false,
+      "batchable": false
     }
   ],
   "services": [
@@ -253,6 +296,11 @@
       "name": "activityPlayer",
       "namespace": "lottery",
       "models": ["activityPlayer", "preDrawInfo"]
+    },
+    {
+      "name": "prizeShow",
+      "namespace": "lottery",
+      "models": ["prizeShow"]
     }
   ],
   "controllers": [
@@ -274,6 +322,16 @@
         "version": "1.0.0",
         "groupValue": "activityPlayer",
         "groupLabel": "参与抽奖用户记录" 
+      }
+    },
+    {
+      "name": "prizeShow",
+      "models": ["prizeShow"],
+      "api": {
+        "base": "",
+        "version": "1.0.0",
+        "groupValue": "prizeShow",
+        "groupLabel": "中奖晒单记录" 
       }
     }
   ]

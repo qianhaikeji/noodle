@@ -109,6 +109,16 @@ const queryFormItems = [
     field: 'valid',
     component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
   },
+  {
+    label: '是否作为推荐活动',
+    field: 'recommend',
+    component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
+  },
+  {
+    label: '是否已开奖',
+    field: 'finished',
+    component: <StatusSelect statusList={ENUM_SWITCH_STATUS.getOptions()} />,
+  },
 ]
 
 /**
