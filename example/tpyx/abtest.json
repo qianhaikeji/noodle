@@ -173,7 +173,7 @@
       "fields": [
         {
           "name": "clientId",
-          "type": "INTEGER",
+          "type": "STRING",
           "comment": "'用户标识'",
           "opList": ["edit", "list", "filter", "create", "required"]
         },

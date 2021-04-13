@@ -238,7 +238,7 @@ class AbTestController extends Controller {
    * @apiVersion 1.0.0
    * @apiGroup abTest
    * @apiDescription 获取AB测试分配记录列表
-   * @apiParam { INTEGER } [clientId] (query参数) '用户标识'
+   * @apiParam { STRING } [clientId] (query参数) '用户标识'
    * @apiParam { INTEGER } [abTestId] (query参数) '实验ID'
    * @apiParam { INTEGER } [abGroupId] (query参数) '对照组ID'
    * @apiUse pagination
